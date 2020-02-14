@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'EmployeeController@index');
 
-
+Route::get('/working', function(){
+    return view('dashboards.admin1');
+});
 Auth::routes();
 Route::get('/admin', 'AdminController@index')->name('admin');
 Route::get('/employee', 'EmployeeController@index')->name('employee');
