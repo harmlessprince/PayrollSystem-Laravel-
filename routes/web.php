@@ -14,10 +14,12 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware('auth');
+Route::get('/', 'EmployeeController@index');
+
 
 Auth::routes();
+Route::get('/admin', 'AdminController@index')->name('admin');
+Route::get('/employee', 'EmployeeController@index')->name('employee');
+// Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+

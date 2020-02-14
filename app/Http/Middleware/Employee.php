@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class Employee
 {
@@ -14,7 +15,18 @@ class Employee
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
-        return $next($request);
+    {   
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        if (Auth::user()->role == 'admin') {
+            return redirect()->route('admin');
+        }
+
+        if (Auth::user()->role == 'employee') {
+            return $next($request);
+        }  
+        
     }
 }

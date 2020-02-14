@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@include('includes.nav')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    You are <strong>ADMIN</strong> logged in!
                 </div>
             </div>
         </div>
