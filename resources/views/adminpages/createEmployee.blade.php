@@ -16,30 +16,51 @@
                     <div class="form-group">
                         {{Form::label('employeeName','Employee Name')}}
                         {{Form::text('employeeName','',['class'=>'form-control'])}}
+                        @error('employeeName')
+                            <p class="text-danger"> {{$message}} </p>
+                        @enderror
                     </div>
                     <div class=" form-group">
                         {{Form::label('dateOfBirth','Date of Birth*')}}
                         {{Form::date('dateOfBirth',\Carbon\Carbon::now(), ['class'=>'form-control'] )}}
+                        @error('dateOfBirth')
+                            <p class="text-danger"> {{$message}} </p>
+                        @enderror
                     </div>
                     <div class="form-group">
                         {{Form::label('gender','Gender')}}
                         {{Form::select('gender',['male' => 'Male', 'female' => 'Female'], null ,['class'=>'form-control','placeholder' => 'Gender'])}}
+                        @error('gender')
+                            <p class="text-danger"> {{$message}} </p>
+                        @enderror
                     </div>
                     <div class="form-group">
                         {{Form::label('phone_number','Phone Number')}}
                         {{Form::tel('phone_number','',['class'=>'form-control'])}}
+                        @error('phone_number')
+                        <p class="text-danger"> {{$message}} </p>
+                    @enderror
                     </div>
                     <div class="form-group">
                         {{Form::label('nationality','Nationality')}}
                         {{Form::text('nationality','',['class'=>'form-control'])}}
+                        @error('nationality')
+                            <p class="text-danger"> {{$message}} </p>
+                        @enderror
                     </div>
                     <div class="form-group">
                         {{Form::label('address','Local Address')}}
                         {{Form::textarea('address','',['class'=>'form-control', 'rows'=>'3'])}}
+                        @error('address')
+                         <p class="text-danger"> {{$message}} </p>
+                        @enderror
                     </div>
                     <div class="form-group">
                         {{Form::label('maritalStatus','Marital Status')}}
                         {{Form::select('maritalStatus',['single' => 'Single', 'married' => 'Married'], null ,['class'=>'form-control','placeholder' => 'Pick a status..'])}}
+                        @error('maritalStatus')
+                            <p class="text-danger"> {{$message}} </p>
+                        @enderror
                     </div>
                     <div class="form-group">
                         {{Form::label('user_photo','Employee Photo')}}
@@ -59,14 +80,23 @@
                     <div class="form-group">
                         {{Form::label('email','E-mail')}}
                         {{Form::email('email','',['class'=>'form-control'])}}
+                        @error('email')
+                        <p class="text-danger"> {{$message}} </p>
+                    @enderror
                     </div>
                     <div class="form-group">
                         {{Form::label('password','Password')}}
                         {{Form::password('password',['class'=>'form-control'] )}}
+                        @error('password')
+                        <p class="text-danger"> {{$message}} </p>
+                    @enderror
                     </div>
                     <div class="form-group">
-                        {{Form::label('confirm_password','Confirm Password')}}
-                        {{Form::password('confirm_password',['class'=>'form-control'])}}
+                        {{Form::label('password_confirmation','Confirm Password')}}
+                        {{Form::password('password_confirmation',['class'=>'form-control'])}}
+                        @error('password_confirmation')
+                            <p class="text-danger"> {{$message}} </p>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -97,14 +127,23 @@
                     <div class="form-group">
                         {{Form::label('department','Department')}}
                         {{Form::select('department',['technical' => 'Technical', 'marketting' => 'Marketting','sales' => 'Sales', 'HR' => 'Human Resource'], null ,['class'=>'form-control','placeholder' => 'Select employee department..'])}}
+                        @error('department')
+                          <p class="text-danger"> {{$message}} </p>
+                        @enderror
                     </div>
                     <div class="form-group">
                         {{Form::label('designation','Designation')}}
                         {{Form::select('designation',['technical' => 'Technical', 'marketting' => 'Marketting','sales' => 'Sales', 'HR' => 'Human Resource'], null ,['class'=>'form-control','placeholder' => 'Select employee department first..'])}}
+                        @error('designation')
+                            <p class="text-danger"> {{$message}} </p>
+                        @enderror
                     </div>
                     <div class=" form-group">
                         {{Form::label('resumptionDate','Resumption Date')}}
                         {{Form::date('resumptionDate',\Carbon\Carbon::now(), ['class'=>'form-control'] )}}
+                        @error('resumptionDate')
+                            <p class="text-danger"> {{$message}} </p>
+                        @enderror
                     </div>
                     <div class="form-group">
                         {{Form::label('employeeStatus','Employee Status')}}
@@ -127,6 +166,9 @@
                                 <span class="input-group-text">₦</span>
                             </div>
                             {{Form::number('basicSalary','1000' ,['class'=>'form-control'])}}
+                            @error('basicSalary')
+                                <p class="text-danger"> {{$message}} </p>
+                            @enderror
                         </div>
                     </div>
                     <hr>
@@ -134,6 +176,9 @@
                         <div class="form-row">
                             <div class="col-auto">
                                 {{Form::select('deductionType',['tax' => 'Monthly Tax Deduction','pension' => 'Monthly Pension Deduction'], null ,['class'=>'form-control','placeholder'=>'Choose type of deduction'])}}
+                                @error('deductionType')
+                                    <p class="text-danger"> {{$message}} </p>
+                                @enderror
                             </div>
                             <div class="col">
                                 <div class="input-group">
@@ -141,6 +186,9 @@
                                         <span class="input-group-text">₦</span>
                                     </div>
                                     {{Form::number('deductionUnit','200',['class'=>'form-control'])}}
+                                    @error('deductionUnit')
+                                        <p class="text-danger"> {{$message}} </p>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -155,6 +203,9 @@
                                 <span class="input-group-text">₦</span>
                             </div>
                             {{Form::number('totalSalary','' ,['class'=>'form-control'])}}
+                            @error('totalSalary')
+                                <p class="text-danger"> {{$message}} </p>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -168,14 +219,23 @@
                         <div class="form-group">
                             {{Form::label('accountName','Account Name')}}
                             {{Form::text('accountName','',['class'=>'form-control'])}}
+                            @error('accountName')
+                              <p class="text-danger"> {{$message}} </p>
+                            @enderror
                         </div>
                         <div class="form-group">
                             {{Form::label('accountNumber','Account Number')}}
                             {{Form::text('accountNumber','',['class'=>'form-control'] )}}
+                            @error('accountNumber')
+                                <p class="text-danger"> {{$message}} </p>
+                            @enderror
                         </div>
                         <div class="form-group">
                             {{Form::label('bankName','Bank Name')}}
                             {{Form::text('bankName','',['class'=>'form-control'])}}
+                            @error('bankName')
+                                <p class="text-danger"> {{$message}} </p>
+                            @enderror
                         </div>
                     </div>
                 </div>

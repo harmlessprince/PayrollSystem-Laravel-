@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\User;
+// use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
+
 class AdminController extends Controller
 {
+    
   /**
      * Create a new controller instance.
      *
@@ -31,7 +34,7 @@ class AdminController extends Controller
     }
 
     public function manageEmployee(){
-        $users = User::get();
+        $users = User::all();
         return view('adminpages.manageEmployee')->with('users',$users);
     }
 
@@ -40,11 +43,31 @@ class AdminController extends Controller
     }
 
     public function store(Request $request){
-
+        
         $this->validate($request, [
-            // 'employeeName'=>'required',
-            
-            'user_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1999|required|dimensions:min_width=250,min_height=500'
+            'employeeName'=>'required',
+            'dateOfBirth'=>'required|date',
+            'email'=>'required|email:rfc,dns',
+            'gender'=>'required',
+            'phone_number'=>'required',
+            'nationality'=>'required',
+            'address'=>'required',
+            'maritalStatus'=>'required',
+            'department'=>'required',
+            'designation'=>'required',
+            'resumptionDate'=>'required|date',
+            'basicSalary'=>'required|numeric',
+            'deductionType'=>'required',
+            'taxUnit'=>'required',
+            'pensionUnit'=>'required',
+            'totalSalary'=>'required|numeric',
+            'accountName'=>'required|string',
+            'accountNumber'=>'required|numeric',
+            'bankName'=>'required|string',
+            'password'=>'required|confirmed',
+            'employeeName'=>'required',
+            'employeeName'=>'required',
+            'user_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1999|required|dimensions:max_width=180,max_height=180'
           ]);
       
           // Get file name with extension
@@ -62,7 +85,8 @@ class AdminController extends Controller
       
           $imagePath = $request->file('user_photo')->storeAs('public/Employee_Images', $fileNameToStore);
             
-        //   return $imagePath;
+          return $imagePath;
+
           $user = new User();
           
           // accepting album details
@@ -97,9 +121,8 @@ class AdminController extends Controller
     }
 
     public function show($id){
-
-        return view('adminpages.show');
-        // $user = User::find($id);
-        // return view('adminpages.viewprofile')->with('user', $user);
+        
+        $user = User::find($id);
+        return view('adminpages.employeeDetails')->with('user', $user);
     }
 }

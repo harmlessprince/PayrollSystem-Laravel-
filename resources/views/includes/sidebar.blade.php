@@ -4,9 +4,9 @@
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/{{Auth::user()->role ?? ''}}">
           <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+            <i class="fas fa-money-bill-wave-alt"></i>
           </div>
-          <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+          <div class="sidebar-brand-text mx-3">payRoll<sup>v:0.1</sup></div>
         </a>
   
         <!-- Divider -->
@@ -32,7 +32,7 @@
           <!-- Nav Item - Employee Collapse Menu -->
           <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#employee" aria-expanded="true" aria-controls="collapseTwo">
-              <i class="fas fa-fw fa-cog"></i>
+              <i class="fas fa-fw fa-users"></i>
               <span>Employee</span>
             </a>
             <div id="employee" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -46,7 +46,7 @@
           <!-- Nav Item - Department Collapse Menu -->
           <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#department" aria-expanded="true" aria-controls="collapseTwo">
-              <i class="fas fa-fw fa-cog"></i>
+              <i class="fas fa-fw fa-warehouse"></i>
               <span>Department</span>
             </a>
             <div id="department" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -60,7 +60,7 @@
           <!-- Nav Item - Attendance Collapse Menu -->
           <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#attendance" aria-expanded="true" aria-controls="collapseTwo">
-              <i class="fas fa-fw fa-cog"></i>
+              <i class="fas fa-fw fa-address-book"></i>
               <span>Attendance</span>
             </a>
             <div id="attendance" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -74,7 +74,7 @@
           <!-- Nav Item - Leave Collapse Menu -->
           <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#leave" aria-expanded="true" aria-controls="collapseTwo">
-              <i class="fas fa-fw fa-cog"></i>
+              <i class="fas fa-fw fa-bed"></i>
               <span>Leave</span>
             </a>
             <div id="leave" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -88,7 +88,7 @@
           <!-- Nav Item - Payroll Collapse Menu -->
           <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#payroll" aria-expanded="true" aria-controls="collapseTwo">
-              <i class="fas fa-fw fa-cog"></i>
+              <i class="fas fa-fw fa-money-check-alt"></i>
               <span>Payroll</span>
             </a>
             <div id="payroll" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -102,7 +102,7 @@
           <!-- Nav Item - Holiday Collapse Menu -->
           <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#holiday" aria-expanded="true" aria-controls="collapseTwo">
-              <i class="fas fa-fw fa-cog"></i>
+              <i class="fas fa-fw fa-glass-cheers"></i>
               <span>Holiday</span>
             </a>
             <div id="holiday" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">

@@ -11,6 +11,7 @@
 |
 */
 
+use Illuminate\Foundation\Console\RouteCacheCommand;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,10 @@ Route::get('/admin', 'AdminController@index')->name('admin');
 Route::get('/manage-employee', 'AdminController@manageEmployee');
 Route::get('/create-employee', 'AdminController@create');
 // Route::get('/employee/{{$user->id}}', 'AdminController@show');
+
+Route::get('/employeeDetails', function(){
+    return view('adminpages.employeeDetails');
+});
 
 
 Route::get('/employee', 'EmployeeController@index')->name('employee');
