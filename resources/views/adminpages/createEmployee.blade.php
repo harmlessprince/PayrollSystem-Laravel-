@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master')
 @section('title','Admin Dashboard')
 @section('page-name', 'Add Employee')
 
@@ -8,7 +8,7 @@
     <!--Employee Details Section -->
     <div class="col-lg-6 ">
         <div class="card mb-4 p-3">
-            <div class="card-header py-3" data-toggle="collapse" data-target="#employeeDetails">
+            <div class="card-header py-3" data-toggle="collapse" data-target="#employeeDetails" aria-expanded="false">
                 <h6 class="m-0 font-weight-bold">Employee Details</h6>
             </div>
             <div class="card-body">
@@ -26,8 +26,8 @@
                         {{Form::select('gender',['male' => 'Male', 'female' => 'Female'], null ,['class'=>'form-control','placeholder' => 'Gender'])}}
                     </div>
                     <div class="form-group">
-                        {{Form::label('phone-number','Phone Number')}}
-                        {{Form::tel('phone-number','',['class'=>'form-control'])}}
+                        {{Form::label('phone_number','Phone Number')}}
+                        {{Form::tel('phone_number','',['class'=>'form-control'])}}
                     </div>
                     <div class="form-group">
                         {{Form::label('nationality','Nationality')}}
@@ -39,7 +39,7 @@
                     </div>
                     <div class="form-group">
                         {{Form::label('maritalStatus','Marital Status')}}
-                        {{Form::select('maritalStatus',['S' => 'Single', 'M' => 'Married'], null ,['class'=>'form-control','placeholder' => 'Pick a status..'])}}
+                        {{Form::select('maritalStatus',['single' => 'Single', 'married' => 'Married'], null ,['class'=>'form-control','placeholder' => 'Pick a status..'])}}
                     </div>
                     <div class="form-group">
                         {{Form::label('user_photo','Employee Photo')}}
@@ -175,7 +175,7 @@
                         </div>
                         <div class="form-group">
                             {{Form::label('bankName','Bank Name')}}
-                            {{Form::text('banName','',['class'=>'form-control'])}}
+                            {{Form::text('bankName','',['class'=>'form-control'])}}
                         </div>
                     </div>
                 </div>

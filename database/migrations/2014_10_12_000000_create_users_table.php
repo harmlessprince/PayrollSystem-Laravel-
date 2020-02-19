@@ -18,11 +18,11 @@ class CreateUsersTable extends Migration
             $table->string('employeeName');
             $table->date('dateOfBirth');
             $table->string('gender');
-            $table->string('phone-number');
+            $table->string('phone_number');
             $table->string('nationality');
             $table->string('address');
             $table->string('maritalStatus');
-            $table->string('image');
+            $table->string('user_photo');
             $table->string('employee_id');
             $table->string('department');
             $table->string('designation');

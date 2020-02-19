@@ -16,13 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'EmployeeController@index');
 Route::resource('employee', 'AdminController');
-Auth::routes();
+// Auth::routes();
+Auth::routes(['register' => false]);
 Route::get('/admin', 'AdminController@index')->name('admin');
 Route::get('/manage-employee', 'AdminController@manageEmployee');
 Route::get('/create-employee', 'AdminController@create');
+// Route::get('/employee/{{$user->id}}', 'AdminController@show');
 
 
 Route::get('/employee', 'EmployeeController@index')->name('employee');
 // Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-
-

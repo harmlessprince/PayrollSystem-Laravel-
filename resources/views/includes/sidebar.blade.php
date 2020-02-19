@@ -2,7 +2,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/{{auth()->user()->role}}">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/{{Auth::user()->role ?? ''}}">
           <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
           </div>
@@ -14,7 +14,7 @@
   
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-          <a class="nav-link" href="/{{auth()->user()->role}}">
+          <a class="nav-link" href="/">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
         </li>
@@ -26,8 +26,8 @@
         <div class="sidebar-heading">
           Pages
         </div>
-
-        @if (Auth::user()->role == 'admin') 
+        @if(Auth::check() && Auth::user()->role == 'admin') 
+        {{-- @if (Auth::user()->role == 'admin')  --}}
           <!-- Admin Link Menu Starts Here --->
           <!-- Nav Item - Employee Collapse Menu -->
           <li class="nav-item">
@@ -113,7 +113,7 @@
             </div>
           </li>
         <!-- Admin Link Menu Ends Here --->
-        @else 
+        @else
 
           <!-- Employee Link Menu Starts Here --->
             <!-- Nav Item - Attendance Collapse Menu -->

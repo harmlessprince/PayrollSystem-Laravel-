@@ -1,5 +1,5 @@
 
-@extends('layouts.app')
+@extends('layouts.master')
 @section('title','Manage Employees')
 @section("page-level-scripts-up")
     <!-- Custom styles for this page -->
@@ -41,83 +41,30 @@
                         </tr>
                       </tfoot>
                       <tbody>
+                        @forelse ($users as $user)
                         <tr>
-                          <td>1</td>
-                          <td>Tiger Nixon</td>
-                          <td>system@system.com</td>
-                          <td>Technical</td>
-                          <td>Head</td>
-                          <td><a href="#" class="btn btn-sm btn-success" role="button">Active</a></td>
+                        <td>{{$user->id}}</td>
+                          <td>{{$user->employeeName}}</td>
+                          <td>{{$user->email}}</td>
+                          <td>{{$user->department}}</td>
+                          <td>{{$user->designation}}</td>
+
+                          <td>@if($user->employeeStatus == 'active')
+                            <button href="#" class="btn btn-sm btn-success">Active</button>   
+                          @else
+                          <button href="#" class="btn btn-sm btn-danger" >Inactive</button>
+                          @endif
+                           </td>
                           <td>
-                            <a href="#" class="btn btn-sm btn-info" role="button">View</a>
+                          <a href="/employee/{{$user->id}}" class="btn btn-sm btn-info" role="button">View</a>
                             <a href="#" class="btn btn-sm btn-primary" role="button">Edit</a>
                             <a href="#" class="btn btn-sm btn-danger" role="button">Delete</a>
                           </td>
                         </tr>
                         <tr>
-                          <td>2</td>
-                          <td>Tiger Nixon</td>
-                          <td>system@system.com</td>
-                          <td>Technical</td>
-                          <td>Head</td>
-                          <td><a href="#" class="btn btn-sm btn-success" role="button">Active</a></td>
-                          <td>
-                            <a href="#" class="btn btn-sm btn-info" role="button">View</a>
-                            <a href="#" class="btn btn-sm btn-primary" role="button">Edit</a>
-                            <a href="#" class="btn btn-sm btn-danger" role="button">Delete</a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>Tiger Nixon</td>
-                          <td>system@system.com</td>
-                          <td>Technical</td>
-                          <td>Head</td>
-                          <td><a href="#" class="btn btn-sm btn-success" role="button">Active</a></td>
-                          <td>
-                            <a href="#" class="btn btn-sm btn-info" role="button">View</a>
-                            <a href="#" class="btn btn-sm btn-primary" role="button">Edit</a>
-                            <a href="#" class="btn btn-sm btn-danger" role="button">Delete</a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>4</td>
-                          <td>Tiger Nixon</td>
-                          <td>system@system.com</td>
-                          <td>Technical</td>
-                          <td>Head</td>
-                          <td><a href="#" class="btn btn-sm btn-success" role="button">Active</a></td>
-                          <td>
-                            <a href="#" class="btn btn-sm btn-info" role="button">View</a>
-                            <a href="#" class="btn btn-sm btn-primary" role="button">Edit</a>
-                            <a href="#" class="btn btn-sm btn-danger" role="button">Delete</a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>5</td>
-                          <td>Tiger Nixon</td>
-                          <td>system@system.com</td>
-                          <td>Technical</td>
-                          <td>Head</td>
-                          <td><a href="#" class="btn btn-sm btn-success" role="button">Active</a></td>
-                          <td>
-                            <a href="#" class="btn btn-sm btn-info" role="button">View</a>
-                            <a href="#" class="btn btn-sm btn-primary" role="button">Edit</a>
-                            <a href="#" class="btn btn-sm btn-danger" role="button">Delete</a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>6</td>
-                          <td>Tiger Nixon</td>
-                          <td>system@system.com</td>
-                          <td>Technical</td>
-                          <td>Head</td>
-                          <td><a href="#" class="btn btn-sm btn-success" role="button">Active</a></td>
-                          <td>
-                            <a href="#" class="btn btn-sm btn-info" role="button">View</a>
-                            <a href="#" class="btn btn-sm btn-primary" role="button">Edit</a>
-                            <a href="#" class="btn btn-sm btn-danger" role="button">Delete</a>
-                          </td>
+                          @empty
+                            <h3>No users to display</h3>
+                          @endforelse
                         </tr>
 
                       </tbody>
