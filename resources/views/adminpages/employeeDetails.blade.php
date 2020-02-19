@@ -42,7 +42,7 @@
                 <span class="float-left">Date of Birth</span>
                 <span style="margin-left:50%"> {{$user->dateOfBirth}} </span>
             </div>
-            <div class="col-lg-12 border-bottom p-2">
+            <div class="col-lg-12 border-bottom p-2 ">
                 <span class="float-left">Gender</span>
                 <span style="margin-left:50%"> {{$user->gender}} </span>
             </div>
@@ -58,13 +58,68 @@
 
     </div>
     <div class="tab-pane fade" id="company" role="tabpanel" aria-labelledby="company-tab">
-        Company Details
+        <div class="row mt-2 ">
+            <div class="col-lg-12 border-top border-bottom p-2">
+                <span class="float-left">Employee ID</span>
+                <span style="margin-left:50%"> {{$user->employeeName}} </span>
+            </div>
+            <div class="col-lg-12 border-bottom p-2">
+                <span class="float-left">Department</span>
+                <span style="margin-left:50%"> {{$user->email}} </span>
+            </div>
+            <div class="col-lg-12 border-bottom p-2">
+                <span class="float-left">Designation</span>
+                <span style="margin-left:50%"> {{$user->dateOfBirth}} </span>
+            </div>
+            <div class="col-lg-12 border-bottom p-2 ">
+                <span class="float-left">Date of Joining</span>
+                <span style="margin-left:50%"> {{$user->gender}} </span>
+            </div>
+            <div class="col-lg-12 border-bottom p-2">
+                <span class="float-left">Date of Leaving</span>
+                <span style="margin-left:50%"> {{$user->phone_number}} </span>
+            </div>
+            <div class="col-lg-12 border-bottom p-2">
+                <span class="float-left">Status</span>
+                <span style="margin-left:50%"> {{$user->nationality}} </span>
+            </div>
+        </div>
     </div>
     <div class="tab-pane fade" id="financial" role="tabpanel" aria-labelledby="financial-tab">
-        Financial Details
+        <div class="row mt-2 ">
+            <div class="col-lg-12 border-top border-bottom p-2">
+                <span class="float-left">Basic Salary</span>
+                <span style="margin-left:50%"> {{$user->employeeName}} </span>
+            </div>
+            <div class="col-lg-12 border-bottom p-2">
+                <span class="float-left">HRA</span>
+                <span style="margin-left:50%"> {{$user->email}} </span>
+            </div>
+            <div class="col-lg-12 border-bottom p-2">
+                <span class="float-left">Monthly Tax Deduction</span>
+                <span style="margin-left:50%"> {{$user->dateOfBirth}} </span>
+            </div>
+            <div class="col-lg-12 border-bottom p-2 ">
+                <span class="float-left">Total</span>
+                <span style="margin-left:50%"> {{$user->gender}} </span>
+            </div>
+        </div>
     </div>
     <div class="tab-pane fade" id="bankAccount" role="tabpanel" aria-labelledby="bankAccount-tab">
-        Bank Account Details
+        <div class="row mt-2 ">
+            <div class="col-lg-12 border-top border-bottom p-2">
+                <span class="float-left">Account Holder Name</span>
+                <span style="margin-left:50%"> {{$user->employeeName}} </span>
+            </div>
+            <div class="col-lg-12 border-bottom p-2">
+                <span class="float-left">Account Number</span>
+                <span style="margin-left:50%"> {{$user->email}} </span>
+            </div>
+            <div class="col-lg-12 border-bottom p-2">
+                <span class="float-left">Bank Name</span>
+                <span style="margin-left:50%"> {{$user->dateOfBirth}} </span>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

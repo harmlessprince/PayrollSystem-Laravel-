@@ -125,4 +125,14 @@ class AdminController extends Controller
         $user = User::find($id);
         return view('adminpages.employeeDetails')->with('user', $user);
     }
+
+    public function edit($id){
+        $user = User::find($id);
+        return view('adminpages.editEmployeeProfile')->with('user',$user);
+    }
+
+    public function update (){
+
+    }
 }
+

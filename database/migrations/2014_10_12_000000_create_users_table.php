@@ -26,7 +26,8 @@ class CreateUsersTable extends Migration
             // $table->string('employee_id');
             $table->string('department');
             $table->string('designation');
-            $table->string('resumptionDate');
+            $table->date('resumptionDate');
+            $table->date('LeavingDate')->nullable();
             $table->enum('employeeStatus', ['active', 'inactive'])->default('inactive');
             $table->integer('basicSalary');
             $table->string('deductionType');
