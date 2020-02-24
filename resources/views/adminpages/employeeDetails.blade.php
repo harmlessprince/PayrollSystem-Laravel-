@@ -22,102 +22,133 @@
     </li>
 </ul>
 <div class="tab-content" id="myTabContent">
+    {{-- Personal Details --}}
     <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab">
         <div class="row mt-2">
-            <div class="col-lg-3">
+            <div class="col-lg-12 mb-3 mt-3">
                 <img src="/storage/Employee_Images/{{$user->user_photo}}" alt="{{$user->employeeName}}"
                     class="img-thumbnail" style="height:180px; width:180px;">
             </div>
+            <br>
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Name</th>
+                            <td > {{$user->employeeName}} </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">E-mail</th>
+                            <td>{{$user->email}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Date of Birth</th>
+                            <td>{{$user->dateOfBirth}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Gender</th>
+                            <td>{{$user->gender}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Phone Number</th>
+                            <td>{{$user->phone_number}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Nationality</th>
+                            <td>{{$user->nationality}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="row mt-2 ">
-            <div class="col-lg-12 border-top border-bottom p-2">
-                <span class="float-left">Name</span>
-                <span style="margin-left:50%"> {{$user->employeeName}} </span>
-            </div>
-            <div class="col-lg-12 border-bottom p-2">
-                <span class="float-left">E-mail</span>
-                <span style="margin-left:50%"> {{$user->email}} </span>
-            </div>
-            <div class="col-lg-12 border-bottom p-2">
-                <span class="float-left">Date of Birth</span>
-                <span style="margin-left:50%"> {{$user->dateOfBirth}} </span>
-            </div>
-            <div class="col-lg-12 border-bottom p-2 ">
-                <span class="float-left">Gender</span>
-                <span style="margin-left:50%"> {{$user->gender}} </span>
-            </div>
-            <div class="col-lg-12 border-bottom p-2">
-                <span class="float-left">Phone Number</span>
-                <span style="margin-left:50%"> {{$user->phone_number}} </span>
-            </div>
-            <div class="col-lg-12 border-bottom p-2">
-                <span class="float-left">Nationality</span>
-                <span style="margin-left:50%"> {{$user->nationality}} </span>
-            </div>
-        </div>
-
+        <br>
     </div>
+    {{-- Company details  --}}
     <div class="tab-pane fade" id="company" role="tabpanel" aria-labelledby="company-tab">
         <div class="row mt-2 ">
-            <div class="col-lg-12 border-top border-bottom p-2">
-                <span class="float-left">Employee ID</span>
-                <span style="margin-left:50%"> {{$user->employeeName}} </span>
-            </div>
-            <div class="col-lg-12 border-bottom p-2">
-                <span class="float-left">Department</span>
-                <span style="margin-left:50%"> {{$user->email}} </span>
-            </div>
-            <div class="col-lg-12 border-bottom p-2">
-                <span class="float-left">Designation</span>
-                <span style="margin-left:50%"> {{$user->dateOfBirth}} </span>
-            </div>
-            <div class="col-lg-12 border-bottom p-2 ">
-                <span class="float-left">Date of Joining</span>
-                <span style="margin-left:50%"> {{$user->gender}} </span>
-            </div>
-            <div class="col-lg-12 border-bottom p-2">
-                <span class="float-left">Date of Leaving</span>
-                <span style="margin-left:50%"> {{$user->phone_number}} </span>
-            </div>
-            <div class="col-lg-12 border-bottom p-2">
-                <span class="float-left">Status</span>
-                <span style="margin-left:50%"> {{$user->nationality}} </span>
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Employee ID</th>
+                            <td > {{$user->id}} </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Department</th>
+                            <td>{{$user->department}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Designation</th>
+                            <td>{{$user->designation}}</td>
+                        </tr>   <br>
+                        <tr>
+                            <th scope="row">Date of Joining</th>
+                            <td>......</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Date of Leaving</th>
+                            <td>.....</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Status</th>
+                            <td>{{$user->employeeStatus}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+
+    {{-- Financial Details section --}}
     <div class="tab-pane fade" id="financial" role="tabpanel" aria-labelledby="financial-tab">
-        <div class="row mt-2 ">
-            <div class="col-lg-12 border-top border-bottom p-2">
-                <span class="float-left">Basic Salary</span>
-                <span style="margin-left:50%"> {{$user->employeeName}} </span>
-            </div>
-            <div class="col-lg-12 border-bottom p-2">
-                <span class="float-left">HRA</span>
-                <span style="margin-left:50%"> {{$user->email}} </span>
-            </div>
-            <div class="col-lg-12 border-bottom p-2">
-                <span class="float-left">Monthly Tax Deduction</span>
-                <span style="margin-left:50%"> {{$user->dateOfBirth}} </span>
-            </div>
-            <div class="col-lg-12 border-bottom p-2 ">
-                <span class="float-left">Total</span>
-                <span style="margin-left:50%"> {{$user->gender}} </span>
+        <div class="row mt-4 ">
+            <div class="table-responsive">
+                <table class="table border-top-0" >
+                    <tbody>
+                        <tr  >
+                            <th scope="row">Basic Salary</th>
+                            <td>{{$user->department}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">HRA</th>
+                            <td>{{$user->designation}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Monthly Tax Deduction</th>
+                            <td>......</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Date of Leaving</th>
+                            <td>.....</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Total</th>
+                            <td>{{$user->employeeStatus}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
     <div class="tab-pane fade" id="bankAccount" role="tabpanel" aria-labelledby="bankAccount-tab">
-        <div class="row mt-2 ">
-            <div class="col-lg-12 border-top border-bottom p-2">
-                <span class="float-left">Account Holder Name</span>
-                <span style="margin-left:50%"> {{$user->employeeName}} </span>
-            </div>
-            <div class="col-lg-12 border-bottom p-2">
-                <span class="float-left">Account Number</span>
-                <span style="margin-left:50%"> {{$user->email}} </span>
-            </div>
-            <div class="col-lg-12 border-bottom p-2">
-                <span class="float-left">Bank Name</span>
-                <span style="margin-left:50%"> {{$user->dateOfBirth}} </span>
+        <div class="row mt-4 ">
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Account Holder Name</th>
+                            <td>{{$user->accountName}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Account Number</th>
+                            <td>{{$user->accountNumber}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Bank Name</th>
+                            <td>{{$user->bankName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

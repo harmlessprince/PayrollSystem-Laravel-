@@ -17,24 +17,27 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'employeeName' => "Employee",
-            'email' => 'user'.'@gmail.com',
+            'employee_name' => "Admin",
+            'email' => 'admin'.'@gmail.com',
             'password' => Hash::make('123456'),
-            'dateOfBirth'=>Carbon::create('2020', '01', '01'),
+            'date_of_birth'=>Carbon::create('2020', '01', '01'),
             'gender'=>'male',
             'phone_number'=>'09086556010',
             'nationality'=>'Nigerian',
             'address'=>'20, Ogunsolu, Street',
-            'maritalStatus'=>'single',
-            'department'=>'Technical',
-            'designation'=>'HOD',
-            'resumptionDate'=>Carbon::create('2020', '01', '01'),
-            'basicSalary'=>'2000',
-            'deductionType'=>'tax',
-            'totalSalary'=>'1700',
-            'accountName'=>'Adewuyi Taofeeq O.',
-            'accountNumber'=>'0236469309',
-            'bankName'=>'Zenith',
+            'marital_status'=>'single',
+        ]);
+
+        DB::table('users')->insert([
+            'employee_name' => "User",
+            'email' => 'user'.'@gmail.com',
+            'password' => Hash::make('123456'),
+            'date_of_birth'=>Carbon::create('2020', '01', '01'),
+            'gender'=>'male',
+            'phone_number'=>'0908045010',
+            'nationality'=>'Ghanian',
+            'address'=>'20, Ogunsolu, Street',
+            'marital_status'=>'single',
         ]);
     }
 }

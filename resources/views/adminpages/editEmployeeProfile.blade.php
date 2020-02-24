@@ -167,7 +167,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">₦</span>
                             </div>
-                            {{Form::number('basicSalary','1000' ,['class'=>'form-control'])}}
+                            {{Form::number('basicSalary',$user->basicSalary ,['class'=>'form-control'])}}
                             @error('basicSalary')
                             <p class="text-danger"> {{$message}} </p>
                             @enderror
@@ -177,7 +177,7 @@
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-auto">
-                                {{Form::select('deductionType',['tax' => 'Monthly Tax Deduction','pension' => 'Monthly Pension Deduction'], null ,['class'=>'form-control','placeholder'=>'Choose type of deduction'])}}
+                                {{Form::select('deductionType',['tax' => 'Monthly Tax Deduction','pension' => 'Monthly Pension Deduction'], $user->deductionType ,['class'=>'form-control','placeholder'=>'Choose type of deduction'])}}
                                 @error('deductionType')
                                 <p class="text-danger"> {{$message}} </p>
                                 @enderror
@@ -187,7 +187,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">₦</span>
                                     </div>
-                                    {{Form::number('deductionUnit','200',['class'=>'form-control'])}}
+                                    {{Form::number('deductionUnit',$user->deductionUnit,['class'=>'form-control'])}}
                                     @error('deductionUnit')
                                     <p class="text-danger"> {{$message}} </p>
                                     @enderror
@@ -204,7 +204,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">₦</span>
                             </div>
-                            {{Form::number('totalSalary','' ,['class'=>'form-control'])}}
+                            {{Form::number('totalSalary',$user->totalSalary ,['class'=>'form-control'])}}
                             @error('totalSalary')
                             <p class="text-danger"> {{$message}} </p>
                             @enderror
@@ -220,21 +220,21 @@
                 <div class="collapse" id="bankDetails">
                     <div class="form-group">
                         {{Form::label('accountName','Account Name')}}
-                        {{Form::text('accountName','',['class'=>'form-control'])}}
+                        {{Form::text('accountName',$user->accountName,['class'=>'form-control'])}}
                         @error('accountName')
                         <p class="text-danger"> {{$message}} </p>
                         @enderror
                     </div>
                     <div class="form-group">
                         {{Form::label('accountNumber','Account Number')}}
-                        {{Form::text('accountNumber','',['class'=>'form-control'] )}}
+                        {{Form::text('accountNumber',$user->accountNumber,['class'=>'form-control'] )}}
                         @error('accountNumber')
                         <p class="text-danger"> {{$message}} </p>
                         @enderror
                     </div>
                     <div class="form-group">
                         {{Form::label('bankName','Bank Name')}}
-                        {{Form::text('bankName','',['class'=>'form-control'])}}
+                        {{Form::text('bankName',$user->bankName,['class'=>'form-control'])}}
                         @error('bankName')
                         <p class="text-danger"> {{$message}} </p>
                         @enderror
@@ -244,7 +244,7 @@
         </div>
     </div>
     <div class="card-body">
-        {{Form::submit('Register Employee',['class'=>'btn btn-primary btn-lg btn-block mt-3'])}}
+        {{Form::submit('Update Employee Details',['class'=>'btn btn-primary btn-lg btn-block mt-3'])}}
     </div>
 </div>
 {!! Form::close() !!}
