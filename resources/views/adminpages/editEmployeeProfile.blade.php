@@ -16,22 +16,22 @@
             <div class="card-body">
                 <div class="collapse" id="employeeDetails">
                     <div class="form-group">
-                        {{Form::label('employeeName','Employee Name')}}
-                        {{Form::text('employeeName',$user->employeeName,['class'=>'form-control'] )}}
-                        @error('employeeName')
+                        {{Form::label('employee_name','Employee Name')}}
+                        {{Form::text('employee_name',$user->employee_name,['class'=>'form-control'])}}
+                        @error('employee_name')
                         <p class="text-danger"> {{$message}} </p>
                         @enderror
                     </div>
                     <div class=" form-group">
-                        {{Form::label('dateOfBirth','Date of Birth*')}}
-                        {{Form::date('dateOfBirth',$user->dateOfBirth, ['class'=>'form-control'] )}}
-                        @error('dateOfBirth')
+                        {{Form::label('date_of_birth','Date of Birth*')}}
+                        {{Form::date('date_of_birth',$user->date_of_birth, ['class'=>'form-control'] )}}
+                        @error('date_of_birth')
                         <p class="text-danger"> {{$message}} </p>
                         @enderror
                     </div>
                     <div class="form-group">
                         {{Form::label('gender','Gender')}}
-                        {{Form::select('gender',['male' => 'Male', 'female' => 'Female'], $user->gender,['class'=>'form-control','placeholder' => 'Gender'])}}
+                        {{Form::select('gender',['male' => 'Male', 'female' => 'Female'], $user->gender ,['class'=>'form-control','placeholder' => 'Gender'])}}
                         @error('gender')
                         <p class="text-danger"> {{$message}} </p>
                         @enderror
@@ -58,19 +58,13 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        {{Form::label('maritalStatus','Marital Status')}}
-                        {{Form::select('maritalStatus',['single' => 'Single', 'married' => 'Married'], $user->maritalStatus ,['class'=>'form-control','placeholder' => 'Pick a status..'])}}
-                        @error('maritalStatus')
+                        {{Form::label('marital_status','Marital Status')}}
+                        {{Form::select('marital_status',['single' => 'Single', 'married' => 'Married'], $user->marital_status ,['class'=>'form-control','placeholder' => 'Pick a status..'])}}
+                        @error('marital_status')
                         <p class="text-danger"> {{$message}} </p>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        {{Form::label('user_photo','Employee Photo')}}
-                        {{Form::file('user_photo'), ['class'=>'form-control']}}
-                        @error('user_photo')
-                        <p class="text-danger"> {{$message}} </p>
-                        @enderror
-                    </div>
+
                 </div>
             </div>
             <!--Account Login Details Section -->
@@ -83,20 +77,6 @@
                         {{Form::label('email','E-mail')}}
                         {{Form::email('email',$user->email,['class'=>'form-control'])}}
                         @error('email')
-                        <p class="text-danger"> {{$message}} </p>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        {{Form::label('password','Password')}}
-                        {{Form::password('password',['class'=>'form-control'] )}}
-                        @error('password')
-                        <p class="text-danger"> {{$message}} </p>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        {{Form::label('password_confirmation','Confirm Password')}}
-                        {{Form::password('password_confirmation',['class'=>'form-control'])}}
-                        @error('password_confirmation')
                         <p class="text-danger"> {{$message}} </p>
                         @enderror
                     </div>
@@ -127,29 +107,33 @@
                         {{Form::select('role',['employee' => 'Employee', 'admin' => 'Admin'], $user->role ,['class'=>'form-control'])}}
                     </div>
                     <div class="form-group">
-                        {{Form::label('department','Department')}}
-                        {{Form::select('department',['technical' => 'Technical', 'marketting' => 'Marketting','sales' => 'Sales', 'HR' => 'Human Resource'], $user->department ,['class'=>'form-control','placeholder' => 'Select employee department..'])}}
-                        @error('department')
+
+
+                        {{Form::label('department_id','Department')}}
+                        {{Form::select('department_name',$departments, $user->department_id ,['class'=>'form-control','placeholder' => 'Select employee department..'])}}
+
+                        @error('department_id')
                         <p class="text-danger"> {{$message}} </p>
                         @enderror
                     </div>
                     <div class="form-group">
-                        {{Form::label('designation','Designation')}}
-                        {{Form::select('designation',['technical' => 'Technical', 'marketting' => 'Marketting','sales' => 'Sales', 'HR' => 'Human Resource'], $user->designation ,['class'=>'form-control','placeholder' => 'Select employee department first..'])}}
-                        @error('designation')
-                        <p class="text-danger"> {{$message}} </p>
-                        @enderror
+
+                        <select name="designation_name" class="form-control">
+                            <option>Choose a department first.....</option>
+
+                        </select>
+
                     </div>
                     <div class=" form-group">
-                        {{Form::label('resumptionDate','Resumption Date')}}
-                        {{Form::date('resumptionDate',$user->resumptionDate, ['class'=>'form-control'] )}}
-                        @error('resumptionDate')
+                        {{Form::label('resumption_date','Resumption Date')}}
+                        {{Form::date('resumption_date','', ['class'=>'form-control'] )}}
+                        @error('resumption_date')
                         <p class="text-danger"> {{$message}} </p>
                         @enderror
                     </div>
                     <div class="form-group">
-                        {{Form::label('employeeStatus','Employee Status')}}
-                        {{Form::select('employeeStatus',['active' => 'Active', 'inactive' => 'Inactive'], $user->employeeStatus ,['class'=>'form-control'])}}
+                        {{Form::label('employee_status','Employee Status')}}
+                        {{Form::select('employee_status',['active' => 'Active', 'inactive' => 'Inactive'], $user->employee_status ,['class'=>'form-control'])}}
                     </div>
                 </div>
             </div>
@@ -161,81 +145,155 @@
             <div class="card-body">
                 <div class="collapse" id="financialDetails">
 
-                    <div class="form-group">
-                        {{Form::label('basicSalary','Basic Salary')}}
+                    <div class="form-group basic_salary">
+                        {{Form::label('basic_salary','Basic Salary')}}
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">₦</span>
                             </div>
-                            {{Form::number('basicSalary',$user->basicSalary ,['class'=>'form-control'])}}
-                            @error('basicSalary')
+                            {{Form::number('basic_salary',$user->account->basic_salary ,['class'=>'form-control', 'id'=>'basic_salary'])}}
+                            @error('basic_salary')
                             <p class="text-danger"> {{$message}} </p>
                             @enderror
                         </div>
                     </div>
                     <hr>
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-auto">
-                                {{Form::select('deductionType',['tax' => 'Monthly Tax Deduction','pension' => 'Monthly Pension Deduction'], $user->deductionType ,['class'=>'form-control','placeholder'=>'Choose type of deduction'])}}
-                                @error('deductionType')
-                                <p class="text-danger"> {{$message}} </p>
-                                @enderror
-                            </div>
-                            <div class="col">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">₦</span>
+                    <ul class="list-group " id="sum_deduction">
+                        <li class="list-group-item border-0" id="user_deduction_list">
+                            <div class="form-group" id="deduction-form">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label for="alllowance">Deduction Name</label>
+                                        <select class="form-control" name="deduction_name[]">
+                                            
+                                            @foreach ($user->deductions as $userdeduction)
+                                                
+                                            @endforeach
+                                            <option value="">Select an deduction type</option>
+
+                                                @forelse ($deductions as $deduction)
+
+                                                <option value="{{$deduction->deduction_name}}" >
+                                                    {{$deduction->deduction_name}}
+
+                                                </option>
+                                                @empty
+                                                <option value="">Please Kindly input some deduction options</option>
+                                                @endforelse
+                                        
+
+                                            
+                                        </select>
+
                                     </div>
-                                    {{Form::number('deductionUnit',$user->deductionUnit,['class'=>'form-control'])}}
-                                    @error('deductionUnit')
+                                    <div class="col">
+                                        <label for="deduction_unit">Deduction Value(Naira)</label>
+                                        <div class="input-group">
+                                            <input type="number" name="deduction_value[]" id="deduction-0"
+                                                class="form-control deduction" value="">
+                                            <a type="button"
+                                                class="btn btn-sm btn-danger text-white text-center ml-1 btn_remove_deduction"><i
+                                                    class="fas fa-trash-alt"></i></a>
+                                        </div>
+                                    </div>
+                                    @error('deduction_value.*')
                                     <p class="text-danger"> {{$message}} </p>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-auto">
-                                <button type="button" class="btn btn-secondary"><i class="fas fa-plus"></i></button>
+                           
+                           
+                        </li>
+                        <input type="hidden" class="form-control total_deduction mt-1 mb-1" name="total_deduction"
+                            id="total_deduction" placeholder="Total Deduction" readonly>
+                        <button type="button" class="btn btn-warning btn-sm btn-block mt-2"
+                            id="insert_new_deduction">Insert new Deduction</button>
+                    </ul>
+                    <ul class="list-group">
+                        <li class="list-group-item border-0" id="user_allowance_list">
+                            <div class="form-group" id="allowance-form">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label for="alllowance">Allowance Name</label>
+                                        <select class="form-control" name="allowance_name[]">
+                                            <option value="">Select an allowance type</option>
+                                            @forelse ($allowances as $allowance)
+
+                                            <option value="{{$allowance->allowance_name}}">
+                                                {{$allowance->allowance_name}}</option>
+                                            @empty
+                                            <option value="">Please Kindly some options</option>
+                                            @endforelse
+                                        </select>
+
+                                    </div>
+                                    <div class="col">
+                                        <label for="allowance_unit">Allowance Value(Naira)</label>
+                                        <div class="input-group">
+                                            <input type="number" name="allowance_value[]" id="allowance-0"
+                                                class="form-control allowance">
+                                            <a type="button"
+                                                class="btn btn-sm btn-danger text-white text-center ml-1 btn_remove_allowance"><i
+                                                    class="fas fa-trash-alt"></i></a>
+                                            @error('allowance_value[]')
+                                            <p class="text-danger"> {{$message}} </p>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </li>
+                        @error('allowance_name.*')
+                        <small class="text-danger">{{$message}}</small>
+                        @enderror
+                        <input type="hidden" class="form-control total_allowance mt-1 mb-1" name="total_allowance"
+                            id="total_allowance" placeholder="Total Allowance" readonly>
+                        <button type="button" class="btn btn-warning btn-sm btn-block " id="insert_new_allowance">Insert
+                            new Allowance</button>
+                    </ul>
                     <div class="form-group">
-                        {{Form::label('totalSalary','Total Salary')}}
+                        {{Form::label('total_salary','Total Salary')}}
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">₦</span>
                             </div>
-                            {{Form::number('totalSalary',$user->totalSalary ,['class'=>'form-control'])}}
-                            @error('totalSalary')
+                            {{Form::text('total_salary','',['class'=>'form-control', 'id'=>'total_salary', 'readonly'])}}
+                            <br>
+                            @error('total_salary')
                             <p class="text-danger"> {{$message}} </p>
                             @enderror
+                            {{Form::button('Calculate Salary',['class'=>'btn btn-primary btn-sm btn-block mt-3','id'=>'calcTotalSalary'])}}
+                            {{-- {{Form::button('sum_values','' ,['class'=>'form-control', 'id'=>'calcTotalSalary'], )}}
+                            --}}
+
                         </div>
                     </div>
                 </div>
             </div>
             <!-- Bank Account Details--->
-            <div class="card-header py-3" data-toggle="collapse" data-target="#bankDetails">
+            <div class="card-header py-3" data-toggle="collapse" data-target="#bank_details">
                 <h6 class="m-0 font-weight-bold">Bank Account Details</h6>
             </div>
             <div class="card-body">
-                <div class="collapse" id="bankDetails">
+                <div class="collapse" id="bank_details">
                     <div class="form-group">
-                        {{Form::label('accountName','Account Name')}}
-                        {{Form::text('accountName',$user->accountName,['class'=>'form-control'])}}
-                        @error('accountName')
+                        {{Form::label('account_name','Account Name')}}
+                        {{Form::text('account_name','',['class'=>'form-control'])}}
+                        @error('account_name')
                         <p class="text-danger"> {{$message}} </p>
                         @enderror
                     </div>
                     <div class="form-group">
-                        {{Form::label('accountNumber','Account Number')}}
-                        {{Form::text('accountNumber',$user->accountNumber,['class'=>'form-control'] )}}
-                        @error('accountNumber')
+                        {{Form::label('account_number','Account Number')}}
+                        {{Form::text('account_number','',['class'=>'form-control'] )}}
+                        @error('account_number')
                         <p class="text-danger"> {{$message}} </p>
                         @enderror
                     </div>
                     <div class="form-group">
-                        {{Form::label('bankName','Bank Name')}}
-                        {{Form::text('bankName',$user->bankName,['class'=>'form-control'])}}
-                        @error('bankName')
+                        {{Form::label('bank_name','Bank Name')}}
+                        {{Form::text('bank_name','',['class'=>'form-control'])}}
+                        @error('bank_name')
                         <p class="text-danger"> {{$message}} </p>
                         @enderror
                     </div>
@@ -244,8 +302,12 @@
         </div>
     </div>
     <div class="card-body">
-        {{Form::submit('Update Employee Details',['class'=>'btn btn-primary btn-lg btn-block mt-3'])}}
+        {{Form::submit('Register Employee',['class'=>'btn btn-primary btn-lg btn-block mt-3'])}}
     </div>
 </div>
 {!! Form::close() !!}
+@endsection
+@section('page-level-scripts-down')
+<!-- Page level plugins -->
+<script src="/vendor/userapps.js"></script>
 @endsection

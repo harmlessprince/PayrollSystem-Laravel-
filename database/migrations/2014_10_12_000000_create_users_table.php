@@ -25,8 +25,10 @@ class CreateUsersTable extends Migration
             $table->string('address');
             $table->string('marital_status');
             $table->enum('employee_status', ['active', 'inactive'])->default('active');
-            $table->enum('role', ['employee', 'admin'])->default('employee');
-            $table->string('user_photo')->default('default.jpeg');
+            $table->enum('role', ['employee', 'admin'])->default('admin');
+            $table->unsignedBigInteger('department_id');
+            $table->unsignedBigInteger('designation_id');
+            $table->string('user_photo')->default('default.jpeg')->nullable();
             $table->date('resumption_date')->default(now());
             $table->date('leaving_date')->nullable();
             $table->rememberToken();

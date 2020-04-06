@@ -1,0 +1,66 @@
+$(document).ready(function() {
+    //Generating dydnamic input 
+    var count = 0;
+
+    // number_of_desigantion(count);
+    $("#add_new_input").click(function() {
+        count++;
+
+        $("#desigantion_list").append(
+
+           '<div class="form-group row" id="desigantion_input-'+count+'">'+
+           '<input type="text" name="designation_name[]" id="designation_name" class="form-control col mr-1" placeholder="Enter Designation Name">'+ 
+          ' <input type="button" class="col-auto btn btn-danger btn_remove" id="'+count+'" value="delete">' +
+          '</div>'
+            
+        );
+    });
+
+
+
+    //Deleting the dynamically generated input
+    $(document).on("click", ".btn_remove", function() {
+        var button_id = $(this).attr("id");
+        $("#desigantion_input-" + button_id + "").remove();
+    });
+
+    $(".reset-form").click(function(){
+        $("#myform").trigger("reset");
+        
+    });
+
+
+    // Get Designations
+    $('select[name="department_name"]').on('change', function(){
+        var departmentId = $(this).val();
+
+        // console.log(departmentId);
+        if(departmentId) {
+            $.ajax({
+                url: '/desigantions/get/'+departmentId,
+                type:"GET",
+                dataType:"json",
+                beforeSend: function(){
+                    $('#loaderdesignation').css("visibility", "visible");
+                },
+
+                success:function(data) {
+
+                    $('select[name="designation_name"]').empty();
+
+                    $.each(data, function(key, value){
+
+                        $('select[name="designation_name"]').append('<option value="'+ key +'">' + value + '</option>');
+
+                    });
+                },
+                complete: function(){
+                    $('#loaderdesignation').css("visibility", "hidden");
+                }
+            });
+        } else {
+            $('select[name="designation_name"]').empty();
+        }
+
+    });
+});

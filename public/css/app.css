@@ -44,6 +44,11 @@
   box-sizing: border-box;
 }
 
+
+#loaderdesignation{
+visibility:hidden;
+}
+
 html {
   font-family: sans-serif;
   line-height: 1.15;

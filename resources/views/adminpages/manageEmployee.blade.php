@@ -43,12 +43,12 @@
           @forelse ($users as $user)
           <tr>
             <td>{{$user->id}}</td>
-            <td>{{$user->employeeName}}</td>
+            <td>{{$user->employee_name}}</td>
             <td>{{$user->email}}</td>
-            <td>{{$user->department}}</td>
-            <td>{{$user->designation}}</td>
+            <td>{{$user->department->department_name ?? ''}}</td>
+            <td>{{$user->designation->designation_name ?? ''}}</td>
 
-            <td>@if($user->employeeStatus == 'active')
+            <td>@if($user->employee_status == 'active')
               <button href="#" class="btn btn-sm btn-success">Active</button>
               @else
               <button href="#" class="btn btn-sm btn-danger">Inactive</button>

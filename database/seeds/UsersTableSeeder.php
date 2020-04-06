@@ -26,6 +26,8 @@ class UsersTableSeeder extends Seeder
             'nationality'=>'Nigerian',
             'address'=>'20, Ogunsolu, Street',
             'marital_status'=>'single',
+            'department_id'=>"2",
+            'designation_id'=>"1"
         ]);
 
         DB::table('users')->insert([
@@ -38,6 +40,8 @@ class UsersTableSeeder extends Seeder
             'nationality'=>'Ghanian',
             'address'=>'20, Ogunsolu, Street',
             'marital_status'=>'single',
+            'department_id'=>"1",
+            'designation_id'=>"2"
         ]);
     }
 }

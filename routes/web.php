@@ -28,6 +28,17 @@ Route::get('/employeeDetails', function(){
     return view('adminpages.employeeDetails');
 });
 
+Route::get('desigantions/get/{id}', 'AdminController@getDesignations');
+Route::get('/create-department', 'AdminController@createdepartment');
+
+Route::post('/create-department/store', 'AdminController@saveDepartment');
+
 
 Route::get('/employee', 'EmployeeController@index')->name('employee');
 // Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
+Route::get('allowances/get/{id}', 'AdminController@loadAllowances');
+
+Route::get('/payroll/configuration', 'AdminController@appConfiguration');
+
+Route::post('/store/allowance&deductions', 'AdminController@SaveAllowanceAndDeductions');

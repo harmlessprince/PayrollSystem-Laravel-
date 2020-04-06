@@ -14,12 +14,19 @@ class DepartmentsTableSeeder extends Seeder
     {
         
         DB::table('departments')->insert([
-            'user_id'=>'1',
-            'department_name'=>'Finanace'
+            'department_name'=>'Information Clerks'
         ]);
         DB::table('departments')->insert([
-            'user_id'=>'2',
-            'department_name'=>'Engineering'
+            'department_name'=>'Material Recording Clerks'
+        ]);
+        DB::table('departments')->insert([
+            'department_name'=>'Bill and Account Collectors'
+        ]);
+        DB::table('departments')->insert([
+            'department_name'=>'Financial Clerks'
+        ]);
+        DB::table('departments')->insert([
+            'department_name'=>'General Office Clerks'
         ]);
     }
 }

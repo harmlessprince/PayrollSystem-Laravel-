@@ -26,7 +26,7 @@
     <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab">
         <div class="row mt-2">
             <div class="col-lg-12 mb-3 mt-3">
-                <img src="/storage/Employee_Images/{{$user->user_photo}}" alt="{{$user->employeeName}}"
+                <img src="/storage/Employee_Images/{{$user->user_photo}}" alt="{{$user->employee_name}}"
                     class="img-thumbnail" style="height:180px; width:180px;">
             </div>
             <br>
@@ -35,7 +35,7 @@
                     <tbody>
                         <tr>
                             <th scope="row">Name</th>
-                            <td > {{$user->employeeName}} </td>
+                            <td> {{$user->employee_name}} </td>
                         </tr>
                         <tr>
                             <th scope="row">E-mail</th>
@@ -43,7 +43,7 @@
                         </tr>
                         <tr>
                             <th scope="row">Date of Birth</th>
-                            <td>{{$user->dateOfBirth}}</td>
+                            <td>{{$user->date_of_birth}}</td>
                         </tr>
                         <tr>
                             <th scope="row">Gender</th>
@@ -71,27 +71,27 @@
                     <tbody>
                         <tr>
                             <th scope="row">Employee ID</th>
-                            <td > {{$user->id}} </td>
+                            <td> {{$user->id}} </td>
                         </tr>
                         <tr>
                             <th scope="row">Department</th>
-                            <td>{{$user->department}}</td>
+                            <td>{{$user->department->department_name ?? ''}}</td>
                         </tr>
                         <tr>
                             <th scope="row">Designation</th>
-                            <td>{{$user->designation}}</td>
-                        </tr>   <br>
+                            <td>{{$user->designation->designation_name ?? ''}}</td>
+                        </tr> <br>
                         <tr>
-                            <th scope="row">Date of Joining</th>
-                            <td>......</td>
+                            <th scope="row">Resumption Date</th>
+                            <td>{{$user->resumption_date}}</td>
                         </tr>
                         <tr>
                             <th scope="row">Date of Leaving</th>
-                            <td>.....</td>
+                            <td>{{$user->leaving_date ?? ''}}</td>
                         </tr>
                         <tr>
                             <th scope="row">Status</th>
-                            <td>{{$user->employeeStatus}}</td>
+                            <td>{{$user->employee_status}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -99,31 +99,38 @@
         </div>
     </div>
 
+
+
+
     {{-- Financial Details section --}}
     <div class="tab-pane fade" id="financial" role="tabpanel" aria-labelledby="financial-tab">
         <div class="row mt-4 ">
             <div class="table-responsive">
-                <table class="table border-top-0" >
+                <table class="table border-top-0">
                     <tbody>
-                        <tr  >
+                        <tr>
                             <th scope="row">Basic Salary</th>
-                            <td>{{$user->department}}</td>
+                            <td># {{$user->account->basic_salary}} </td>
                         </tr>
                         <tr>
-                            <th scope="row">HRA</th>
-                            <td>{{$user->designation}}</td>
+                            <th scope="row">Total Salary</th>
+                            <td># {{$user->account->total_salary}} </td>
                         </tr>
                         <tr>
-                            <th scope="row">Monthly Tax Deduction</th>
-                            <td>......</td>
+                            <th scope="row">Deductions</th>
+                            <td>
+                                @foreach ($user->deductions as $deduction)
+                                {{$deduction->pivot->deduction_name}} => {{$deduction->pivot->deduction_value}} <br>
+                                @endforeach
+                            </td>
                         </tr>
                         <tr>
-                            <th scope="row">Date of Leaving</th>
-                            <td>.....</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Total</th>
-                            <td>{{$user->employeeStatus}}</td>
+                            <th scope="row">Allowances</th>
+                            <td>
+                                @foreach ($user->allowances as $allowance)
+                                {{$allowance->pivot->allowance_name}} => {{$allowance->pivot->allowance_value}} <br>
+                                @endforeach
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -137,15 +144,15 @@
                     <tbody>
                         <tr>
                             <th scope="row">Account Holder Name</th>
-                            <td>{{$user->accountName}}</td>
+                            <td>{{$user->account->account_name}}</td>
                         </tr>
                         <tr>
                             <th scope="row">Account Number</th>
-                            <td>{{$user->accountNumber}}</td>
+                            <td>{{$user->account->account_number}}</td>
                         </tr>
                         <tr>
                             <th scope="row">Bank Name</th>
-                            <td>{{$user->bankName}}</td>
+                            <td>{{$user->account->bank_name}}</td>
                         </tr>
                     </tbody>
                 </table>

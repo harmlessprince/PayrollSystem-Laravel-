@@ -37,19 +37,36 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // public function account()
-    // {
-    //     return $this->hasOne('App\account');
-    // }
 
-    // public function department()
-    // {
-    //     return $this->hasOne('App\department');
-    // }
+    //Defining 
+    public function account()
+    {
+        return $this->hasOne('App\Account');
+    }
 
-    // public function designation()
-    // {
-    //     return $this->hasOne('App\designation');
-    // }
+    public function department()
+    {
+        return $this->belongsTo('App\Department');
+    }
+
+    public function designation()
+    {
+        return $this->belongsTo('App\Designation');
+    }
+
+
+
+    // Defining Many to Many Relationship 
+
+    public function allowances()
+    {
+        return $this->belongsToMany(Allowance::class)->withPivot('allowance_name','allowance_value')->withTimestamps();
+    }
+
+    
+    public function deductions()
+    {
+        return $this->belongsToMany(Deduction::class)->withPivot('deduction_name','deduction_value')->withTimestamps();
+    }
 
 }
