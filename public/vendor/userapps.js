@@ -182,6 +182,3 @@ $(document).ready(function() {
 
 });
 
-
-"@forelse ($user->deductions as $userdeduction)if ($userdeduction->pivot->deduction_id>0)<option value="+" {{$userdeduction->pivot->deduction_id}}">
-  +" {{$userdeduction->pivot->deduction_name}}</option>"

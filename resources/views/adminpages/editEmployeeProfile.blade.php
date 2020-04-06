@@ -159,48 +159,48 @@
                     </div>
                     <hr>
                     <ul class="list-group " id="sum_deduction">
+
                         <li class="list-group-item border-0" id="user_deduction_list">
-                            <div class="form-group" id="deduction-form">
-                                <div class="form-row">
-                                    <div class="col">
-                                        <label for="alllowance">Deduction Name</label>
-                                        <select class="form-control" name="deduction_name[]">
-                                            
-                                            @foreach ($user->deductions as $userdeduction)
+                            @foreach ($user->deductions as $userdeduction)
+                                <div class="form-group" id="deduction-form">
+                            
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="alllowance">Deduction Name</label>
+
+                                            <select class="form-control" name="deduction_name[]">
+
+                                                    <option value="">Select a deduction type</option>
+
+                                                    @foreach ($deductions as $deduction)
+                                                    @if ($deduction->deduction_name == $userdeduction->pivot->deduction_name)
+                                                    <option value="{{$deduction->deduction_name}}" selected> {{$deduction->deduction_name}}</option>
+                                                    @else
+                                                    <option value="{{$deduction->deduction_name}}" > {{$deduction->deduction_name}} </option>
+                                                    @endif
                                                 
-                                            @endforeach
-                                            <option value="">Select an deduction type</option>
+                                                    @endforeach
+                                                
 
-                                                @forelse ($deductions as $deduction)
+                                            </select>
 
-                                                <option value="{{$deduction->deduction_name}}" >
-                                                    {{$deduction->deduction_name}}
-
-                                                </option>
-                                                @empty
-                                                <option value="">Please Kindly input some deduction options</option>
-                                                @endforelse
-                                        
-
-                                            
-                                        </select>
-
-                                    </div>
-                                    <div class="col">
-                                        <label for="deduction_unit">Deduction Value(Naira)</label>
-                                        <div class="input-group">
-                                            <input type="number" name="deduction_value[]" id="deduction-0"
-                                                class="form-control deduction" value="">
-                                            <a type="button"
-                                                class="btn btn-sm btn-danger text-white text-center ml-1 btn_remove_deduction"><i
-                                                    class="fas fa-trash-alt"></i></a>
                                         </div>
+                                        <div class="col">
+                                            <label for="deduction_unit">Deduction Value(Naira)</label>
+                                            <div class="input-group">
+                                                <input type="number" name="deduction_value[]" id="deduction-0"
+                                            class="form-control deduction" value="{{$userdeduction->pivot->deduction_value}}">
+                                                <a type="button"
+                                                    class="btn btn-sm btn-danger text-white text-center ml-1 btn_remove_deduction"><i
+                                                        class="fas fa-trash-alt"></i></a>
+                                            </div>
+                                        </div>
+                                        @error('deduction_value.*')
+                                        <p class="text-danger"> {{$message}} </p>
+                                        @enderror
                                     </div>
-                                    @error('deduction_value.*')
-                                    <p class="text-danger"> {{$message}} </p>
-                                    @enderror
                                 </div>
-                            </div>
+                            @endforeach
                            
                            
                         </li>
@@ -211,37 +211,42 @@
                     </ul>
                     <ul class="list-group">
                         <li class="list-group-item border-0" id="user_allowance_list">
-                            <div class="form-group" id="allowance-form">
-                                <div class="form-row">
-                                    <div class="col">
-                                        <label for="alllowance">Allowance Name</label>
-                                        <select class="form-control" name="allowance_name[]">
-                                            <option value="">Select an allowance type</option>
-                                            @forelse ($allowances as $allowance)
+                            @foreach ($user->allowances as $userallowance)
+                                <div class="form-group" id="allowance-form">
+                                    <div class="form-row">
+                                        <div class="col">
+                                            <label for="alllowance">Allowance Name</label>
+                                            <select class="form-control" name="allowance_name[]">
+                                                <option value="">Select an allowance type</option>
 
-                                            <option value="{{$allowance->allowance_name}}">
-                                                {{$allowance->allowance_name}}</option>
-                                            @empty
-                                            <option value="">Please Kindly some options</option>
-                                            @endforelse
-                                        </select>
+                                                @foreach ($allowances as $allowance)
+                                                @if ($allowance->allowance_name == $userallowance->pivot->allowance_name)
+                                                <option value="{{$allowance->allowance_name}}" selected> {{$allowance->allowance_name}}</option>
+                                                @else
+                                                <option value="{{$allowance->allowance_name}}" > {{$allowance->allowance_name}} </option>
+                                                @endif
+                                            
+                                                @endforeach
+                                            
+                                            </select>
 
-                                    </div>
-                                    <div class="col">
-                                        <label for="allowance_unit">Allowance Value(Naira)</label>
-                                        <div class="input-group">
-                                            <input type="number" name="allowance_value[]" id="allowance-0"
-                                                class="form-control allowance">
-                                            <a type="button"
-                                                class="btn btn-sm btn-danger text-white text-center ml-1 btn_remove_allowance"><i
-                                                    class="fas fa-trash-alt"></i></a>
-                                            @error('allowance_value[]')
-                                            <p class="text-danger"> {{$message}} </p>
-                                            @enderror
+                                        </div>
+                                        <div class="col">
+                                            <label for="allowance_unit">Allowance Value(Naira)</label>
+                                            <div class="input-group">
+                                                <input type="number" name="allowance_value[]" id="allowance-0"
+                                                    class="form-control allowance" value="{{$userallowance->pivot->allowance_value}}">
+                                                <a type="button"
+                                                    class="btn btn-sm btn-danger text-white text-center ml-1 btn_remove_allowance"><i
+                                                        class="fas fa-trash-alt"></i></a>
+                                                @error('allowance_value[]')
+                                                <p class="text-danger"> {{$message}} </p>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </li>
                         @error('allowance_name.*')
                         <small class="text-danger">{{$message}}</small>

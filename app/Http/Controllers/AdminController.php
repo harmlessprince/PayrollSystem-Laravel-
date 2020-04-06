@@ -225,8 +225,9 @@ class AdminController extends Controller
         // $deductions = Deduction::pluck('deduction_name', 'id');
         $deductions = Deduction::all();
         $allowances = Allowance::all();
-        $user = User::with('account','department','designation','allowances.users', 'deductions.users')->find($id);
-
+        
+        $user = User::with('account','department','designation' ,'allowances.users', 'deductions.users')->find($id);
+        // ,'allowances.users', 'deductions.users'
       
        
         return view('adminpages.editEmployeeProfile')->with(['user'=>$user,'departments' => $departments, 'deductions' => $deductions,  'allowances' => $allowances]);
