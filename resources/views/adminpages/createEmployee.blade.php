@@ -225,7 +225,7 @@
                                 <div class="form-row">
                                     <div class="col">
                                         <label for="alllowance">Allowance Name</label>
-                                        <select class="form-control" name="allowance_name[]">
+                                        <select class="form-control" name="allowance_name[]" id="userAllowance">
                                             <option value="">Select an allowance type</option>
                                             @forelse ($allowances as $allowance)
 

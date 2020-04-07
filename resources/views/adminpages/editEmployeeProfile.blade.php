@@ -216,14 +216,14 @@
                                     <div class="form-row">
                                         <div class="col">
                                             <label for="alllowance">Allowance Name</label>
-                                            <select class="form-control" name="allowance_name[]">
+                                            <select class="form-control" name="allowance_name[]" id="userAllowances">
                                                 <option value="">Select an allowance type</option>
 
                                                 @foreach ($allowances as $allowance)
                                                 @if ($allowance->allowance_name == $userallowance->pivot->allowance_name)
-                                                <option value="{{$allowance->allowance_name}}" selected> {{$allowance->allowance_name}}</option>
+                                                    <option value="{{$allowance->allowance_name}}" selected> {{$allowance->allowance_name}}</option>
                                                 @else
-                                                <option value="{{$allowance->allowance_name}}" > {{$allowance->allowance_name}} </option>
+                                                    <option value="{{$allowance->allowance_name}}" > {{$allowance->allowance_name}} </option>
                                                 @endif
                                             
                                                 @endforeach
@@ -251,7 +251,7 @@
                         @error('allowance_name.*')
                         <small class="text-danger">{{$message}}</small>
                         @enderror
-                        <input type="hidden" class="form-control total_allowance mt-1 mb-1" name="total_allowance"
+                        <input type="text" class="form-control total_allowance mt-1 mb-1" name="total_allowance"
                             id="total_allowance" placeholder="Total Allowance" readonly>
                         <button type="button" class="btn btn-warning btn-sm btn-block " id="insert_new_allowance">Insert
                             new Allowance</button>
@@ -283,21 +283,21 @@
                 <div class="collapse" id="bank_details">
                     <div class="form-group">
                         {{Form::label('account_name','Account Name')}}
-                        {{Form::text('account_name','',['class'=>'form-control'])}}
+                        {{Form::text('account_name', $user->account->account_name,['class'=>'form-control'])}}
                         @error('account_name')
                         <p class="text-danger"> {{$message}} </p>
                         @enderror
                     </div>
                     <div class="form-group">
                         {{Form::label('account_number','Account Number')}}
-                        {{Form::text('account_number','',['class'=>'form-control'] )}}
+                        {{Form::text('account_number', $user->account->account_number,['class'=>'form-control'] )}}
                         @error('account_number')
                         <p class="text-danger"> {{$message}} </p>
                         @enderror
                     </div>
                     <div class="form-group">
                         {{Form::label('bank_name','Bank Name')}}
-                        {{Form::text('bank_name','',['class'=>'form-control'])}}
+                        {{Form::text('bank_name', $user->account->bank_name,['class'=>'form-control'])}}
                         @error('bank_name')
                         <p class="text-danger"> {{$message}} </p>
                         @enderror

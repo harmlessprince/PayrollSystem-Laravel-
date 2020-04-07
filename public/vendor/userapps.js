@@ -61,9 +61,20 @@ $(document).ready(function() {
         }
     });
 
+  
+        $('#userAllowance').change(function() {
+            dropdownval = $(this).val();
+            console.log(dropdownval);
+            $('#userAllowance').not(this).find('option[value="' + dropdownval + '"]').remove();
+        });
+    
+    
+
+
     var $firstAllowance = $("#allowance-form");
     var counter_allowance = 1;
     $("#insert_new_allowance").on("click", function() {
+
         var $clonedAllowance = $firstAllowance.clone(true);
 
         $clonedAllowance
@@ -72,8 +83,12 @@ $(document).ready(function() {
 
         $clonedAllowance.find("user_allowance_list");
 
+
+
         $("#user_allowance_list").append($clonedAllowance);
 
+
+   
         removeClonedAllowance($clonedAllowance);
         sumAllowances();
         counter_allowance++;
@@ -155,6 +170,12 @@ $(document).ready(function() {
         sumDeductions();
     });
 
+
+    $("#financialDetails").ready(sumDeductions());
+
+    $("#financialDetails").ready(sumAllowances());
+
+
     $("#financialDetails").on("keyup", ".allowance", function() {
         sumAllowances();
     });
@@ -176,7 +197,6 @@ $(document).ready(function() {
 
         // alert(valueOfTotalSalary);
     });
-
 
 
 
