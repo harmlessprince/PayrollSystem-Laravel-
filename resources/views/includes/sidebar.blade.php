@@ -54,7 +54,7 @@
     <div id="department" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <a class="collapse-item" href="/create-department">Create Department</a>
-        <a class="collapse-item" href="#">Manage Department</a>
+        <a class="collapse-item" href="/manage-department">Manage Department</a>
       </div>
     </div>
   </li>

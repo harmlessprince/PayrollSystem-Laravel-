@@ -30,6 +30,7 @@ Route::get('/employeeDetails', function(){
 
 Route::get('desigantions/get/{id}', 'AdminController@getDesignations');
 Route::get('/create-department', 'AdminController@createdepartment');
+Route::get('/manage-department', 'AdminController@manageDepartment');
 
 Route::post('/create-department/store', 'AdminController@saveDepartment');
 

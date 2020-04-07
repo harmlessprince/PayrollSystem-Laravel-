@@ -237,6 +237,7 @@ class AdminController extends Controller
 
     public function update()
     {
+
     }
 
 
@@ -281,6 +282,19 @@ class AdminController extends Controller
         }
 
         return redirect('/admin')->with('success', 'Department Data uploaded sucessfully');
+    }
+
+
+    public function manageDepartment(){
+
+        $departments = Department::with('designations')->get();
+
+        $departments->loadCount('users');
+
+
+        // $numberOfEmployessInDepts = Department::withCount('users')->get();
+
+        return view("adminpages.manageDepartment", ['departments'=>$departments]);
     }
 
 
