@@ -285,6 +285,7 @@ class AdminController extends Controller
     }
 
 
+    //Display's All Departments and Related Designations
     public function manageDepartment(){
 
         $departments = Department::with('designations')->get();
@@ -297,6 +298,17 @@ class AdminController extends Controller
         return view("adminpages.manageDepartment", ['departments'=>$departments]);
     }
 
+    //Edit Department and Designation Method
+    public function editDepartmentDesigantion($id)
+    {
+        $department = Department::with('designations')->find($id);
+
+        return view('adminpages.editDepartmentDesigantion')->with(['department'=>$department]);
+    }
+
+    public function DepartmentDesignationUpdate( $id){
+
+    }
 
     //Compnay Settings Methods Starts Here
 

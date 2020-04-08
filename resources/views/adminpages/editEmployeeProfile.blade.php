@@ -307,7 +307,7 @@
         </div>
     </div>
     <div class="card-body">
-        {{Form::submit('Register Employee',['class'=>'btn btn-primary btn-lg btn-block mt-3'])}}
+        {{Form::submit('Update Employee',['class'=>'btn btn-primary btn-lg btn-block mt-3'])}}
     </div>
 </div>
 {!! Form::close() !!}

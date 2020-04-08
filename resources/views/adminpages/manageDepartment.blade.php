@@ -20,7 +20,7 @@
         <thead>
           <tr>
             <th>Serial</th>
-            <th>Department</th>
+            <th>Departments</th>
             <th>Designations</th>
             <th>Total Employees</th>
             <th>Action</th>
@@ -29,8 +29,8 @@
         <tfoot>
           <tr>
             <th>Serial</th>
-            <th>Department</th>
-            <th>Designation</th>
+            <th>Departments</th>
+            <th>Designations</th>
             <th>Total Employees</th>
             <th>Action</th>
           </tr>
@@ -45,7 +45,7 @@
                         
                         <td>
                             @foreach ($department->designations as $designations)
-                                {{$designations->designation_name}} <br>
+                               <p> {{$designations->designation_name}} </p> 
                             @endforeach
                         </td>
                         
@@ -53,7 +53,7 @@
                            {{$department->users_count}}
                         </td>
                         <td>
-                        <a href="" class="btn btn-sm btn-primary" role="button">Edit</a>
+                        <a href="/department/{{$department->id}}/editDepartmentDesigantion" class="btn btn-sm btn-primary" role="button">Edit</a>
                         <a href="#" class="btn btn-sm btn-danger" role="button">Delete</a>
                         </td>
                     </tr>

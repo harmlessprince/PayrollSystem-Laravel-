@@ -32,6 +32,10 @@ Route::get('desigantions/get/{id}', 'AdminController@getDesignations');
 Route::get('/create-department', 'AdminController@createdepartment');
 Route::get('/manage-department', 'AdminController@manageDepartment');
 
+Route::get('/department/{id}/editDepartmentDesigantion', 'AdminController@editDepartmentDesigantion');
+
+Route::put('/department/{id}', 'AdminController@DepartmentDesignationUpdate');
+
 Route::post('/create-department/store', 'AdminController@saveDepartment');
 
 
