@@ -68,8 +68,8 @@
     </a>
     <div id="attendance" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" href="#">Daily Attendance</a>
-        <a class="collapse-item" href="#">Attendance Report</a>
+        <a class="collapse-item" href="/daily/attendance">Daily Attendance</a>
+        <a class="collapse-item" href="/attendance/report">Attendance Report</a>
       </div>
     </div>
   </li>

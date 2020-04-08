@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\Console\Input\Input;
+use Symfony\Component\CssSelector\Node\FunctionNode;
 
 class AdminController extends Controller
 {
@@ -310,12 +311,25 @@ class AdminController extends Controller
 
     }
 
+
+    //Methods Handling Attendance Of Employees
+
+    public function dailyAttendance() {
+        return view("adminpages.dailyAttendance");
+    }
+
+    public function attendanceReport(){
+        return view("adminpages.attendanceReport");
+    }
+
     //Compnay Settings Methods Starts Here
 
     public function appConfiguration()
     {
         return  view('adminpages.appsettings.configuration');
     }
+
+
 
     public function SaveAllowanceAndDeductions(Request $request)
     {
