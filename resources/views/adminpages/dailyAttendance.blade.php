@@ -10,15 +10,14 @@
 
 @section('main-content')
 
-<form id="Report-form">
+<form id="Report-form" action="" method="GET">
   <div class="form-row align-items-center">
     <div class="form-group col-md-4">
       <label class="" >Employees by Department</label>
-      <select class="form-control  mb-2" id="typeOfEmployee">
-        <option selected>Choose...</option>
-        <option value="all">All Employees</option>
+      <select class="form-control  mb-2" id="attendanceType" name="attendanceType">
+        <option value="0">All Employees</option>
        @foreach ($departments as $department)
-      <option value="{{$department->id}}">{{$department->department_name}}</option>
+        <option value="{{$department->id}}">{{$department->department_name}}</option>
        @endforeach
       </select>
     </div>
@@ -26,7 +25,7 @@
   
     <div class="col-md-4 form-group">
       <label  for="inlineFormInput">Name</label>
-      <input type="date" class="form-control mb-2" id="datePicker" >
+      <input type="date" class="form-control mb-2" id="datePicker" name="datePicker" >
     </div>
     <div class="col-auto form-group">
       <button type="submit" class="btn btn-primary mt-4">Generate Attendance</button>
@@ -39,7 +38,7 @@
     <h6 class="m-0 font-weight-bold text-primary">Attendance</h6>
   </div>
   <div class="card-body">
-    <div class="table-responsive">
+    <div class="table-responsive" id="">
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
@@ -57,15 +56,8 @@
             <th>Status</th>
           </tr>
         </tfoot>
-        <tbody>
+        <tbody id="tableForAttendance">
          
-          <tr>
-            <td>1</td>
-            <td>John</td>
-            <td id="Attendancedate"></td>
-            <td></td>
-          </tr>
-
         </tbody>
       </table>
     </div>

@@ -1,29 +1,52 @@
 $(document).ready(function() {
+
+
     //Generating Attendance Table
-    $("#Report-form").on('submit',function(e){
+    $("#Report-form").on("submit", function(e) {
         e.preventDefault();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            }
-        });
+
+        var attendanceID = $("#attendanceType").val(); //Get attendance type id 
+        var attendanceDate = $("#datePicker").val();    //Get Attendance date
+      
         $.ajax({
-            url: "/attendance/daily",
-            type: "GET",
+            url: "/attendance/generateAttendance",
+            type: "get",
+            data: {
+                _token: "{{ csrf_token() }}",
+            },
+            cache: false,
             dataType: "json",
-            success: function(data) {
-                alert("Data Loaded");
+            success: function(dataResult) {
+                console.log(dataResult);
+                var resultData = dataResult.data;
+                var bodyData = "";
+                var i = 1;
+                $.each(resultData,function(index,row){
+                   bodyData += `
+                   <tr>
+                     <td>${row.id}</td>
+                     <td>${row.employee_name}</td>
+                     <td id="Attendancedate">${formatDate(date)}</td>
+                     <td>
+                       <select class="form-control">
+                       <option selected>Choose...</option>
+                       <option value="0">Absent</option>
+                       <option value="1">Present</option>
+                     </select>
+                   </td>
+                   </tr>`;
+                });
+               console.log(bodyData);
+                $("#tableForAttendance").append(bodyData);
             }
         });
     });
-
-
 
     // Generate Date Format
     var date = Date();
     document.getElementById("datePicker").value = formatDate(date);
 
-    document.getElementById("Attendancedate").textContent =   document.getElementById("datePicker").value = formatDate(date);
+  
     function formatDate(date) {
         var d = new Date(date);
         month = "" + (d.getMonth() + 1);

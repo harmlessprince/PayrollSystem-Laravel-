@@ -316,10 +316,13 @@ class AdminController extends Controller
 
     public function dailyAttendance() {
         $departments = Department::all();
-        $users =  User::all();
+        return view("adminpages.dailyAttendance")->with(["departments"=>$departments]);
+    }
 
-        // return json_encode($designations);
-        return view("adminpages.dailyAttendance")->with([json_encode($users), "departments"=>$departments]);
+    public function generateAttendance()
+    {
+        $users = User::get();
+        return json_encode(array('data'=>$users));
     }
 
     public function attendanceReport(){
