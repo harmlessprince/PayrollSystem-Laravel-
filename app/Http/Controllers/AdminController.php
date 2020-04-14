@@ -315,7 +315,11 @@ class AdminController extends Controller
     //Methods Handling Attendance Of Employees
 
     public function dailyAttendance() {
-        return view("adminpages.dailyAttendance");
+        $departments = Department::all();
+        $users =  User::all();
+
+        // return json_encode($designations);
+        return view("adminpages.dailyAttendance")->with([json_encode($users), "departments"=>$departments]);
     }
 
     public function attendanceReport(){

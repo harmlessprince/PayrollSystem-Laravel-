@@ -9,6 +9,30 @@
 @section('page-name', 'Daily Attendance')
 
 @section('main-content')
+
+<form id="Report-form">
+  <div class="form-row align-items-center">
+    <div class="form-group col-md-4">
+      <label class="" >Employees by Department</label>
+      <select class="form-control  mb-2" id="typeOfEmployee">
+        <option selected>Choose...</option>
+        <option value="all">All Employees</option>
+       @foreach ($departments as $department)
+      <option value="{{$department->id}}">{{$department->department_name}}</option>
+       @endforeach
+      </select>
+    </div>
+  
+  
+    <div class="col-md-4 form-group">
+      <label  for="inlineFormInput">Name</label>
+      <input type="date" class="form-control mb-2" id="datePicker" >
+    </div>
+    <div class="col-auto form-group">
+      <button type="submit" class="btn btn-primary mt-4">Generate Attendance</button>
+    </div>
+  </div>
+</form>
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
@@ -36,9 +60,9 @@
         <tbody>
          
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>1</td>
+            <td>John</td>
+            <td id="Attendancedate"></td>
             <td></td>
           </tr>
 
@@ -56,4 +80,6 @@
 
 <!-- Page level custom scripts -->
 <script src="/js/demo/datatables-demo.js"></script>
+
+<script src="/vendor/attendace.js"></script>
 @endsection
