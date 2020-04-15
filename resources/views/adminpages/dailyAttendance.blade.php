@@ -2,6 +2,11 @@
 @section('title','Daily Attendance')
 @section("page-level-scripts-up")
 <!-- Custom styles for this page -->
+{{-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script> --}}
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 @endsection
 
@@ -13,19 +18,19 @@
 <form id="Report-form" action="" method="GET">
   <div class="form-row align-items-center">
     <div class="form-group col-md-4">
-      <label class="" >Employees by Department</label>
+      <label class="">Employees by Department</label>
       <select class="form-control  mb-2" id="attendanceType" name="attendanceType">
         <option value="0">All Employees</option>
-       @foreach ($departments as $department)
+        @foreach ($departments as $department)
         <option value="{{$department->id}}">{{$department->department_name}}</option>
-       @endforeach
+        @endforeach
       </select>
     </div>
-  
-  
+
+
     <div class="col-md-4 form-group">
-      <label  for="inlineFormInput">Name</label>
-      <input type="date" class="form-control mb-2" id="datePicker" name="datePicker" >
+      <label for="inlineFormInput">Name</label>
+      <input type="date" class="form-control mb-2" id="datePicker" name="datePicker">
     </div>
     <div class="col-auto form-group">
       <button type="submit" class="btn btn-primary mt-4">Generate Attendance</button>
@@ -56,8 +61,8 @@
             <th>Status</th>
           </tr>
         </tfoot>
-        <tbody id="tableForAttendance">
-         
+        <tbody>
+
         </tbody>
       </table>
     </div>
@@ -67,11 +72,12 @@
 
 @section('page-level-scripts-down')
 <!-- Page level plugins -->
+<script src="/vendor/attendace.js"></script>
 <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
 <!-- Page level custom scripts -->
 <script src="/js/demo/datatables-demo.js"></script>
 
-<script src="/vendor/attendace.js"></script>
+
 @endsection

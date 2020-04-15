@@ -4,49 +4,40 @@ $(document).ready(function() {
     //Generating Attendance Table
     $("#Report-form").on("submit", function(e) {
         e.preventDefault();
-
         var attendanceID = $("#attendanceType").val(); //Get attendance type id 
         var attendanceDate = $("#datePicker").val();    //Get Attendance date
-      
-        $.ajax({
-            url: "/attendance/generateAttendance",
-            type: "get",
-            data: {
-                _token: "{{ csrf_token() }}",
-            },
-            cache: false,
-            dataType: "json",
-            success: function(dataResult) {
-                console.log(dataResult);
-                var resultData = dataResult.data;
-                var bodyData = "";
-                var i = 1;
-                $.each(resultData,function(index,row){
-                   bodyData += `
-                   <tr>
-                     <td>${row.id}</td>
-                     <td>${row.employee_name}</td>
-                     <td id="Attendancedate">${formatDate(date)}</td>
-                     <td>
-                       <select class="form-control">
-                       <option selected>Choose...</option>
-                       <option value="0">Absent</option>
-                       <option value="1">Present</option>
-                     </select>
-                   </td>
-                   </tr>`;
-                });
-               console.log(bodyData);
-                $("#tableForAttendance").append(bodyData);
+        var i = 
+        $("#dataTable").dataTable({
+            "destroy": true,
+            "processing":true,
+            "serverside": true,
+            "ajax": "/attendance/generateAttendance",
+            "columns":[
+                {"data": null},
+                {"data": "employee_name"},
+                {"data":  null,"defaultContent": formatDate(date)},
+                {"data": null},
+            ],
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                $("td:nth-child(1)", nRow).html(iDisplayIndex + 1);
+                $("td:nth-child(4)", nRow).html(`<select class="form-control">
+                                                    <option selected>Choose...</option>
+                                                    <option value="0">Absent</option>
+                                                    <option value="1">Present</option>
+                                                </select>`);
+                return nRow;
             }
+            
         });
+        
+        
     });
 
     // Generate Date Format
     var date = Date();
     document.getElementById("datePicker").value = formatDate(date);
 
-  
+ 
     function formatDate(date) {
         var d = new Date(date);
         month = "" + (d.getMonth() + 1);

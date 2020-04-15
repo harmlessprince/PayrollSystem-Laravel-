@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-// use App\Account;
 
+// use App\Account;
 use App\Account;
 use App\Allowance;
 use App\AllowanceUser;
@@ -14,6 +14,7 @@ use App\Designation;
 use App\Fianancialdetail;
 use App\User;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 // use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -319,11 +320,21 @@ class AdminController extends Controller
         return view("adminpages.dailyAttendance")->with(["departments"=>$departments]);
     }
 
+    // public function generateAttendance()
+    // {
+    //     // $users = User::get();
+    //     $users = DB::table('users')->select('employee_name', 'id')->get();
+    //     return json_encode(array('data'=>$users));
+    // }
+
     public function generateAttendance()
     {
-        $users = User::get();
-        return json_encode(array('data'=>$users));
+        // $users = User::get();
+        $users = DB::table('users')->select('employee_name', 'id')->get();
+        return Datatables::of($users)->make(true);
     }
+
+
 
     public function attendanceReport(){
         return view("adminpages.attendanceReport");
