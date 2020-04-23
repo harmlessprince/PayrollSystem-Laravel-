@@ -38,14 +38,14 @@
 </div>
 {{-- </form> --}}
 <!-- DataTales Example -->
-<input type="button" value="present" class="btn btn-sm btn-success" id="attendance_status" name="attendance_status">
+{{-- <input type="button" value="present" class="btn btn-sm btn-success" id="attendance_status" name="attendance_status"> --}}
 <div class="card shadow mb-4">
   <div class="card-header py-3">
 
     <h6 class="m-0 font-weight-bold text-primary">Attendance</h6>
   </div>
   <div class="card-body">
-    <input id="selectAll" type="text" value="">
+    {{-- <input id="selectAll" type="text" value=""> --}}
     <div class="table-responsive" id="">
       {!! Form::open(['action'=>'AdminController@storeAttendance', 'method'=>'POST', 'class'=>'myform']) !!}
       @csrf
