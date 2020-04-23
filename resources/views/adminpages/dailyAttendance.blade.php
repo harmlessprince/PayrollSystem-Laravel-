@@ -2,12 +2,10 @@
 @section('title','Daily Attendance')
 @section("page-level-scripts-up")
 <!-- Custom styles for this page -->
-{{-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script> --}}
+
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"> --}}
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script> --}}
 @endsection
 
 
@@ -15,48 +13,58 @@
 
 @section('main-content')
 
-<form id="Report-form" action="" method="GET">
-  <div class="form-row align-items-center">
-    <div class="form-group col-md-4">
-      <label class="">Employees by Department</label>
-      <select class="form-control  mb-2" id="attendanceType" name="attendanceType">
-        <option value="0">All Employees</option>
-        @foreach ($departments as $department)
-        <option value="{{$department->id}}">{{$department->department_name}}</option>
-        @endforeach
-      </select>
-    </div>
-
-
-    <div class="col-md-4 form-group">
-      <label for="inlineFormInput">Name</label>
-      <input type="date" class="form-control mb-2" id="datePicker" name="datePicker">
-    </div>
-    <div class="col-auto form-group">
-      <button type="submit" class="btn btn-primary mt-4">Generate Attendance</button>
-    </div>
+{{-- <form id="Report-form" action="" method="GET"> --}}
+<div class="row align-items-center input-datepicker">
+  <div class="form-group col-md-4">
+    <label class="">Employees by Department</label>
+    <select class="form-control  mb-2" id="attendance_department" name="attendance_department">
+      <option value="">All Employees</option>
+      @foreach ($departments as $department)
+      <option value="{{$department->id}}">{{$department->department_name}}</option>
+      @endforeach
+    </select>
   </div>
-</form>
+
+
+  <div class="col-md-4 form-group">
+    <label for="inlineFormInput">Attendance Date</label>
+    <input type="date" class="form-control mb-2" id="attendance_date" name="attendance_date"
+      placeholder="Atttendance Date" />
+  </div>
+  <div class="col-md-4 form-group align-items-end">
+    <button type="button" class="btn btn-primary mt-4" name="filter_attendance" id="filter_attendance">Generate
+      Attendance</button>
+  </div>
+</div>
+{{-- </form> --}}
 <!-- DataTales Example -->
+<input type="button" value="present" class="btn btn-sm btn-success" id="attendance_status" name="attendance_status">
 <div class="card shadow mb-4">
   <div class="card-header py-3">
+
     <h6 class="m-0 font-weight-bold text-primary">Attendance</h6>
   </div>
   <div class="card-body">
+    <input id="selectAll" type="text" value="">
     <div class="table-responsive" id="">
-      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+      {!! Form::open(['action'=>'AdminController@storeAttendance', 'method'=>'POST', 'class'=>'myform']) !!}
+      @csrf
+      <table class="table table-bordered" width="100%" cellspacing="0" id="attendance_table">
         <thead>
           <tr>
             <th> Serial</th>
             <th>Employee Name</th>
+            <th>Department Name</th>
             <th>Date</th>
             <th>Status</th>
+
           </tr>
         </thead>
         <tfoot>
           <tr>
             <th> Serial</th>
             <th>Employee Name</th>
+            <th>Department Name</th>
             <th>Date</th>
             <th>Status</th>
           </tr>
@@ -65,9 +73,17 @@
 
         </tbody>
       </table>
+
+      <div class="  text-center ">
+       <button type="submit"> Submit Attendance</button>
+      </div>
+      {!! Form::close() !!}
+
     </div>
   </div>
 </div>
+
+
 @endsection
 
 @section('page-level-scripts-down')

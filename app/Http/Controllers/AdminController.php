@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Account;
 use App\Allowance;
 use App\AllowanceUser;
+use App\Attendance;
 use App\Deduction;
 use App\DeductionUser;
 use App\Department;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\Console\Input\Input;
 use Symfony\Component\CssSelector\Node\FunctionNode;
+use Yajra\DataTables\Contracts\DataTable;
 
 class AdminController extends Controller
 {
@@ -227,19 +229,16 @@ class AdminController extends Controller
         // $deductions = Deduction::pluck('deduction_name', 'id');
         $deductions = Deduction::all();
         $allowances = Allowance::all();
-        
-        $user = User::with('account','department','designation' ,'allowances.users', 'deductions.users')->find($id);
-        // ,'allowances.users', 'deductions.users'
-      
-       
-        return view('adminpages.editEmployeeProfile')->with(['user'=>$user,'departments' => $departments, 'deductions' => $deductions,  'allowances' => $allowances]);
 
-    
+        $user = User::with('account', 'department', 'designation', 'allowances.users', 'deductions.users')->find($id);
+        // ,'allowances.users', 'deductions.users'
+
+
+        return view('adminpages.editEmployeeProfile')->with(['user' => $user, 'departments' => $departments, 'deductions' => $deductions,  'allowances' => $allowances]);
     }
 
     public function update()
     {
-
     }
 
 
@@ -288,7 +287,8 @@ class AdminController extends Controller
 
 
     //Display's All Departments and Related Designations
-    public function manageDepartment(){
+    public function manageDepartment()
+    {
 
         $departments = Department::with('designations')->get();
 
@@ -297,7 +297,7 @@ class AdminController extends Controller
 
         // $numberOfEmployessInDepts = Department::withCount('users')->get();
 
-        return view("adminpages.manageDepartment", ['departments'=>$departments]);
+        return view("adminpages.manageDepartment", ['departments' => $departments]);
     }
 
     //Edit Department and Designation Method
@@ -305,38 +305,65 @@ class AdminController extends Controller
     {
         $department = Department::with('designations')->find($id);
 
-        return view('adminpages.editDepartmentDesigantion')->with(['department'=>$department]);
+        return view('adminpages.editDepartmentDesigantion')->with(['department' => $department]);
     }
 
-    public function DepartmentDesignationUpdate( $id){
-
+    public function DepartmentDesignationUpdate($id)
+    {
     }
 
 
     //Methods Handling Attendance Of Employees
 
-    public function dailyAttendance() {
-        $departments = Department::all();
-        return view("adminpages.dailyAttendance")->with(["departments"=>$departments]);
-    }
-
-    // public function generateAttendance()
-    // {
-    //     // $users = User::get();
-    //     $users = DB::table('users')->select('employee_name', 'id')->get();
-    //     return json_encode(array('data'=>$users));
-    // }
-
-    public function generateAttendance()
+    public function dailyAttendance()
     {
-        // $users = User::get();
-        $users = DB::table('users')->select('employee_name', 'id')->get();
-        return Datatables::of($users)->make(true);
+   
+        $departments = Department::all();
+        return view("adminpages.dailyAttendance")->with(["departments" => $departments]);
+    }
+
+    public function generateAttendance(Request $request)
+    {
+        if (request()->ajax()) {
+            if (!empty($request->attendance_department)) {
+                $data = User::with('department')
+                ->select('id', 'employee_name', 'department_id')
+                ->where('department_id', array( $request->attendance_department))
+                ->get();
+            }else {
+                $data = User::with('department')
+                ->select('id', 'employee_name', 'department_id')
+                ->get();
+            }
+            return  Datatables::of($data)->make(true);
+
+        } 
     }
 
 
+    public function storeAttendance(Request $request)
+    {
+        // $this->validate($request, [
+        //     'employee_name' => 'required',
+        //     'date_of_birth' => 'required|date',
+            
+        //     'allowance_value' => 'required',
+        //     'deduction_name' => 'required',
+        //     'deduction_value' => 'required',
+            
+        // ]);
 
-    public function attendanceReport(){
+        $attendnace = new Attendance();
+
+         // accepting User model datas
+        //  $attendnace->attendance_status = $request->input('attendance_status')->has('delete') ? 1 : 0;
+        $attendnace->attendance_status = $request->input('attendance_status');
+        $attendnace->user_id = $request->id;
+
+       dd($attendnace);
+    }
+    public function attendanceReport()
+    {
         return view("adminpages.attendanceReport");
     }
 

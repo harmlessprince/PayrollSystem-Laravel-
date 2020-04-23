@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmployeedepartmentsTable extends Migration
+class CreateAttendancesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateEmployeedepartmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('employeedepartments', function (Blueprint $table) {
+        Schema::create('attendances', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            
+            $table->string("department_name");
+            $table->date("attendance_date");
+            $table->tinyInteger("attendance_status")->default(false);
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateEmployeedepartmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employeedepartments');
+        Schema::dropIfExists('attendances');
     }
 }

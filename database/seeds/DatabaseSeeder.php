@@ -1,5 +1,6 @@
 <?php
 
+use App\Deduction;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,7 +16,9 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             DesignationsTableSeeder::class,
             DepartmentsTableSeeder::class, 
-            AccountsTableSeeder::class
+            AccountsTableSeeder::class,
+            AllowancesTableSeeder::class,
+            DeductionsTableSeeder::class
         ]);
     }
 }

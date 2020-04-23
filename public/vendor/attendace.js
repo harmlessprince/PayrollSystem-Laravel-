@@ -1,43 +1,8 @@
 $(document).ready(function() {
-
-
-    //Generating Attendance Table
-    $("#Report-form").on("submit", function(e) {
-        e.preventDefault();
-        var attendanceID = $("#attendanceType").val(); //Get attendance type id 
-        var attendanceDate = $("#datePicker").val();    //Get Attendance date
-        var i = 
-        $("#dataTable").dataTable({
-            "destroy": true,
-            "processing":true,
-            "serverside": true,
-            "ajax": "/attendance/generateAttendance",
-            "columns":[
-                {"data": null},
-                {"data": "employee_name"},
-                {"data":  null,"defaultContent": formatDate(date)},
-                {"data": null},
-            ],
-            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
-                $("td:nth-child(1)", nRow).html(iDisplayIndex + 1);
-                $("td:nth-child(4)", nRow).html(`<select class="form-control">
-                                                    <option selected>Choose...</option>
-                                                    <option value="0">Absent</option>
-                                                    <option value="1">Present</option>
-                                                </select>`);
-                return nRow;
-            }
-            
-        });
-        
-        
-    });
-
     // Generate Date Format
     var date = Date();
-    document.getElementById("datePicker").value = formatDate(date);
+    document.getElementById("attendance_date").value = formatDate(date);
 
- 
     function formatDate(date) {
         var d = new Date(date);
         month = "" + (d.getMonth() + 1);
@@ -49,4 +14,76 @@ $(document).ready(function() {
 
         return [year, month, day].join("-");
     }
+
+    load_attendance();
+    function load_attendance(attendance_department = "") {
+        $("#attendance_table").DataTable({
+            destroy: true,
+            processing: true,
+            serverside: true,
+            ajax: {
+                url: "/attendance",
+                data: { attendance_department: attendance_department },
+                type: "get"
+            },
+            columns: [
+                { data: null },
+                { data: "employee_name" },
+                { data: "department.department_name" },
+                {
+                    data: null,
+                    defaultContent: formatDate(date)
+                },
+                { data: null }
+            ],
+            fnRowCallback: function(nRow, aData, iDisplayIndex) {
+                $("td:nth-child(1)", nRow).html(iDisplayIndex + 1);
+                $("td:nth-child(5)", nRow).html(`<div class="form-group">
+                                                    <select class="form-control" name="attendance_status[]" id="attendance_status">
+                                                    <option value="true">Present</option>
+                                                    <option value="false" selected>Absent</option>
+                                                    </select>
+                                                </div>`);
+                return nRow;
+            }
+        });
+    }
+
+    // <input type="checkbox" name="attendance_status[]" id="attendance_status" value="false"></input>
+
+    $("#filter_attendance").on("click", function() {
+        var attendance_department = $("#attendance_department").val();
+        // console.log(attendance_department);
+        if (attendance_department) {
+            $("#attendance_table")
+                .DataTable()
+                .destroy();
+            load_attendance(attendance_department);
+        } else {
+            load_attendance();
+        }
+    });
+
+    $("#selectAll").click(function() {
+        $("input[type=checkbox]").prop("checked", $(this).prop("checked"));
+    });
+
+    $("input[type=checkbox]").click(function() {
+        if (!$(this).prop("checked")) {
+            $("#selectAll").prop("checked", false);
+        }
+    });
+
+    // getHolidays();
+
+    // function getHolidays() {
+    //     var apiUrl = "https://calendarific.com/api/v2/holidays?&api_key=baa9dc110aa712sd3a9fa2a3dwb6c01d4c875950dc32&country=NG&year=2020";
+    //     $.ajax({
+    //         url: apiUrl,
+    //     }).done(function (items) {
+    //         $.each(items, function(key, item){
+    //             console.log(item);
+    //         });
+    //     });
+    // }
 });
