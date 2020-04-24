@@ -38,7 +38,7 @@ Route::put('/department/{id}', 'AdminController@DepartmentDesignationUpdate');
 
 Route::post('/create-department/store', 'AdminController@saveDepartment');
 
-Route::get('/attendance/daily','AdminController@dailyAttendance');
+Route::get('/attendance/daily','AdminController@indexAttendance');
 Route::get('/attendance','AdminController@generateAttendance')->name('generateattendance');
 Route::post('/store/attendance','AdminController@storeAttendance');
 Route::get('/attendance/report','AdminController@attendanceReport');

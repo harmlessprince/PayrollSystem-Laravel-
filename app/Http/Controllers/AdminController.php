@@ -315,7 +315,7 @@ class AdminController extends Controller
 
     //Methods Handling Attendance Of Employees
 
-    public function dailyAttendance()
+    public function indexAttendance()
     {
    
         $departments = Department::all();

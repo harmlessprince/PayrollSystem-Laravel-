@@ -1,4 +1,5 @@
 $(document).ready(function() {
+   
     // Generate Date Format
     var date = Date();
     document.getElementById("attendance_date").value = formatDate(date);
@@ -17,8 +18,9 @@ $(document).ready(function() {
 
     load_attendance();
     function load_attendance(attendance_department = "") {
-        $("#attendance_table").DataTable({
-            destroy: true,
+        counter = 1;
+    var table =    $("#attendance_table").DataTable({
+            // destroy: true,
             processing: true,
             serverside: true,
             ajax: {
@@ -28,18 +30,20 @@ $(document).ready(function() {
             },
             columns: [
                 { data: null },
-                { data: "employee_name" },
-                { data: "department.department_name" },
+                { data: "employee_name", name:"employee_name" },
+                { data: "id", name:"user_id" },
+                { data: "department.department_name", name: "department_name" },
                 {
                     data: null,
-                    defaultContent: formatDate(date)
+                    defaultContent: formatDate(date),
+                    name:"attendance_date"
                 },
-                { data: null }
+                { data: null, name:"attendance_status" }
             ],
             fnRowCallback: function(nRow, aData, iDisplayIndex) {
                 $("td:nth-child(1)", nRow).html(iDisplayIndex + 1);
-                $("td:nth-child(5)", nRow).html(`<div class="form-group">
-                                                    <select class="form-control" name="attendance_status[]" id="attendance_status">
+                $("td:nth-child(6)", nRow).html(`<div class="form-group">
+                                                    <select class="form-control" name="attendance_status[]" id="attendance_status-${counter++}">
                                                     <option value="true">Present</option>
                                                     <option value="false" selected>Absent</option>
                                                     </select>
@@ -47,10 +51,16 @@ $(document).ready(function() {
                 return nRow;
             }
         });
+
+        
+            //    table .destroy();
+    var data = table.rows().data().toArray();
+
+    console.log("The table has " + data.length + " records");
+    console.log("Data", data);
     }
 
-    // <input type="checkbox" name="attendance_status[]" id="attendance_status" value="false"></input>
-
+    // Filter Attendance Table
     $("#filter_attendance").on("click", function() {
         var attendance_department = $("#attendance_department").val();
         // console.log(attendance_department);
@@ -64,15 +74,22 @@ $(document).ready(function() {
         }
     });
 
-    $("#selectAll").click(function() {
-        $("input[type=checkbox]").prop("checked", $(this).prop("checked"));
-    });
+    // $("#selectAll").click(function() {
+    //     $("input[type=checkbox]").prop("checked", $(this).prop("checked"));
+    // });
 
-    $("input[type=checkbox]").click(function() {
-        if (!$(this).prop("checked")) {
-            $("#selectAll").prop("checked", false);
-        }
-    });
+    // $("input[type=checkbox]").click(function() {
+    //     if (!$(this).prop("checked")) {
+    //         $("#selectAll").prop("checked", false);
+    //     }
+    // });
+
+    // var attendanceTable = $("#attendance_table").DataTable();
+
+    // var data = attendanceTable.rows().data();
+
+    // console.log("The table has " + data.length + " records");
+    // console.log("Data", data);
 
     // getHolidays();
 

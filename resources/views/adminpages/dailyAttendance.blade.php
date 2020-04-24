@@ -4,8 +4,7 @@
 <!-- Custom styles for this page -->
 
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"> --}}
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script> --}}
+
 @endsection
 
 
@@ -36,24 +35,24 @@
       Attendance</button>
   </div>
 </div>
-{{-- </form> --}}
+
 <!-- DataTales Example -->
-{{-- <input type="button" value="present" class="btn btn-sm btn-success" id="attendance_status" name="attendance_status"> --}}
 <div class="card shadow mb-4">
   <div class="card-header py-3">
 
     <h6 class="m-0 font-weight-bold text-primary">Attendance</h6>
   </div>
+  {{-- {!! Form::open(['action'=>'AdminController@storeAttendance', 'method'=>'POST', 'class'=>'myform']) !!}
+  @csrf --}}
   <div class="card-body">
     {{-- <input id="selectAll" type="text" value=""> --}}
     <div class="table-responsive" id="">
-      {!! Form::open(['action'=>'AdminController@storeAttendance', 'method'=>'POST', 'class'=>'myform']) !!}
-      @csrf
-      <table class="table table-bordered" width="100%" cellspacing="0" id="attendance_table">
+      <table class="text-center table-bordered table" width="100%" cellspacing="0" id="attendance_table">
         <thead>
           <tr>
             <th> Serial</th>
             <th>Employee Name</th>
+            <th>Employee ID</th>
             <th>Department Name</th>
             <th>Date</th>
             <th>Status</th>
@@ -64,24 +63,25 @@
           <tr>
             <th> Serial</th>
             <th>Employee Name</th>
+            <th>Employee ID</th>
             <th>Department Name</th>
             <th>Date</th>
             <th>Status</th>
           </tr>
         </tfoot>
         <tbody>
-
+         
         </tbody>
       </table>
-
-      <div class="  text-center ">
-       <button type="submit"> Submit Attendance</button>
-      </div>
-      {!! Form::close() !!}
-
+    </div>
+    <div class="mt-3  text-center ">
+      <button type="submit" class="btn btn-success"> Submit Attendance</button>
     </div>
   </div>
+  {{-- {!! Form::close() !!} --}}
 </div>
+
+
 
 
 @endsection
@@ -89,11 +89,13 @@
 @section('page-level-scripts-down')
 <!-- Page level plugins -->
 <script src="/vendor/attendace.js"></script>
-<script src="/vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+{{-- <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script> --}}
 
 <!-- Page level custom scripts -->
-<script src="/js/demo/datatables-demo.js"></script>
+{{-- <script src="/js/demo/datatables-demo.js"></script> --}}
 
 
 @endsection
