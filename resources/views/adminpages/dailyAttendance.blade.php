@@ -75,7 +75,7 @@
       </table>
     </div>
     <div class="mt-3  text-center ">
-      <button type="submit" class="btn btn-success"  id="mark_attendance"> Submit Attendance</button>
+      <button type="submit" class="btn btn-success"  id="mark_attendance"> Submit Attendance Now</button>
     </div>
   </div>
   {!! Form::close() !!}
