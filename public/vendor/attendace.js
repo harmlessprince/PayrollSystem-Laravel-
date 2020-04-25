@@ -89,7 +89,7 @@ $(document).ready(function() {
         })
 
         // let attendance_data = data.serializeArray();
-        // console.log(attendance_data);
+        console.log(attendance_data);
 
         $.each(attendance_data, function( k, v ) {
             $.each(v, function( key, value ) {
