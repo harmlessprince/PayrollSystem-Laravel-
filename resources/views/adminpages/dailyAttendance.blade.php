@@ -42,8 +42,8 @@
 
     <h6 class="m-0 font-weight-bold text-primary">Attendance</h6>
   </div>
-  {{-- {!! Form::open(['action'=>'AdminController@storeAttendance', 'method'=>'POST', 'class'=>'myform']) !!}
-  @csrf --}}
+  {!! Form::open(['action'=>'AdminController@storeAttendance', 'method'=>'POST', 'class'=>'myform']) !!}
+  @csrf
   <div class="card-body">
     {{-- <input id="selectAll" type="text" value=""> --}}
     <div class="table-responsive" id="">
@@ -75,10 +75,10 @@
       </table>
     </div>
     <div class="mt-3  text-center ">
-      <button type="submit" class="btn btn-success"> Submit Attendance</button>
+      <button type="submit" class="btn btn-success"  id="mark_attendance"> Submit Attendance</button>
     </div>
   </div>
-  {{-- {!! Form::close() !!} --}}
+  {!! Form::close() !!}
 </div>
 
 

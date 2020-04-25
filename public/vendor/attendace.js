@@ -1,5 +1,4 @@
 $(document).ready(function() {
-   
     // Generate Date Format
     var date = Date();
     document.getElementById("attendance_date").value = formatDate(date);
@@ -15,11 +14,12 @@ $(document).ready(function() {
 
         return [year, month, day].join("-");
     }
-
+   
     load_attendance();
+    
     function load_attendance(attendance_department = "") {
-        counter = 1;
-    var table =    $("#attendance_table").DataTable({
+        let counter = 1;
+        $("#attendance_table").DataTable({
             // destroy: true,
             processing: true,
             serverside: true,
@@ -30,41 +30,94 @@ $(document).ready(function() {
             },
             columns: [
                 { data: null },
-                { data: "employee_name", name:"employee_name" },
-                { data: "id", name:"user_id" },
+                { data: "employee_name", name: "employee_name" },
+                { data: "id", name: "user_id" },
                 { data: "department.department_name", name: "department_name" },
                 {
                     data: null,
-                    defaultContent: formatDate(date),
-                    name:"attendance_date"
+                    name: "attendance_date",
+                    defaultContent:`
+                                        <input type="hidden" class="form-control" name="attendance_date[]" value= "${formatDate(date)}" id="attendance_date- ${counter++}" readonly>
+                                    `,
                 },
-                { data: null, name:"attendance_status" }
+                {
+                    data: null,
+                    name: "attendance_status",
+                    defaultContent: `<div class="form-group">
+                                        <select class="form-control" name="attendance_status[]" id="attendance_status-${counter++}">
+                                        <option value="true">Present</option>
+                                        <option value="false" selected>Absent</option>
+                                        </select>
+                                    </div>`
+                }
             ],
             fnRowCallback: function(nRow, aData, iDisplayIndex) {
                 $("td:nth-child(1)", nRow).html(iDisplayIndex + 1);
-                $("td:nth-child(6)", nRow).html(`<div class="form-group">
-                                                    <select class="form-control" name="attendance_status[]" id="attendance_status-${counter++}">
-                                                    <option value="true">Present</option>
-                                                    <option value="false" selected>Absent</option>
-                                                    </select>
-                                                </div>`);
                 return nRow;
             }
         });
-
-        
-            //    table .destroy();
-    var data = table.rows().data().toArray();
-
-    console.log("The table has " + data.length + " records");
-    console.log("Data", data);
     }
+
+    $("#mark_attendance").on("click", function(event) {
+        event.preventDefault();
+        var table = $("#attendance_table").DataTable();
+        let attendance_status = [];
+        $("select[name='attendance_status[]']").each(function() {
+            attendance_status.push($(this).val());
+        });
+
+        let attendance_date = [];
+        $("input[name='attendance_date[]']").each(function() {
+            attendance_date.push($(this).val());
+        });
+
+        var data = table
+            .rows()
+            .data()
+            .toArray();
+        
+         data = data.map((item,i)=>{
+            return {
+                attendance_status: attendance_status[i],...item,
+            }
+        })
+
+       var  attendance_data = data.map((item,i)=>{
+            return {
+                attendance_date: attendance_date[i],...item
+            }
+        })
+
+        // let attendance_data = data.serializeArray();
+        // console.log(attendance_data);
+
+        $.each(attendance_data, function( k, v ) {
+            $.each(v, function( key, value ) {
+                console.log(  "name: " + key + ", Value: " + value );
+            });
+        });
+
+      
+
+
+      
+        // $.ajax({
+        //     url: "/store/attendance",
+        //     method:"POST",
+        //     data: { 'data': JSON.stringify(data) },
+        //     success: function(data){
+        //         console.log(data);
+        //         alert('Sucess');
+        //     },
+        // });
+       
+    });
 
     // Filter Attendance Table
     $("#filter_attendance").on("click", function() {
         var attendance_department = $("#attendance_department").val();
         // console.log(attendance_department);
-        if (attendance_department) {
+        if (attendance_department || attendance_department == "") {
             $("#attendance_table")
                 .DataTable()
                 .destroy();

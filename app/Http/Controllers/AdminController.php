@@ -16,6 +16,7 @@ use App\Fianancialdetail;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+// use DataTables;
 // use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -335,7 +336,7 @@ class AdminController extends Controller
                 ->select('id', 'employee_name', 'department_id')
                 ->get();
             }
-            return  Datatables::of($data)->make(true);
+            return  DataTables::of($data)->make(true);
 
         } 
     }
