@@ -36,9 +36,9 @@ $(document).ready(function() {
                 {
                     data: null,
                     name: "attendance_date",
-                    defaultContent:`
-                                        <input type="hidden" class="form-control" name="attendance_date[]" value= "${formatDate(date)}" id="attendance_date- ${counter++}" readonly>
-                                    `,
+                    defaultContent:`<div class="form-group">
+                                        <input type="text" class="form-control text-center" style="width:8em; background-color:white; border:0" name="attendance_date[]" value= "${formatDate(date)}" id="attendance_date- ${counter++}" readonly>
+                                        </div>`,
                 },
                 {
                     data: null,
