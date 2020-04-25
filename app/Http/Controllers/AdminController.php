@@ -354,14 +354,14 @@ class AdminController extends Controller
             
         // ]);
 
-        $attendnace = new Attendance();
+    //     $attendnace = new Attendance();
 
-         // accepting User model datas
-        //  $attendnace->attendance_status = $request->input('attendance_status')->has('delete') ? 1 : 0;
-        $attendnace->attendance_status = $request->input('attendance_status');
-        $attendnace->user_id = $request->id;
+    //      // accepting User model datas
+    //     //  $attendnace->attendance_status = $request->input('attendance_status')->has('delete') ? 1 : 0;
+    //     $attendnace->attendance_status = $request->input('attendance_status');
+    //     $attendnace->user_id = $request->id;
 
-       dd($attendnace);
+    //    dd($attendnace);
     }
     public function attendanceReport()
     {
