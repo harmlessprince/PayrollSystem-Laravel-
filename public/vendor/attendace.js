@@ -30,7 +30,9 @@ $(document).ready(function() {
             },
             columns: [
                 { data: null },
-                { data: "employee_name", name: "employee_name" },
+                { data: "employee_name", defaultContent:`<div class="form-group">
+                                            <input type="text" class="form-control text-center" style="width:8em; background-color:white; border:0" name="employee_name[]" readonly>
+                                            </div>`, },
                 { data: "id", name: "user_id" },
                 { data: "department.department_name", name: "department_name" },
                 {
@@ -59,7 +61,7 @@ $(document).ready(function() {
     }
 
     $("#mark_attendance").on("click", function(event) {
-        event.preventDefault();
+       
         var table = $("#attendance_table").DataTable();
         let attendance_status = [];
         $("select[name='attendance_status[]']").each(function() {
@@ -74,41 +76,45 @@ $(document).ready(function() {
         var data = table
             .rows()
             .data()
-            .toArray();
+            .toArray()
+           
         
          data = data.map((item,i)=>{
             return {
                 attendance_status: attendance_status[i],...item,
             }
         })
-
-       var  attendance_data = data.map((item,i)=>{
+       
+       data = data.map((item,i)=>{
             return {
                 attendance_date: attendance_date[i],...item
             }
         })
-
-        // let attendance_data = data.serializeArray();
-        console.log(attendance_data);
-
-        $.each(attendance_data, function( k, v ) {
-            $.each(v, function( key, value ) {
-                console.log(  "name: " + key + ", Value: " + value );
-            });
+        console.log(data);
+        $.each(data, function () {
+            console.log("ID: " + this.employee_name);
+          
         });
 
-      
+        // event.preventDefault();
 
-
-      
-        // $.ajax({
-        //     url: "/store/attendance",
-        //     method:"POST",
-        //     data: { 'data': JSON.stringify(data) },
-        //     success: function(data){
-        //         console.log(data);
-        //         alert('Sucess');
-        //     },
+    //   var payload = JSON.stringify(attendance_data)
+        // attendance_data.forEach(function(payload){
+            $.ajax({
+                // headers: {
+                //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                // },
+                type: 'post',
+                url: "/store/attendance",
+                data:   {'data': JSON.stringify(data)},
+                dataType: 'json',  
+                success: function(data) {
+                    console.log(data);
+                },
+                error: function() {
+                    console.log("Error");
+                }
+            });
         // });
        
     });
@@ -126,23 +132,6 @@ $(document).ready(function() {
             load_attendance();
         }
     });
-
-    // $("#selectAll").click(function() {
-    //     $("input[type=checkbox]").prop("checked", $(this).prop("checked"));
-    // });
-
-    // $("input[type=checkbox]").click(function() {
-    //     if (!$(this).prop("checked")) {
-    //         $("#selectAll").prop("checked", false);
-    //     }
-    // });
-
-    // var attendanceTable = $("#attendance_table").DataTable();
-
-    // var data = attendanceTable.rows().data();
-
-    // console.log("The table has " + data.length + " records");
-    // console.log("Data", data);
 
     // getHolidays();
 

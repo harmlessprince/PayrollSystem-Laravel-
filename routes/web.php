@@ -43,7 +43,9 @@ Route::get('/attendance','AdminController@generateAttendance')->name('generateat
 Route::post('/store/attendance','AdminController@storeAttendance');
 Route::get('/attendance/report','AdminController@attendanceReport');
 
-
+//Generating Employee Payslip
+Route::get('/create/payslip','AdminController@createPayslip');
+Route::get('/fetch/users/{id}','AdminController@fetchEmployee');
 
 
 

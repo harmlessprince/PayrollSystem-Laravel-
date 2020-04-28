@@ -318,7 +318,7 @@ class AdminController extends Controller
 
     public function indexAttendance()
     {
-   
+
         $departments = Department::all();
         return view("adminpages.dailyAttendance")->with(["departments" => $departments]);
     }
@@ -328,53 +328,17 @@ class AdminController extends Controller
         if (request()->ajax()) {
             if (!empty($request->attendance_department)) {
                 $data = User::with('department')
-                ->select('id', 'employee_name', 'department_id')
-                ->where('department_id', array( $request->attendance_department))
-                ->get();
-            }else {
+                    ->select('id', 'employee_name', 'department_id')
+                    ->where('department_id', array($request->attendance_department))
+                    ->get();
+            } else {
                 $data = User::with('department')
-                ->select('id', 'employee_name', 'department_id')
-                ->get();
+                    ->select('id', 'employee_name', 'department_id')
+                    ->get();
             }
             return  DataTables::of($data)->make(true);
-
-        } 
+        }
     }
-
-
-    public function storeAttendance(Request $request)
-    {
-        // $this->validate($request, [
-        //     'employee_name' => 'required',
-        //     'date_of_birth' => 'required|date',
-            
-        //     'allowance_value' => 'required',
-        //     'deduction_name' => 'required',
-        //     'deduction_value' => 'required',
-            
-        // ]);
-
-    //     $attendnace = new Attendance();
-
-    //      // accepting User model datas
-    //     //  $attendnace->attendance_status = $request->input('attendance_status')->has('delete') ? 1 : 0;
-    //     $attendnace->attendance_status = $request->input('attendance_status');
-    //     $attendnace->user_id = $request->id;
-
-    //    dd($attendnace);
-    }
-    public function attendanceReport()
-    {
-        return view("adminpages.attendanceReport");
-    }
-
-    //Compnay Settings Methods Starts Here
-
-    public function appConfiguration()
-    {
-        return  view('adminpages.appsettings.configuration');
-    }
-
 
 
     public function SaveAllowanceAndDeductions(Request $request)
@@ -405,11 +369,48 @@ class AdminController extends Controller
         return redirect('/admin')->with('success', 'Allowance(s) and Deduction(s) uploaded sucessfully');
     }
 
+    //Attendance Report Generation
+
     public function loadAllowances($id)
     {
         $allowances = DB::table("allowances")->pluck("designation_name", "id")->toArray();
 
         return json_encode($allowances);
+    }
+
+    public function attendanceReport()
+    {
+        return view("adminpages.attendanceReport");
+    }
+
+    public function storeAttendance(Request $request)
+    {
+
+        return response()->json($request->all());
+    }
+    // Attendance Report Generation Methds Ends
+
+    /**Generate Employee Payslip from here */
+    public function createPayslip()
+    {
+
+
+        $departments = Department::get();
+        return view('adminpages.createPayslip')->with(["departments" => $departments]);
+    }
+
+    public function fetchEmployee($id)
+    {
+        $users = DB::table("users")->where("department_id", $id)->pluck("employee_name", "id")->toArray();
+
+        return json_encode($users);
+
+    }
+    //Compnay Settings Methods Starts Here
+
+    public function appConfiguration()
+    {
+        return  view('adminpages.appsettings.configuration');
     }
 
     //Compnay Settings Methods Ends Here

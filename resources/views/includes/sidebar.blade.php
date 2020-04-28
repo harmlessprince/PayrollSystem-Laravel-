@@ -60,7 +60,7 @@
   </li>
 
   <!-- Nav Item - Attendance Collapse Menu -->
-  <li class="nav-item">
+  {{-- <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#attendance" aria-expanded="true"
       aria-controls="collapseTwo">
       <i class="fas fa-fw fa-address-book"></i>
@@ -72,7 +72,7 @@
         <a class="collapse-item" href="/attendance/report">Attendance Report</a>
       </div>
     </div>
-  </li>
+  </li> --}}
 
 
   <!-- Nav Item - Leave Collapse Menu -->
@@ -100,7 +100,7 @@
     </a>
     <div id="payroll" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" href="#">Create Payslip</a>
+        <a class="collapse-item" href="/create/payslip">Create Payslip</a>
         <a class="collapse-item" href="#">Payslip List</a>
       </div>
     </div>

@@ -2,7 +2,7 @@
 @section('title','Daily Attendance')
 @section("page-level-scripts-up")
 <!-- Custom styles for this page -->
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 @endsection
