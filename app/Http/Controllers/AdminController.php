@@ -14,6 +14,7 @@ use App\Department;
 use App\Designation;
 use App\Fianancialdetail;
 use App\User;
+use Facade\FlareClient\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 // use DataTables;
@@ -404,6 +405,24 @@ class AdminController extends Controller
         $users = DB::table("users")->where("department_id", $id)->pluck("employee_name", "id")->toArray();
 
         return json_encode($users);
+
+    }
+
+    public function fetchEmployeeFinance($id)
+    {
+
+        if (request()->ajax()) {
+            if ($id) {
+                $deductions = Deduction::all();
+                $allowances = Allowance::all();
+                $data = User::with('account','allowances.users', 'deductions.users')
+                    ->select('id', 'employee_name', 'email','department_id', 'designation_id', 'phone_number')
+                    ->where('id', $id)
+                    ->get();
+            }
+            return json_encode(['result'=>$data]);
+        }
+        // $user = User::with('account','allowances.users', 'deductions.users')->find($id);
 
     }
     //Compnay Settings Methods Starts Here

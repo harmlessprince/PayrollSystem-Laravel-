@@ -16,9 +16,9 @@ $(document).ready(function() {
     }
    
     load_attendance();
-    
+    var counter = 1;
     function load_attendance(attendance_department = "") {
-        let counter = 1;
+       
         $("#attendance_table").DataTable({
             // destroy: true,
             processing: true,
@@ -39,14 +39,14 @@ $(document).ready(function() {
                     data: null,
                     name: "attendance_date",
                     defaultContent:`<div class="form-group">
-                                        <input type="text" class="form-control text-center" style="width:8em; background-color:white; border:0" name="attendance_date[]" value= "${formatDate(date)}" id="attendance_date- ${counter++}" readonly>
+                                        <input type="text" class="form-control text-center" style="width:8em; background-color:white; border:0" name="attendance_date[]" value= "${formatDate(date)}" id="attendance_date-${counter}" readonly>
                                         </div>`,
                 },
                 {
                     data: null,
                     name: "attendance_status",
                     defaultContent: `<div class="form-group">
-                                        <select class="form-control" name="attendance_status[]" id="attendance_status-${counter++}">
+                                        <select class="form-control" name="attendance_status[]" id="attendance_status-${counter}">
                                         <option value="true">Present</option>
                                         <option value="false" selected>Absent</option>
                                         </select>
