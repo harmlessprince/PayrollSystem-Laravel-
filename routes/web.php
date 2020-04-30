@@ -47,6 +47,8 @@ Route::get('/attendance/report','AdminController@attendanceReport');
 Route::get('/create/payslip','AdminController@createPayslip');
 Route::get('/fetch/users/{id}','AdminController@fetchEmployee');
 Route::get('/fetch/employee-fiance/{id}','AdminController@fetchEmployeeFinance');
+Route::get('/fetch/deductions','AdminController@fetchDeductions');
+Route::get('/fetch/allowances','AdminController@fetchAllowances');
 
 
 

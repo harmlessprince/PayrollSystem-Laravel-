@@ -394,10 +394,10 @@ class AdminController extends Controller
     /**Generate Employee Payslip from here */
     public function createPayslip()
     {
-
-
-        $departments = Department::get();
-        return view('adminpages.createPayslip')->with(["departments" => $departments]);
+        $deductions = Deduction::all();
+        $allowances = Allowance::all();
+        $departments = Department::all();
+        return view('adminpages.createPayslip')->with(["departments" => $departments, 'deductions'=>$deductions, 'allowances'=> $allowances]);
     }
 
     public function fetchEmployee($id)
@@ -420,11 +420,30 @@ class AdminController extends Controller
                     ->where('id', $id)
                     ->get();
             }
-            return json_encode(['result'=>$data]);
+            return json_encode(['result'=>$data,'deduct'=> $deductions, 'allowan'=> $allowances]);
         }
-        // $user = User::with('account','allowances.users', 'deductions.users')->find($id);
 
     }
+
+    public function fetchDeductions()
+    {
+        if (request()->ajax()) {
+                $deductions = Deduction::all();
+                // $allowances = Allowance::all();
+            return json_encode(['deduct'=> $deductions]);
+        }
+    }
+
+
+    public function fetchAllowances()
+    {
+        if (request()->ajax()) {
+                // $deductions = Deduction::all();
+                $allowances = Allowance::all();
+            return json_encode(['allowan'=> $allowances]);
+        }
+    }
+    
     //Compnay Settings Methods Starts Here
 
     public function appConfiguration()
