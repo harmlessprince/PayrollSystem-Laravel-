@@ -3,7 +3,6 @@
 @section("page-level-scripts-up")
 <!-- Custom styles for this page -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <style>
     .card {
         border: 0px;
@@ -19,6 +18,10 @@
 
     .noHover:hover {
         border: none;
+    }
+
+    .slip-title{
+        margin-right: 19em;
     }
 
     .col,
@@ -111,7 +114,7 @@
             <div class="form-group">
                 <label class="">Departments</label>
                 <select class="form-control departments mb-2" id="department_name" data-dependent="employee_name"
-                    name="departments">
+                    name="department_name">
                     <option disabled selected="true">-----Select----</option>
                     @foreach ($departments as $department)
                     <option value="{{$department->id}}">{{$department->department_name}}</option>
@@ -120,26 +123,15 @@
             </div>
             <div class="form-group ">
                 <label class="">Employee Names</label>
-                <select class="form-control  mb-2" id="users" name="user_id">
+                <select class="form-control  mb-2" id="users" name="users">
                     <option disabled selected="true">-----Select-----</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label class=""> Year</label>
-                <select class="form-control  mb-2" id="years" name="">
-                    <option disabled selected="true"> -----Select-----</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class=""> Month </label>
-                <select class="form-control  mb-2" id="months" name="">
-                    <option disabled selected="true"> ------Select-----</option>
-                </select>
-            </div>
+           
         </div>
         <!-- Button trigger modal -->
         <div class="form-group text-center">
-            <button type="button" class="btn btn-primary mt-4" name="" id="generate_payslip" data-toggle="modal"
+            <button type="button" class="btn btn-primary mt-4" id="generate_payslip" data-toggle="modal"
                 data-target=".bd-example-modal-lg">Generate
                 Payslip</button>
         </div>
@@ -149,145 +141,136 @@
 
     </div>
 
+    
+
+    
+
 
 </div>
 
 <!-- Modal -->
-<div class="modal fade  bd-example-modal-lg" id="exampleModalScrollable" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable" role="document">
-        <div class="modal-content payslip-modal">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalScrollableTitle">Employee Payslip</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body ">
-                <div class="row">
-                    <input type="hidden" name="" id="hidden_id" readonly />
-                    <div class="col-md-6 noHover allAllowances" tabindex="0">
-                        <h5 class="card-title">Allowances</h5>
-                        <div class="card">
-                            <div class="card-body payslip-modal">
-                                <ul class="list-group allowance_container" id="allowance_list">
-                                    <li class="list-group-item">
-                                        <div class="row allowance_form">
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <select class="form-control" name="" id="allowance_name">
-                                                        <option disabled selected="true"> -----Select----</option>
-                                                       
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control allowance" name=""
-                                                        id="allowance_value">
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <button type="button" id="addAllowance"
-                                                    class="form-control btn  btn-sm btn-success">
-                                                    <svg class="bi bi-plus-square" width="1em" height="1em"
-                                                        viewBox="0 0 16 16" fill="currentColor"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path fill-rule="evenodd"
-                                                            d="M8 3.5a.5.5 0 01.5.5v4a.5.5 0 01-.5.5H4a.5.5 0 010-1h3.5V4a.5.5 0 01.5-.5z"
-                                                            clip-rule="evenodd" />
-                                                        <path fill-rule="evenodd"
-                                                            d="M7.5 8a.5.5 0 01.5-.5h4a.5.5 0 010 1H8.5V12a.5.5 0 01-1 0V8z"
-                                                            clip-rule="evenodd" />
-                                                        <path fill-rule="evenodd"
-                                                            d="M14 1H2a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V2a1 1 0 00-1-1zM2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2z"
-                                                            clip-rule="evenodd" />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <h5 class="card-title">Other Allowance</h5>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control " name="" id=""
-                                                placeholder="Allowance title">
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <input type="number" class="form-control allowance" name="" id=""
-                                                placeholder="Allowance value">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<form action="/store/payslip" method="POST">
+    @csrf
+    <div class="modal fade  bd-example-modal-lg" id="exampleModalScrollable " tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable" role="document">
+
+            <div class="modal-content payslip-modal">
+                <div class="modal-header">
+                    
+                    <h5 class="modal-title slip-title" id="exampleModalScrollableTitle">Employee Payslip</h5>
+                    <h5 class="modal-title " id="exampleModalScrollableTitle">Payslip ID: <span class="font-weight-bold text-uppercase" id="payslip-id"></span> </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body ">
+                    <div class="row">
+                        
+                        <input type="hidden" name="user_id" id="user_id" readonly />
+                      
+                      
                     </div>
-                    <div class="col-md-6" id="allDeductions">
-                        <h5 class="card-title">Deductions</h5>
-                        <div class="card">
-                            <div class="card-body payslip-modal">
-                                <ul class="list-group deduction_container" id="deduction_list">
-                                    <li class="list-group-item">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <select class="form-control" name="" id="deduction_name">
-                                                        <option disabled selected="true"> -----Select----</option>
-                                                       
-                                                    </select>
+
+                    <div class="row align-items-center">
+                        <div class="col-md-7 mx-auto">
+                            <div class="">
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-4 col-form-label">Basic</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">N</span>
                                                 </div>
+                                                <input type="text" id="basic_salary" name="basic_salary"
+                                                    class="form-control" readonly />
                                             </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control deduction" name=""
-                                                        id="deduction_value">
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <button type="button" id="addDeduction"
-                                                    class="form-control btn  btn-sm btn-success">
-                                                    <svg class="bi bi-plus-square" width="1em" height="1em"
-                                                        viewBox="0 0 16 16" fill="currentColor"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path fill-rule="evenodd"
-                                                            d="M8 3.5a.5.5 0 01.5.5v4a.5.5 0 01-.5.5H4a.5.5 0 010-1h3.5V4a.5.5 0 01.5-.5z"
-                                                            clip-rule="evenodd" />
-                                                        <path fill-rule="evenodd"
-                                                            d="M7.5 8a.5.5 0 01.5-.5h4a.5.5 0 010 1H8.5V12a.5.5 0 01-1 0V8z"
-                                                            clip-rule="evenodd" />
-                                                        <path fill-rule="evenodd"
-                                                            d="M14 1H2a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V2a1 1 0 00-1-1zM2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2z"
-                                                            clip-rule="evenodd" />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <h5 class="card-title">Other Deduction</h5>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control " name=""
-                                                placeholder="Deduction title">
                                         </div>
                                     </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <input type="number" class="form-control deduction" name=""
-                                                placeholder="Deduction value">
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-4 col-form-label">Total Allowance</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">N</span>
+                                                </div>
+                                                <input type="text" class="form-control total_allowance "
+                                                    id="total_allowance" name="total_allowance" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-4 col-form-label">Total Deduction</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">N</span>
+                                                </div>
+                                                <input type="text" id="total_deduction" name="total_deduction"
+                                                    class="form-control total_deduction" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-4 col-form-label">Net Salary</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="">N</span>
+                                                </div>
+                                                <input type="text" id="total_salary" name="total_salary"
+                                                    class="form-control" readonly />
+                                            </div>
+                                            {{-- <button type="button" class="btn btn-primary sumSalary">Calculate Net
+                                                Salary</button> --}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-4 col-form-label"> Payment method</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="methodOfPayment" id="methodOfPayment">
+                                                <option disabled selected="true"> ------Select -----</option>
+                                                <option value="cash">Cash</option>
+                                                <option value="bank">Bank</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-4 col-form-label">Status</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="status" id="status">
+                                                <option disabled selected="true">------Select-----</option>
+                                                <option value="1">Paid</option>
+                                                <option value="0">Unpaid</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label  for="" class="col-sm-4 col-form-label"> Year</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control year  mb-2" id="years" name="payslip_year">
+                                                <option disabled selected="true"> -----Select-----</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-4  col-form-label"> Month </label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control  mb-2 month" name="payslip_month" id="months">
+                                                <option disabled selected="true"> ------Select-----</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-4 col-form-label">Comments</label>
+                                        <div class="col-sm-8">
+                                            <textarea class="form-control" name="comment" id="comment"
+                                                rows="3"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -296,96 +279,16 @@
                     </div>
                 </div>
 
-                <div class="row align-items-center">
-                    <div class="col-md-7 mx-auto">
-                        <div class="">
-                            <div class="card-body">
-                                <div class="form-group row">
-                                    <label for="" class="col-sm-4 col-form-label">Basic</label>
-                                    <div class="col-sm-8">
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="">N</span>
-                                            </div>
-                                            <input type="text" id="basic_salary" class="form-control" readonly />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="" class="col-sm-4 col-form-label">Total Allowance</label>
-                                    <div class="col-sm-8">
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="">N</span>
-                                            </div>
-                                            <input type="text" class="form-control total_allowance" readonly />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="" class="col-sm-4 col-form-label">Total Deduction</label>
-                                    <div class="col-sm-8">
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="">N</span>
-                                            </div>
-                                            <input type="text" id="total_deduction" class="form-control total_deduction"
-                                                readonly />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="" class="col-sm-4 col-form-label">Net Salary</label>
-                                    <div class="col-sm-8">
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="">N</span>
-                                            </div>
-                                            <input type="text" id="total_salary" class="form-control" readonly />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="" class="col-sm-4 col-form-label"> Payment method</label>
-                                    <div class="col-sm-8">
-                                        <select class="form-control" name="" id="">
-                                            <option disabled selected="true"> ------Select -----</option>
-                                            <option value="cash">Cash</option>
-                                            <option value="bank">Bank</option>
-                                            <option value="other">Other</option>
-                                        </select>
-                                    </div>
-
-                                </div>
-                                <div class="form-group row">
-                                    <label for="" class="col-sm-4 col-form-label">Status</label>
-                                    <div class="col-sm-8">
-                                        <select class="form-control" name="" id="">
-                                            <option disabled selected="true">------Select-----</option>
-                                            <option value="paid">Paid</option>
-                                            <option value="unpaid">Unpaid</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="" class="col-sm-4 col-form-label">Comments</label>
-                                    <div class="col-sm-8">
-                                        <textarea class="form-control" name="" id="" rows="3"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="create-slip" class="btn btn-primary">Create Payslip</button>
                 </div>
+
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Create Payslip</button>
-            </div>
+
         </div>
     </div>
-</div>
-
+</form>
 
 
 
@@ -394,212 +297,6 @@
 
 @section('page-level-scripts-down')
 <!-- Page level plugins -->
-<script src="https://unpkg.com/mustache@latest"></script>
 <script src="/vendor/payslip.js"></script>
 
 @endsection
-
-
-
-
-<script id="template" type="x-tmpl-mustache">
-    <div class="row">
-
-        <div class="col-md-6">
-            <h5 class="card-title">Allowances</h5>
-            <div class="card">
-                <div class="card-body">
-                    <ul class="list-group allowance_container" id="allowance_list">
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <select class="form-control" name="" id="">
-                                            <option></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" name="" id="">
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <button type="button" id="addAllowance" class="form-control btn  btn-sm btn-success">
-                                        <svg class="bi bi-plus-square" width="1em" height="1em" viewBox="0 0 16 16"
-                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd"
-                                                d="M8 3.5a.5.5 0 01.5.5v4a.5.5 0 01-.5.5H4a.5.5 0 010-1h3.5V4a.5.5 0 01.5-.5z"
-                                                clip-rule="evenodd" />
-                                            <path fill-rule="evenodd"
-                                                d="M7.5 8a.5.5 0 01.5-.5h4a.5.5 0 010 1H8.5V12a.5.5 0 01-1 0V8z"
-                                                clip-rule="evenodd" />
-                                            <path fill-rule="evenodd"
-                                                d="M14 1H2a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V2a1 1 0 00-1-1zM2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <h5 class="card-title">Other Allowance</h5>
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="" id="" placeholder="Allowance title">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <input type="number" class="form-control" name="" id="" placeholder="Allowance value">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <h5 class="card-title">Deductions</h5>
-            <div class="card">
-                <div class="card-body">
-                    <ul class="list-group deduction_container" id="deduction_list">
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <select class="form-control" name="" id="">
-                                            <option></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <input type="number" class="form-control" name="" id="">
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <button type="button" id="addDeduction" class="form-control btn  btn-sm btn-success">
-                                        <svg class="bi bi-plus-square" width="1em" height="1em" viewBox="0 0 16 16"
-                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd"
-                                                d="M8 3.5a.5.5 0 01.5.5v4a.5.5 0 01-.5.5H4a.5.5 0 010-1h3.5V4a.5.5 0 01.5-.5z"
-                                                clip-rule="evenodd" />
-                                            <path fill-rule="evenodd"
-                                                d="M7.5 8a.5.5 0 01.5-.5h4a.5.5 0 010 1H8.5V12a.5.5 0 01-1 0V8z"
-                                                clip-rule="evenodd" />
-                                            <path fill-rule="evenodd"
-                                                d="M14 1H2a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V2a1 1 0 00-1-1zM2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <h5 class="card-title">Other Deduction</h5>
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name=""  placeholder="Deduction title">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <input type="number" class="form-control" name="" placeholder="Deduction value">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="row align-items-center">
-        <div class="col-md-7 mx-auto">
-            <div class="">
-                <div class="card-body">
-                    <div class="form-group row">
-                        <label for="" class="col-sm-4 col-form-label">Basic</label>
-                        <div class="col-sm-8">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="">N</span>
-                                </div>
-                                <input type="text" class="form-control" readonly />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-sm-4 col-form-label">Total Allowance</label>
-                        <div class="col-sm-8">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="">N</span>
-                                </div>
-                                <input type="text" class="form-control" readonly />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-sm-4 col-form-label">Total Deduction</label>
-                        <div class="col-sm-8">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="">N</span>
-                                </div>
-                                <input type="text" class="form-control" readonly />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-sm-4 col-form-label">Net Salary</label>
-                        <div class="col-sm-8">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="">N</span>
-                                </div>
-                                <input type="text" class="form-control" readonly />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-sm-4 col-form-label"> Payment method</label>
-                        <div class="col-sm-8">
-                            <select class="form-control" name="" id="">
-                                <option></option>
-                                <option></option>
-                                <option></option>
-                            </select>
-                        </div>
-    
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-sm-4 col-form-label">Status</label>
-                        <div class="col-sm-8">
-                            <select class="form-control" name="" id="">
-                                <option></option>
-                                <option></option>
-                                <option></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="col-sm-4 col-form-label">Comments</label>
-                        <div class="col-sm-8">
-                            <textarea class="form-control" name="" id="" rows="3"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</script>

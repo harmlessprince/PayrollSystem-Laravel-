@@ -1,66 +1,240 @@
-$(document).ready(function() {
-    //Generating dydnamic input 
-    var count = 0;
+<h5 class="card-title">Allowances</h5>
+<div class="card">
+    <div class="card-body payslip-modal">
+        <ul class="list-group allowance_container" id="allowance_list">
+            <li class="list-group-item">
+                <div class="row allowance_form">
+                    <div class="col">
+                        <div class="form-group">
+                            <select class="form-control" name="allowance_name[]" id="allowance_name">
+                                <option disabled selected="true"> -----Select----</option>
 
-    // number_of_desigantion(count);
-    $("#add_new_input").click(function() {
-        count++;
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <input type="number" class="form-control allowance" name="allowance_value[]"
+                                id="allowance_value">
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" id="addAllowance" class="form-control btn  btn-sm btn-success">
+                            <svg class="bi bi-plus-square" width="1em" height="1em" viewBox="0 0 16 16"
+                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M8 3.5a.5.5 0 01.5.5v4a.5.5 0 01-.5.5H4a.5.5 0 010-1h3.5V4a.5.5 0 01.5-.5z"
+                                    clip-rule="evenodd" />
+                                <path fill-rule="evenodd"
+                                    d="M7.5 8a.5.5 0 01.5-.5h4a.5.5 0 010 1H8.5V12a.5.5 0 01-1 0V8z"
+                                    clip-rule="evenodd" />
+                                <path fill-rule="evenodd"
+                                    d="M14 1H2a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V2a1 1 0 00-1-1zM2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
 
-        $("#desigantion_list").append(
-
-           '<div class="form-group row" id="desigantion_input-'+count+'">'+
-           '<input type="text" name="designation_name[]" id="designation_name" class="form-control col mr-1" placeholder="Enter Designation Name">'+ 
-          ' <input type="button" class="col-auto btn btn-danger btn_remove" id="'+count+'" value="delete">' +
-          '</div>'
-            
-        );
-    });
 
 
 
-    //Deleting the dynamically generated input
-    $(document).on("click", ".btn_remove", function() {
-        var button_id = $(this).attr("id");
-        $("#desigantion_input-" + button_id + "").remove();
-    });
-
-    $(".reset-form").click(function(){
-        $("#myform").trigger("reset");
-        
-    });
 
 
-    // Get Designations
-    $('select[name="department_name"]').on('change', function(){
-        var departmentId = $(this).val();
 
-        // console.log(departmentId);
-        if(departmentId) {
-            $.ajax({
-                url: '/desigantions/get/'+departmentId,
-                type:"GET",
-                dataType:"json",
-                beforeSend: function(){
-                    $('#loaderdesignation').css("visibility", "visible");
-                },
 
-                success:function(data) {
 
-                    $('select[name="designation_name"]').empty();
 
-                    $.each(data, function(key, value){
 
-                        $('select[name="designation_name"]').append('<option value="'+ key +'">' + value + '</option>');
 
-                    });
-                },
-                complete: function(){
-                    $('#loaderdesignation').css("visibility", "hidden");
-                }
-            });
-        } else {
-            $('select[name="designation_name"]').empty();
-        }
 
-    });
-});
+
+
+
+
+
+<h5 class="card-title">Deductions</h5>
+<div class="card">
+    <div class="card-body payslip-modal">
+        <ul class="list-group deduction_container" id="deduction_list">
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <select class="form-control" name="deduction_name[]" id="deduction_name">
+                                <option disabled selected="true"> -----Select----</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <input type="number" class="form-control deduction" name="deduction_value[]"
+                                id="deduction_value">
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" id="addDeduction" class="form-control btn  btn-sm btn-success">
+                            <svg class="bi bi-plus-square" width="1em" height="1em" viewBox="0 0 16 16"
+                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M8 3.5a.5.5 0 01.5.5v4a.5.5 0 01-.5.5H4a.5.5 0 010-1h3.5V4a.5.5 0 01.5-.5z"
+                                    clip-rule="evenodd" />
+                                <path fill-rule="evenodd"
+                                    d="M7.5 8a.5.5 0 01.5-.5h4a.5.5 0 010 1H8.5V12a.5.5 0 01-1 0V8z"
+                                    clip-rule="evenodd" />
+                                <path fill-rule="evenodd"
+                                    d="M14 1H2a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V2a1 1 0 00-1-1zM2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class="col-md-6 noHover allAllowances" tabindex="0">
+    <h5 class="card-title">Other Allowance</h5>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <input type="text" class="form-control " name="other_allowance_title"
+                            id="other_allowance_title" placeholder="Allowance title">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <input type="number" class="form-control allowance"
+                            name="other_allowance_value" id="other_allowance_value"
+                            placeholder="Allowance value">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6" id="allDeductions">
+    <h5 class="card-title">Other Deduction</h5>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <input type="text" class="form-control " name="other_deduction_title"
+                            placeholder="Deduction title">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <input type="number" class="form-control deduction"
+                            name="other_deduction_value" placeholder="Deduction value">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+// $.each(user_allowances, function(key, entry) {
+    //     let allowance_options = data.allowan.map(
+    //         element => {
+    //             if (
+    //                 entry.pivot.allowance_name ==
+    //                 element.allowance_name
+    //             ) {
+    //                 return `<option value="${element.allowance_name}" selected>${element.allowance_name}</option>`;
+    //             } else {
+    //                 return `<option value="${element.allowance_name}">${element.allowance_name}</option>`;
+    //             }
+    //         }
+    //     );
+    //     let html = `<li class="list-group-item" id="allowance_${counter_allow}">
+    //                 <div class="row">   
+    //                     <div class="col">
+    //                         <div class="form-group">
+    //                             <select class="form-control" name="allowance_name[]" id="sel_${counter_allow}">
+    //                             <option disabled selected="true"> -----Select----</option>
+    //                                ${allowance_options}
+    //                             </select>
+    //                         </div>
+    //                     </div>
+    //                     <div class="col">
+    //                         <div class="form-group">
+    //                         <input type="number" class="form-control allowance" name="allowance_value[]" id="al${counter_allow}" value="${entry.pivot.allowance_value}">
+    //                         </div>
+    //                     </div>
+    //                     <div class="col-auto">
+    //                         <button type="button" id="deleteAllowance_${counter_allow}" class="form-control btn btn-danger remove" >
+    //                         <svg class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    //                         <path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"/>
+    //                         <path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" clip-rule="evenodd"/>
+    //                     </svg>
+    //                         </button>
+    //                     </div>
+    //                 </div>
+    //             </li>`;
+    //     // console.log(entry);
+    //     counter_allow++;
+    //     allowancesFormGroup.append(html);
+
+    //     // allowanceDropdown.append($('<option></option>').attr('value', entry.allowance_name).text(entry.allowance_name));
+    // });
+    // $.each(user_deductions, function(key, entry) {
+    //     let deduction_options = data.deduct.map(element => {
+    //         if (
+    //             entry.pivot.deduction_name ==
+    //             element.deduction_name
+    //         ) {
+    //             return `<option value="${element.deduction_name}" selected>${element.deduction_name}</option>`;
+    //         } else {
+    //             return `<option value="${element.deduction_name}">${element.deduction_name}</option>`;
+    //         }
+    //     });
+    //     let html = `<li class="list-group-item" id="deduction_${counter_deduct}">
+    //                 <div class="row">   
+    //                     <div class="col">
+    //                         <div class="form-group">
+    //                             <select class="form-control" name="deduction_name[]" id="gen${counter_deduct}">
+    //                                 ${deduction_options}
+    //                             </select>
+    //                         </div>
+    //                     </div>
+    //                     <div class="col">
+    //                         <div class="form-group">
+    //                         <input type="number" class="form-control deduction" name="deduction_value[]" id="genp${counter_deduct}" value="${entry.pivot.deduction_value}">
+    //                         </div>
+    //                     </div>
+    //                     <div class="col-auto">
+    //                         <button type="button" id="deleteDeduction_${counter_deduct}" class="form-control btn btn-danger remove" >
+    //                         <svg class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    //                         <path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"/>
+    //                         <path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" clip-rule="evenodd"/>
+    //                     </svg>
+    //                         </button>
+    //                     </div>
+    //                 </div>
+    //             </li>`;
+    //     counter_deduct++;
+    //     // console.log(entry);
+    //     deductionsFormGroup.append(html);
+    //     // allowanceDropdown.append($('<option></option>').attr('value', entry.allowance_name).text(entry.allowance_name));
+    // });

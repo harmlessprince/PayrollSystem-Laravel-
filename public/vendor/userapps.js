@@ -62,11 +62,7 @@ $(document).ready(function() {
     });
 
   
-        // $('#userAllowance').change(function() {
-        //     dropdownval = $(this).val();
-        //     console.log(dropdownval);
-        //     $('#userAllowance').not(this).find('option[value="' + dropdownval + '"]').remove();
-        // });
+     
     
     
 

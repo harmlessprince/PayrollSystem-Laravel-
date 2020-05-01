@@ -13,6 +13,7 @@ use App\DeductionUser;
 use App\Department;
 use App\Designation;
 use App\Fianancialdetail;
+use App\Payslip;
 use App\User;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Support\Facades\Validator;
@@ -397,7 +398,7 @@ class AdminController extends Controller
         $deductions = Deduction::all();
         $allowances = Allowance::all();
         $departments = Department::all();
-        return view('adminpages.createPayslip')->with(["departments" => $departments, 'deductions'=>$deductions, 'allowances'=> $allowances]);
+        return view('adminpages.createPayslip')->with(["departments" => $departments, 'deductions' => $deductions, 'allowances' => $allowances]);
     }
 
     public function fetchEmployee($id)
@@ -405,7 +406,6 @@ class AdminController extends Controller
         $users = DB::table("users")->where("department_id", $id)->pluck("employee_name", "id")->toArray();
 
         return json_encode($users);
-
     }
 
     public function fetchEmployeeFinance($id)
@@ -413,37 +413,88 @@ class AdminController extends Controller
 
         if (request()->ajax()) {
             if ($id) {
-                $deductions = Deduction::all();
-                $allowances = Allowance::all();
-                $data = User::with('account','allowances.users', 'deductions.users')
-                    ->select('id', 'employee_name', 'email','department_id', 'designation_id', 'phone_number')
+                // $deductions = Deduction::all();
+                // $allowances = Allowance::all();
+                $data = User::with('account', 'allowances.users', 'deductions.users')
+                    ->select('id', 'employee_name', 'email', 'department_id', 'designation_id', 'phone_number')
                     ->where('id', $id)
                     ->get();
+                    // DB::table('orders')->where('finalized', 1)->exists()
+                $total_deduction = DB::table('deduction_user')->where('user_id', $id)->sum('deduction_value');
+                $total_allowance = DB::table('allowance_user')->where('user_id', $id)->sum('allowance_value');
             }
-            return json_encode(['result'=>$data,'deduct'=> $deductions, 'allowan'=> $allowances]);
+            return json_encode(['result' => $data, 'total_deduction'=> $total_deduction, 'total_allowance' => $total_allowance]);
         }
-
     }
 
     public function fetchDeductions()
     {
         if (request()->ajax()) {
-                $deductions = Deduction::all();
-                // $allowances = Allowance::all();
-            return json_encode(['deduct'=> $deductions]);
+            $deductions = Deduction::all();
+            return json_encode(['deduct' => $deductions]);
         }
     }
+    public function storePayslip(Request $request)
+    {
+        // dd($request->all());
+        $this->validate($request, [
+            'user_id' => 'required',
+            'basic_salary' => 'required|numeric',
+            'total_salary' => 'required|numeric',
+            'total_allowance' => 'required|numeric',
+            'total_deduction' => 'required|numeric',
+            'payslip_year' => 'required|integer',
+            'payslip_month' => 'required',
+            'status' => 'required',
+            'methodOfPayment' => 'required',
+        ]);
 
+        $user_id = $request->input('user_id');
+        $payslip_month = $request->payslip_month;
+        $payslip_year = $request->payslip_year;
+        $payslip_id = $user_id . "/" . $payslip_year ."/" . $payslip_month;
+        // $user_payslip_month_year = Payslip::where('user_id', '=', $user_id)->exists();
+        if (Payslip::where('payslip_id', '=', $payslip_id)->exists()) {
+
+                return response()->json(
+                    [
+                        'success' => true,
+                        'message' => 'User Payslip for the year and month already exist'
+                    ]
+                );
+
+        } else {
+
+
+            Payslip::create([
+                'user_id'           => $request->user_id,
+                'basic_salary'      =>  $request->basic_salary,
+                'total_salary'      =>  $request->total_salary,
+                'total_allowance'   =>  $request->total_allowance,
+                'total_deduction'   => $request->total_deduction,
+                'payslip_year'      =>  $request->payslip_year,
+                'payslip_month'     => $request->payslip_month,
+                'status'            =>  $request->status,
+                'methodOfPayment'   =>  $request->methodOfPayment,
+                'comment'           => $request->comment
+            ]);
+            return response()->json(
+                [
+                    'success' => true,
+                    'message' => 'Data inserted successfully'
+                ]
+            );
+        }
+    }
 
     public function fetchAllowances()
     {
         if (request()->ajax()) {
-                // $deductions = Deduction::all();
-                $allowances = Allowance::all();
-            return json_encode(['allowan'=> $allowances]);
+            $allowances = Allowance::all();
+            return json_encode(['allowan' => $allowances]);
         }
     }
-    
+
     //Compnay Settings Methods Starts Here
 
     public function appConfiguration()
