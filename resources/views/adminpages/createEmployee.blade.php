@@ -3,7 +3,7 @@
 @section('page-name', 'Add Employee')
 
 @section('main-content')
-{!! Form::open(['action'=>'AdminController@store', 'method'=>'POST', 'enctype'=>'multipart/form-data' ]) !!}
+{!! Form::open(['action'=>'AdminController@store', 'method'=>'POST', 'enctype'=>'multipart/form-data', "class"=>"create_employee" ]) !!}
 <div class="row">
     <!--Employee Details Section -->
     <div class="col-lg-6 ">

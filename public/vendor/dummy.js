@@ -185,28 +185,10 @@ $(document).ready(() => {
     let allowancesFormGroup = $("#allowance_list");
     let deductionsFormGroup = $("#deduction_list");
 
+
     function loadFinance(user_id = "") {
         var user_id = $("#users").val();
-        var slipyear = $(".year").val();
-        var slipmonth = $(".month").val();
-        var user_id = $("#users").val();
-        var coamputed_slip_id = slipyear + slipmonth + user_id;
-        document.getElementById("slip_tag").innerHTML = coamputed_slip_id;
-        document.getElementById("slip_number").value = coamputed_slip_id;
-        slipID();
-        $(function() {
-            $(".create-slip")
-                .parsley()
-                .on("field:validated", function() {
-                    var ok = $(".parsley-error").length === 0;
-                    $(".bs-callout-info").toggleClass("hidden", !ok);
-                    $(".bs-callout-warning").toggleClass("hidden", ok);
-                })
-                .on("form:submit", function() {
-                    return false; // Don't submit form for this demo
-                });
-        });
-        // console.log(slip_id);
+        $('#payslip-id').text(user_id+""+slipmonth+""+slipyear)
         if (user_id) {
             $.ajax({
                 url: "/fetch/employee-fiance/" + user_id,
@@ -217,16 +199,20 @@ $(document).ready(() => {
                     // $("#loader").addClass("spinner-border  ");
                 },
                 success: function(data) {
+                   
                     $("#total_allowance").val(data.total_allowance);
                     $("#total_deduction").val(data.total_deduction);
                     data.result.forEach(element => {
+                        // console.log(element);
+                        // user_allowances = element.allowances;
+                        // user_deductions = element.deductions;
+                       
                         $("#user_id").val(element.id);
-                        $(".slip-title").text(
-                            element.employee_name + " Payslip"
-                        );
-
+                        $('.slip-title').text(element.employee_name + " Payslip")
+                        
                         $("#basic_salary").val(element.account.basic_salary);
                         $("#total_salary").val(element.account.total_salary);
+                        
                     });
                 },
                 complete: function() {
@@ -242,7 +228,7 @@ $(document).ready(() => {
     $("#generate_payslip").on("click", loadFinance);
 
     function sumDeductions() {
-        var sum_deductions = 0.0;
+        // var sum_deductions = 0.0;
 
         $(".deduction").each(function() {
             sum_deductions += parseFloat($(this).val()) || 0;
@@ -326,18 +312,36 @@ $(document).ready(() => {
         }
     });
 
-    // $("#create-slip").click(function(e) {
-    $(".create-slip").on("submit", function(e) {
+    $("#create-slip").click(function(e) {
         e.preventDefault();
-        // $(".create-slip").parsley();
-        slipID();
+       
+        let user_id = $("#user_id").val();
+        let payslip_year = $("#years").val();
+        // console.log(payslip_year);
+        let payslip_month = $("#months").val();
+        let basic_salary = $("#basic_salary").val();
+        let total_allowance = $("#total_allowance").val();
+        let total_deduction = $("#total_deduction").val();
+        let total_salary = $("#total_salary").val();
+        let methodOfPayment = $("#methodOfPayment").val();
+        let status = $("#status").val();
+        let comment = $("#comment").val();
         $.ajax({
             url: "/store/payslip",
             method: "POST",
-            data: $(this).serialize(),
-            dataType: "json",
+            data: {
+                user_id: user_id,
+                payslip_year: payslip_year,
+                payslip_month: payslip_month,
+                basic_salary: basic_salary,
+                total_allowance: total_allowance,
+                total_deduction: total_deduction,
+                total_salary: total_salary,
+                methodOfPayment: methodOfPayment,
+                status: status,
+                comment: comment
+            },
             success: function(response) {
-                // console.log(data);
                 if (response.success) {
                     alert(response.message); //Message come from controller
                 } else {
@@ -350,6 +354,22 @@ $(document).ready(() => {
         });
     });
 
+
+    $('.modal').on('load', function(){
+        $("select.country").change(function(){
+            var selectedCountry = $(this).children("option:selected").val();
+            alert("You have selected the country - " + selectedCountry);
+        });
+    });
+
+    
+    var slipyear = $(".year").val();
+    var slipmonth = $(".month").val();
+
+    console.log(slipyear, slipmonth)
+   
+    
+
     function calculateNetSalary() {
         let basic_salary = parseFloat($("#basic_salary").val()) || 0;
         let total_allowance = parseFloat($("#total_allowance").val()) || 0;
@@ -358,28 +378,6 @@ $(document).ready(() => {
         $("#total_salary").val(result);
     }
 
-    function slipID() {
-        var user_id = $("#users").val();
-        $(".year").on("change", function() {
-            var slipyear = $(".year").val();
-            var slipmonth = $(".month")
-                .children("option:selected")
-                .val();
-            var coamputed_slip_id = slipyear + slipmonth + user_id;
-            document.getElementById("slip_tag").innerHTML = coamputed_slip_id;
-            document.getElementById("slip_number").value = coamputed_slip_id;
-        });
-        $(".month").on("change", function() {
-            var slipmonth = $(".month").val();
-            var slipyear = $(".year")
-                .children("option:selected")
-                .val();
-            var coamputed_slip_id = slipyear + slipmonth + user_id;
-            document.getElementById("slip_tag").innerHTML = coamputed_slip_id;
-            document.getElementById("slip_number").value = coamputed_slip_id;
-        });
-    }
     $(".sumSalary").on("click", calculateNetSalary);
 
-    
 });

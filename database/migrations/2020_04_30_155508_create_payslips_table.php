@@ -15,7 +15,7 @@ class CreatePayslipsTable extends Migration
     {
         Schema::create('payslips', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigIncrements('payslip_id')->unique();
+            $table->string('slip_number');
             $table->bigInteger('user_id');
             $table->integer('basic_salary');
             $table->integer('total_salary');
@@ -40,3 +40,18 @@ class CreatePayslipsTable extends Migration
         Schema::dropIfExists('payslips');
     }
 }
+
+
+// data: {
+//     user_id: user_id,
+//     payslip_year: payslip_year,
+//     payslip_month: payslip_month,
+//     basic_salary: basic_salary,
+//     total_allowance: total_allowance,
+//     total_deduction: total_deduction,
+//     total_salary: total_salary,
+//     methodOfPayment: methodOfPayment,
+//     status: status,
+//     comment: comment,
+//     slip_number: slip_number
+// },

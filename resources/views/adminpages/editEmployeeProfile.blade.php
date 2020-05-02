@@ -161,6 +161,42 @@
                     <ul class="list-group " id="sum_deduction">
 
                         <li class="list-group-item border-0" id="user_deduction_list">
+                            <div class="form-group" id="deduction-form">
+                               
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label for="alllowance">Deduction Name</label>
+                                        <select class="form-control" name="deduction_name[]">
+                                            <option value="">Select an deduction type</option>
+                                            @forelse ($deductions as $deduction)
+
+                                            <option value="{{$deduction->deduction_name}}"> {{$deduction->deduction_name}}
+                                                
+                                            </option>
+                                            
+                                            @empty
+                                            <option value="">Please Kindly input some deduction options</option>
+                                            @endforelse
+                                        </select>
+
+                                       
+                                        
+                                        
+                                    </div>
+                                    <div class="col">
+                                        <label for="deduction_unit">Deduction Value(Naira)</label>
+                                        <div class="input-group">
+                                            <input type="number" name="deduction_value[]" id="deduction-0" class="form-control deduction">
+                                            <a type="button"
+                                                class="btn btn-sm btn-danger text-white text-center ml-1 btn_remove_deduction"><i
+                                                    class="fas fa-trash-alt"></i></a>
+                                        </div>
+                                    </div>
+                                    @error('deduction_value.*')
+                                    <p class="text-danger"> {{$message}} </p>
+                                    @enderror
+                                </div>
+                            </div>
                             @foreach ($user->deductions as $userdeduction)
                                 <div class="form-group" id="deduction-form">
                             
@@ -211,13 +247,43 @@
                     </ul>
                     <ul class="list-group">
                         <li class="list-group-item border-0" id="user_allowance_list">
+                            <div class="form-group" id="allowance-form">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label for="alllowance">Allowance Name</label>
+                                        <select class="form-control" name="allowance_name[]" id="userAllowance">
+                                            <option >Select an allowance type</option>
+                                            @forelse ($allowances as $allowance)
+
+                                            <option value="{{$allowance->allowance_name}}">
+                                                {{$allowance->allowance_name}}</option>
+                                            @empty
+                                            <option >Please Kindly some options</option>
+                                            @endforelse
+                                        </select>
+
+                                    </div>
+                                    <div class="col">
+                                        <label for="allowance_unit">Allowance Value(Naira)</label>
+                                        <div class="input-group">
+                                            <input type="number" name="allowance_value[]" id="allowance-0" class="form-control allowance">
+                                            <a type="button"
+                                                class="btn btn-sm btn-danger text-white text-center ml-1 btn_remove_allowance"><i
+                                                    class="fas fa-trash-alt"></i></a>
+                                            @error('allowance_value[]')
+                                            <p class="text-danger"> {{$message}} </p>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             @foreach ($user->allowances as $userallowance)
                                 <div class="form-group" id="allowance-form">
                                     <div class="form-row">
                                         <div class="col">
                                             <label for="alllowance">Allowance Name</label>
                                             <select class="form-control" name="allowance_name[]" id="userAllowances">
-                                                <option value="">Select an allowance type</option>
+                                                <option >Select an allowance type</option>
 
                                                 @foreach ($allowances as $allowance)
                                                 @if ($allowance->allowance_name == $userallowance->pivot->allowance_name)
@@ -251,7 +317,7 @@
                         @error('allowance_name.*')
                         <small class="text-danger">{{$message}}</small>
                         @enderror
-                        <input type="text" class="form-control total_allowance mt-1 mb-1" name="total_allowance"
+                        <input type="hidden" class="form-control total_allowance mt-1 mb-1" name="total_allowance"
                             id="total_allowance" placeholder="Total Allowance" readonly>
                         <button type="button" class="btn btn-warning btn-sm btn-block " id="insert_new_allowance">Insert
                             new Allowance</button>

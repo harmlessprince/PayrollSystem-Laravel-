@@ -144,7 +144,7 @@ $(document).ready(function() {
         var sum_deductions = 0.0;
 
         $(".deduction").each(function() {
-            sum_deductions += parseFloat($(this).val());
+            sum_deductions += parseFloat($(this).val())||0;
         });
 
         $(".total_deduction").val(sum_deductions);
@@ -155,7 +155,7 @@ $(document).ready(function() {
         var sum_allowances = 0.0;
 
         $(".allowance").each(function() {
-            sum_allowances += parseFloat($(this).val());
+            sum_allowances += parseFloat($(this).val()) || 0 ;
         });
 
         $(".total_allowance").val(sum_allowances);
@@ -194,7 +194,7 @@ $(document).ready(function() {
         // alert(valueOfTotalSalary);
     });
 
-
+   
 
 });
 

@@ -235,13 +235,144 @@ class AdminController extends Controller
 
         $user = User::with('account', 'department', 'designation', 'allowances.users', 'deductions.users')->find($id);
         // ,'allowances.users', 'deductions.users'
-
+        // dd($user);
 
         return view('adminpages.editEmployeeProfile')->with(['user' => $user, 'departments' => $departments, 'deductions' => $deductions,  'allowances' => $allowances]);
     }
 
-    public function update()
+    public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'employee_name' => 'required',
+            'date_of_birth' => 'required|date',
+            'email' => 'required|email',   //:rfc,dns
+            'gender' => 'required',
+            'phone_number' => 'required',
+            'nationality' => 'required',
+            'address' => 'required',
+            'marital_status' => 'required',
+            'department_name' => 'required',
+            'designation_name' => 'required',
+            'resumption_date' => 'required|date',
+            'basic_salary' => 'required|numeric',
+            'total_salary' => 'required|numeric',
+            'allowance_name' => 'required',
+            'allowance_value' => 'required',
+            'deduction_name' => 'required',
+            'deduction_value' => 'required',
+            'account_name' => 'required|string',
+            'account_number' => 'required|numeric',
+            'bank_name' => 'required|string',
+            'user_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1999'
+        ]);
+
+        $user = User::find($id);
+        // accepting User model datas
+        $user->employee_name = $request->input('employee_name');
+        $user->email = $request->input('email');
+        $user->date_of_birth = $request->input('date_of_birth');
+        $user->gender = $request->input('gender');
+        $user->phone_number = $request->input('phone_number');
+        $user->nationality = $request->input('nationality');
+        $user->address = $request->input('address');
+        $user->marital_status = $request->input('marital_status');
+        $user->department_id = $request->input('department_name');
+        $user->designation_id = $request->input('designation_name');
+        $user->resumption_date = $request->input('resumption_date');
+        $user->employee_status = $request->input('employee_status');
+
+
+        //Checking if file upload is present 
+
+        if ($request->hasFile('user_photo')) {
+            // Get file name with extension
+            $fileNameWithExtension = $request->file('user_photo')->getClientOriginalName();
+
+            //Get file name only
+            $fileName = pathinfo($fileNameWithExtension, PATHINFO_FILENAME);
+
+            //Get file extension
+            $fileExtension = $request->file('user_photo')->getClientOriginalExtension();
+
+            $fileNameToStore = $fileName . '_' . time() . '.' . $fileExtension;
+
+            //Upload image
+
+            $imagePath = $request->file('user_photo')->storeAs('public/Employee_Images', $fileNameToStore);
+        }
+
+
+        //Saving User model Instance 
+
+        $user->save();
+
+
+
+
+
+        // Getting Deductions data
+
+        $deductionnames = $request->input('deduction_name'); // Accept all dedutions names 
+
+
+        $user_deduction_data = [];   //Initiallize array for deductions 
+
+        for ($i = 0; $i < count($request->input('deduction_name')); $i++) { //Count number of input with deduction name array 
+
+            // Get all the ids of sellected 
+            $deductionsIds = array();
+            foreach ($deductionnames as $deductionname) {
+
+                $deductionsIds[] = Deduction::select('id')->where('deduction_name', $deductionname)->first()->id;
+            }
+
+            $user_deduction_data[$request->input('deduction_name')[$i]] = [
+                'deduction_value' => $request->input('deduction_value')[$i],
+                'deduction_name' => $request->input('deduction_name')[$i], 'deduction_id' => $deductionsIds[$i]
+            ];
+        }
+
+        $user->deductions()->attach($user_deduction_data);
+
+
+
+        $allowancenames = $request->input('allowance_name');
+
+        $sync_allowance_data = [];
+
+        for ($i = 0; $i < count($request->input('allowance_name')); $i++) {
+
+            $allowanceIds = array();
+            foreach ($allowancenames as $allowancename) {
+
+                $allowanceIds[] = Allowance::select('id')->where('allowance_name', $allowancename)->first()->id;
+            }
+
+            $sync_allowance_data[$request->input('allowance_name')[$i]] = [
+                'allowance_value' => $request->input('allowance_value')[$i],
+                'allowance_name' => $request->input('allowance_name')[$i], 'allowance_id' => $allowanceIds[$i], 'user_id' => $user->id
+            ];
+        }
+
+        $user->allowances()->attach($sync_allowance_data);
+
+
+        //Add total deduction value and allowance to database
+
+        $account = Account::find($id);
+        $account->basic_salary = $request->input('basic_salary');
+        $account->total_salary = $request->input('total_salary');
+        $account->account_name = $request->input('account_name');
+        $account->account_number = $request->input('account_number');
+        $account->bank_name = $request->input('bank_name');
+
+
+        // dd($user, $account, $sync_allowance_data, $user_deduction_data);
+        $account->save();
+
+
+        return redirect('/admin')->with('success', 'Employee Data Updated Sucessfully');
+
     }
 
 
@@ -419,11 +550,11 @@ class AdminController extends Controller
                     ->select('id', 'employee_name', 'email', 'department_id', 'designation_id', 'phone_number')
                     ->where('id', $id)
                     ->get();
-                    // DB::table('orders')->where('finalized', 1)->exists()
+                // DB::table('orders')->where('finalized', 1)->exists()
                 $total_deduction = DB::table('deduction_user')->where('user_id', $id)->sum('deduction_value');
                 $total_allowance = DB::table('allowance_user')->where('user_id', $id)->sum('allowance_value');
             }
-            return json_encode(['result' => $data, 'total_deduction'=> $total_deduction, 'total_allowance' => $total_allowance]);
+            return json_encode(['result' => $data, 'total_deduction' => $total_deduction, 'total_allowance' => $total_allowance]);
         }
     }
 
@@ -445,45 +576,52 @@ class AdminController extends Controller
             'total_deduction' => 'required|numeric',
             'payslip_year' => 'required|integer',
             'payslip_month' => 'required',
+            'slip_number' => 'required',
             'status' => 'required',
             'methodOfPayment' => 'required',
         ]);
 
-        $user_id = $request->input('user_id');
-        $payslip_month = $request->payslip_month;
-        $payslip_year = $request->payslip_year;
-        $payslip_id = $user_id . "/" . $payslip_year ."/" . $payslip_month;
+        // $slip_number = $request->input('slip_number');
+        // $payslip_month = $request->payslip_month;
+        // $payslip_year = $request->payslip_year;
+        // dd($slip_id);
         // $user_payslip_month_year = Payslip::where('user_id', '=', $user_id)->exists();
-        if (Payslip::where('payslip_id', '=', $payslip_id)->exists()) {
+        if (request()->ajax()) {
+            if (Payslip::where('slip_number', '=', $request->input('slip_number'))->exists()) {
+                // return back()->with('error','Payslip has already been generated for this user');
 
                 return response()->json(
                     [
                         'success' => true,
-                        'message' => 'User Payslip for the year and month already exist'
+                        'message' => 'Payslip has already been generated for this user'
                     ]
                 );
+            } else {
 
-        } else {
 
+                $payslip = new Payslip();
 
-            Payslip::create([
-                'user_id'           => $request->user_id,
-                'basic_salary'      =>  $request->basic_salary,
-                'total_salary'      =>  $request->total_salary,
-                'total_allowance'   =>  $request->total_allowance,
-                'total_deduction'   => $request->total_deduction,
-                'payslip_year'      =>  $request->payslip_year,
-                'payslip_month'     => $request->payslip_month,
-                'status'            =>  $request->status,
-                'methodOfPayment'   =>  $request->methodOfPayment,
-                'comment'           => $request->comment
-            ]);
-            return response()->json(
-                [
-                    'success' => true,
-                    'message' => 'Data inserted successfully'
-                ]
-            );
+                $payslip->slip_number = $request->input('slip_number');
+                $payslip->basic_salary = $request->input('basic_salary');
+                $payslip->user_id = $request->input('user_id');
+                $payslip->total_salary = $request->input('total_salary');
+                $payslip->total_allowance = $request->input('total_allowance');
+                $payslip->total_deduction = $request->input('total_deduction');
+                $payslip->payslip_year = $request->input('payslip_year');
+                $payslip->payslip_month = $request->input('payslip_month');
+                $payslip->status = $request->input('status');
+                $payslip->methodOfPayment = $request->input('methodOfPayment');
+                $payslip->comment = $request->input('comment');
+
+                $payslip->save();
+
+                return response()->json(
+                    [
+                        'success' => true,
+                        'message' => 'Payslip  generated Successfully'
+                    ]
+                );
+            }
         }
     }
 

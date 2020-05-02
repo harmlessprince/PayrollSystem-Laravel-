@@ -8,5 +8,6 @@
 
 @section('main-content')
     Games Start Here
+    @include('flash-message')
 @endsection
 

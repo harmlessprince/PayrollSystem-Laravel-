@@ -2,6 +2,7 @@
 @section('title','Daily Attendance')
 @section("page-level-scripts-up")
 <!-- Custom styles for this page -->
+
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <style>
     .card {
@@ -11,6 +12,7 @@
         /* background-color: #F8F9FC; */
     }
 
+   
     .list-group-item {
         /* background-color: #F8F9FC; */
         border: 0px;
@@ -18,10 +20,6 @@
 
     .noHover:hover {
         border: none;
-    }
-
-    .slip-title{
-        margin-right: 19em;
     }
 
     .col,
@@ -100,6 +98,18 @@
     .payslip-modal {
         padding: 0rem;
     }
+    .form-group .parsley-success {
+        color: #468847;
+        background-color: #DFF0D8;
+        border: 1px solid #D6E9C6;
+    }
+
+    .form-group .parsley-error {
+        color: #B94A48;
+        background-color: #F2DEDE;
+        border: 1px solid #EED3D7;
+    }
+
 </style>
 @endsection
 
@@ -108,6 +118,7 @@
 
 @section('main-content')
 <div class="row align-items-center">
+
     {{-- {{ csrf_token() }} --}}
     <div class="card col-md-6 mx-auto">
         <div class="card-body">
@@ -127,7 +138,7 @@
                     <option disabled selected="true">-----Select-----</option>
                 </select>
             </div>
-           
+
         </div>
         <!-- Button trigger modal -->
         <div class="form-group text-center">
@@ -141,15 +152,11 @@
 
     </div>
 
-    
-
-    
-
 
 </div>
 
 <!-- Modal -->
-<form action="/store/payslip" method="POST">
+<form action="/store/payslip" class="create-slip" method="POST" data-parsley-validate="">
     @csrf
     <div class="modal fade  bd-example-modal-lg" id="exampleModalScrollable " tabindex="-1" role="dialog"
         aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
@@ -158,9 +165,11 @@
 
             <div class="modal-content payslip-modal">
                 <div class="modal-header">
-                    
-                    <h5 class="modal-title slip-title" id="exampleModalScrollableTitle">Employee Payslip</h5>
-                    <h5 class="modal-title " id="exampleModalScrollableTitle">Payslip ID: <span class="font-weight-bold text-uppercase" id="payslip-id"></span> </h5>
+                    <h5 class="modal-title mr-5" id="exampleModalScrollableTitle">Employee Payslip</h5>
+
+                    <h5 class="modal-title  ">Payslip ID: <span class="font-weight-bold text-uppercase"
+                            id="slip_tag"></span></h5>
+
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -168,16 +177,31 @@
 
                 <div class="modal-body ">
                     <div class="row">
-                        
+
+                        {{-- <input type="hidden" name="slip_number" id="slip_id" /> --}}
+
                         <input type="hidden" name="user_id" id="user_id" readonly />
-                      
-                      
+
+
                     </div>
 
                     <div class="row align-items-center">
                         <div class="col-md-7 mx-auto">
                             <div class="">
+
                                 <div class="card-body">
+                                    <div class="form-group row">
+                                        <label for="" class="col-sm-4 col-form-label">Enter SlipID</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">ID</span>
+                                                </div>
+                                                <input type="text" id="slip_number" name="slip_number"
+                                                    class="form-control text-uppercase" required="">
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="form-group row">
                                         <label for="" class="col-sm-4 col-form-label">Basic</label>
                                         <div class="col-sm-8">
@@ -186,7 +210,7 @@
                                                     <span class="input-group-text">N</span>
                                                 </div>
                                                 <input type="text" id="basic_salary" name="basic_salary"
-                                                    class="form-control" readonly />
+                                                    class="form-control" readonly required=""/>
                                             </div>
                                         </div>
                                     </div>
@@ -198,7 +222,7 @@
                                                     <span class="input-group-text">N</span>
                                                 </div>
                                                 <input type="text" class="form-control total_allowance "
-                                                    id="total_allowance" name="total_allowance" readonly />
+                                                    id="total_allowance" name="total_allowance" readonly required="" />
                                             </div>
                                         </div>
                                     </div>
@@ -210,7 +234,7 @@
                                                     <span class="input-group-text">N</span>
                                                 </div>
                                                 <input type="text" id="total_deduction" name="total_deduction"
-                                                    class="form-control total_deduction" readonly />
+                                                    class="form-control total_deduction" readonly required=""/>
                                             </div>
                                         </div>
                                     </div>
@@ -222,16 +246,28 @@
                                                     <span class="input-group-text" id="">N</span>
                                                 </div>
                                                 <input type="text" id="total_salary" name="total_salary"
-                                                    class="form-control" readonly />
+                                                    class="form-control" readonly required=""/>
                                             </div>
-                                            {{-- <button type="button" class="btn btn-primary sumSalary">Calculate Net
-                                                Salary</button> --}}
+
                                         </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class=""> Year</label>
+                                        <select class="form-control year mb-2" id="years" name="payslip_year" required="">
+                                            <option disabled selected="true"> -----Select-----</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class=""> Month </label>
+                                        <select class="form-control month mb-2" name="payslip_month" id="months" required="">
+                                            <option disabled selected="true"> ------Select-----</option>
+                                        </select>
                                     </div>
                                     <div class="form-group row">
                                         <label for="" class="col-sm-4 col-form-label"> Payment method</label>
                                         <div class="col-sm-8">
-                                            <select class="form-control" name="methodOfPayment" id="methodOfPayment">
+                                            <select class="form-control" name="methodOfPayment" id="methodOfPayment"
+                                                required="">
                                                 <option disabled selected="true"> ------Select -----</option>
                                                 <option value="cash">Cash</option>
                                                 <option value="bank">Bank</option>
@@ -243,26 +279,10 @@
                                     <div class="form-group row">
                                         <label for="" class="col-sm-4 col-form-label">Status</label>
                                         <div class="col-sm-8">
-                                            <select class="form-control" name="status" id="status">
+                                            <select class="form-control" name="status" id="status" required="">
                                                 <option disabled selected="true">------Select-----</option>
                                                 <option value="1">Paid</option>
                                                 <option value="0">Unpaid</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label  for="" class="col-sm-4 col-form-label"> Year</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-control year  mb-2" id="years" name="payslip_year">
-                                                <option disabled selected="true"> -----Select-----</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="" class="col-sm-4  col-form-label"> Month </label>
-                                        <div class="col-sm-8">
-                                            <select class="form-control  mb-2 month" name="payslip_month" id="months">
-                                                <option disabled selected="true"> ------Select-----</option>
                                             </select>
                                         </div>
                                     </div>
@@ -298,5 +318,7 @@
 @section('page-level-scripts-down')
 <!-- Page level plugins -->
 <script src="/vendor/payslip.js"></script>
+{{-- <script src="/vendor/parsley.js"></script> --}}
+<script src="http://parsleyjs.org/dist/parsley.js"></script>
 
 @endsection
