@@ -9,6 +9,7 @@
 @section('page-name', 'Manage Employees')
 
 @section('main-content')
+@include('flash-message')
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
