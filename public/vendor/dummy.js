@@ -381,3 +381,194 @@ $(document).ready(() => {
     $(".sumSalary").on("click", calculateNetSalary);
 
 });
+
+
+// <ul class="list-group " id="sum_deduction">
+//                         <li class="list-group-item border-0" id="user_deduction_list">
+//                             <div class="form-group" id="deduction-form">
+                               
+//                                 <div class="form-row">
+//                                     <div class="col">
+//                                         <label for="alllowance">Deduction Name</label>
+//                                         <select class="form-control" name="deduction_name[]">
+//                                             <option value="">Select an deduction type</option>
+//                                             @forelse ($deductions as $deduction)
+
+//                                             <option value="{{$deduction->deduction_name}}"> {{$deduction->deduction_name}}
+                                                
+//                                             </option>
+                                            
+//                                             @empty
+//                                             <option value="">Please Kindly input some deduction options</option>
+//                                             @endforelse
+//                                         </select>
+
+                                       
+                                        
+                                        
+//                                     </div>
+//                                     <div class="col">
+//                                         <label for="deduction_unit">Deduction Value(Naira)</label>
+//                                         <div class="input-group">
+//                                             <input type="number" name="deduction_value[]" id="deduction-0" class="form-control deduction">
+//                                             <a type="button"
+//                                                 class="btn btn-sm btn-danger text-white text-center ml-1 btn_remove_deduction"><i
+//                                                     class="fas fa-trash-alt"></i></a>
+//                                         </div>
+//                                     </div>
+//                                     @error('deduction_value.*')
+//                                     <p class="text-danger"> {{$message}} </p>
+//                                     @enderror
+//                                 </div>
+//                             </div>
+//                         </li>
+//                         <input type="hidden" class="form-control total_deduction mt-1 mb-1" name="total_deduction" id="total_deduction" placeholder="Total Deduction" readonly>
+//                         <button type="button" class="btn btn-warning btn-sm btn-block mt-2"
+//                             id="insert_new_deduction">Insert new Deduction</button>
+//                     </ul>
+//                     <ul class="list-group">
+//                         <li class="list-group-item border-0" id="user_allowance_list">
+//                             <div class="form-group" id="allowance-form">
+//                                 <div class="form-row">
+//                                     <div class="col">
+//                                         <label for="alllowance">Allowance Name</label>
+//                                         <select class="form-control" name="allowance_name[]" id="userAllowance">
+//                                             <option value="">Select an allowance type</option>
+//                                             @forelse ($allowances as $allowance)
+
+//                                             <option value="{{$allowance->allowance_name}}">
+//                                                 {{$allowance->allowance_name}}</option>
+//                                             @empty
+//                                             <option value="">Please Kindly some options</option>
+//                                             @endforelse
+//                                         </select>
+
+//                                     </div>
+//                                     <div class="col">
+//                                         <label for="allowance_unit">Allowance Value(Naira)</label>
+//                                         <div class="input-group">
+//                                             <input type="number" name="allowance_value[]" id="allowance-0" class="form-control allowance">
+//                                             <a type="button"
+//                                                 class="btn btn-sm btn-danger text-white text-center ml-1 btn_remove_allowance"><i
+//                                                     class="fas fa-trash-alt"></i></a>
+//                                             @error('allowance_value[]')
+//                                             <p class="text-danger"> {{$message}} </p>
+//                                             @enderror
+//                                         </div>
+//                                     </div>
+//                                 </div>
+//                             </div>
+//                         </li>
+//                         @error('allowance_name.*')
+//                         <small class="text-danger">{{$message}}</small>
+//                         @enderror
+//                         <input type="hidden" class="form-control total_allowance mt-1 mb-1" name="total_allowance" id="total_allowance" placeholder="Total Allowance" readonly>
+//                         <button type="button" class="btn btn-warning btn-sm btn-block " id="insert_new_allowance">Insert
+//                             new Allowance</button>
+//                     </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="row allowance_form">
+<div class="col">
+    <div class="form-group">
+        <select class="form-control" name="allowance_name[]" id="allowance_name">
+            <option disabled selected="true"> -----Select----</option>
+            @foreach ($allowances as $allowance)
+           @if ($allowance->allowance_name ==
+            $userallowance->pivot->allowance_name)
+            <option value="{{$allowance->allowance_name}}" selected>
+                {{$allowance->allowance_name}}</option>
+            @else
+            <option value="{{$allowance->allowance_name}}">
+                {{$allowance->allowance_name}} </option>
+            @endif
+            @endforeach
+
+        </select>
+    </div>
+</div>
+<div class="col">
+    <div class="form-group">
+        <input type="number" class="form-control allowance" name="allowance_value[]"
+            id="allowance_value" value="{{$userallowance->pivot->allowance_value}}">
+    </div>
+</div>
+<div class="col-auto">
+    <button type="button" <div class="row allowance_form">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <select class="form-control" name="allowance_name[]" id="allowance_name">
+                                                <option disabled selected="true"> -----Select----</option>
+                                                @foreach ($allowances as $allowance)
+                                               @if ($allowance->allowance_name ==
+                                                $userallowance->pivot->allowance_name)
+                                                <option value="{{$allowance->allowance_name}}" selected>
+                                                    {{$allowance->allowance_name}}</option>
+                                                @else
+                                                <option value="{{$allowance->allowance_name}}">
+                                                    {{$allowance->allowance_name}} </option>
+                                                @endif
+                                                @endforeach
+                            
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <input type="number" class="form-control allowance" name="allowance_value[]"
+                                                id="allowance_value" value="{{$userallowance->pivot->allowance_value}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="button" id="addAllowance"
+                                            class="form-control btn  btn-sm btn-success">
+                                            <svg class="bi bi-plus-square" width="1em" height="1em" viewBox="0 0 16 16"
+                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                    d="M8 3.5a.5.5 0 01.5.5v4a.5.5 0 01-.5.5H4a.5.5 0 010-1h3.5V4a.5.5 0 01.5-.5z"
+                                                    clip-rule="evenodd" />
+                                                <path fill-rule="evenodd"
+                                                    d="M7.5 8a.5.5 0 01.5-.5h4a.5.5 0 010 1H8.5V12a.5.5 0 01-1 0V8z"
+                                                    clip-rule="evenodd" />
+                                                <path fill-rule="evenodd"
+                                                    d="M14 1H2a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V2a1 1 0 00-1-1zM2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div> id="addAllowance"
+        class="form-control btn  btn-sm btn-success">
+        <svg class="bi bi-plus-square" width="1em" height="1em" viewBox="0 0 16 16"
+            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                d="M8 3.5a.5.5 0 01.5.5v4a.5.5 0 01-.5.5H4a.5.5 0 010-1h3.5V4a.5.5 0 01.5-.5z"
+                clip-rule="evenodd" />
+            <path fill-rule="evenodd"
+                d="M7.5 8a.5.5 0 01.5-.5h4a.5.5 0 010 1H8.5V12a.5.5 0 01-1 0V8z"
+                clip-rule="evenodd" />
+            <path fill-rule="evenodd"
+                d="M14 1H2a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V2a1 1 0 00-1-1zM2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2z"
+                clip-rule="evenodd" />
+        </svg>
+    </button>
+</div>
+</div>

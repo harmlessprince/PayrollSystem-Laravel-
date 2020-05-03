@@ -22,13 +22,14 @@ Auth::routes(['register' => false]);
 Route::get('/admin', 'AdminController@index')->name('admin');
 Route::get('/manage-employee', 'AdminController@manageEmployee');
 Route::get('/create-employee', 'AdminController@create');
+Route::get('/delete-employee/{id}', 'AdminController@destroyEmployee');
 // Route::get('/employee/{{$user->id}}', 'AdminController@show');
 
 Route::get('/employeeDetails', function(){
     return view('adminpages.employeeDetails');
 });
 
-Route::get('desigantions/get/{id}', 'AdminController@getDesignations');
+Route::get('/fetch/desigantions/{id}', 'AdminController@getDesignations');
 Route::get('/create-department', 'AdminController@createdepartment');
 Route::get('/manage-department', 'AdminController@manageDepartment');
 

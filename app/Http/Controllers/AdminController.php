@@ -64,7 +64,7 @@ class AdminController extends Controller
 
     public function create()
     {
-        $departments = Department::pluck('department_name', 'id')->toArray();
+        $departments = Department::all();
         // $departments = Department::all();
         // $deductions = Deduction::pluck('deduction_name', 'id');
         $deductions = Deduction::all();
@@ -92,10 +92,10 @@ class AdminController extends Controller
             'resumption_date' => 'required|date',
             'basic_salary' => 'required|numeric',
             'total_salary' => 'required|numeric',
-            'allowance_name' => 'required',
-            'allowance_value' => 'required',
-            'deduction_name' => 'required',
-            'deduction_value' => 'required',
+            'allowance_name.*' => 'required',
+            'allowance_value.*' => 'required',
+            'deduction_name.*' => 'required',
+            'deduction_value.*' => 'required',
             'account_name' => 'required|string',
             'account_number' => 'required|numeric',
             'bank_name' => 'required|string',
@@ -227,17 +227,18 @@ class AdminController extends Controller
 
     public function edit($id)
     {
-        $departments = Department::pluck('department_name', 'id')->toArray();
+        $departments = Department::all();
         // $departments = Department::all();
+        $designations = Designation::all();
         // $deductions = Deduction::pluck('deduction_name', 'id');
-        $deductions = Deduction::all();
-        $allowances = Allowance::all();
+        // $deductions = Deduction::all();
+        // $allowances = Allowance::all();
 
         $user = User::with('account', 'department', 'designation', 'allowances.users', 'deductions.users')->find($id);
         // ,'allowances.users', 'deductions.users'
         // dd($user);
 
-        return view('adminpages.editEmployeeProfile')->with(['user' => $user, 'departments' => $departments, 'deductions' => $deductions,  'allowances' => $allowances]);
+        return view('adminpages.editEmployeeProfile')->with(['user' => $user, 'departments' => $departments, 'designations'=>$designations]);
     }
 
     public function update(Request $request, $id)
@@ -256,10 +257,10 @@ class AdminController extends Controller
             'resumption_date' => 'required|date',
             'basic_salary' => 'required|numeric',
             'total_salary' => 'required|numeric',
-            'allowance_name' => 'required',
-            'allowance_value' => 'required',
-            'deduction_name' => 'required',
-            'deduction_value' => 'required',
+            'allowance_name.*' => 'required',
+            'allowance_value.*' => 'required',
+            'deduction_name.*' => 'required',
+            'deduction_value.*' => 'required',
             'account_name' => 'required|string',
             'account_number' => 'required|numeric',
             'bank_name' => 'required|string',
@@ -328,11 +329,11 @@ class AdminController extends Controller
 
             $user_deduction_data[$request->input('deduction_name')[$i]] = [
                 'deduction_value' => $request->input('deduction_value')[$i],
-                'deduction_name' => $request->input('deduction_name')[$i], 'deduction_id' => $deductionsIds[$i]
+                'deduction_name' => $request->input('deduction_name')[$i], 'deduction_id' => $deductionsIds[$i],'user_id' => $user->id
             ];
         }
 
-        $user->deductions()->attach($user_deduction_data);
+        $user->deductions()->sync($user_deduction_data);
 
 
 
@@ -350,11 +351,11 @@ class AdminController extends Controller
 
             $sync_allowance_data[$request->input('allowance_name')[$i]] = [
                 'allowance_value' => $request->input('allowance_value')[$i],
-                'allowance_name' => $request->input('allowance_name')[$i], 'allowance_id' => $allowanceIds[$i], 'user_id' => $user->id
+                'allowance_name' => $request->input('allowance_name')[$i], 'allowance_id' => $allowanceIds[$i],'user_id' => $user->id
             ];
         }
 
-        $user->allowances()->attach($sync_allowance_data);
+        $user->allowances()->sync($sync_allowance_data);
 
 
         //Add total deduction value and allowance to database
@@ -371,11 +372,25 @@ class AdminController extends Controller
         $account->save();
 
 
-        return redirect('/admin')->with('success', 'Employee Data Updated Sucessfully');
+        return redirect('/manage-employee')->with('success', 'Employee Data Updated Sucessfully');
 
     }
 
+    public function destroyEmployee ($id){
 
+        DB::table('users')->where('id', $id)->delete();
+        DB::table('accounts')->where('user_id', $id)->delete();
+        DB::table('deduction_user')->where('user_id', $id)->delete();
+        DB::table('allowance_user')->where('user_id', $id)->delete();
+        DB::table('payslips')->where('user_id', $id)->delete();
+       
+        // $user = User::find($id)->delete();
+        // $user->accounts()->where('user_id','=',$id)->delete();
+
+        // $user->deductions()->wherePivot('user_id','=',$id)->detach();
+        // $user->allowances()->wherePivot('user_id','=',$id)->detach();
+
+    }
     // creating department And Designation
 
     public function createDepartment()
@@ -526,10 +541,10 @@ class AdminController extends Controller
     /**Generate Employee Payslip from here */
     public function createPayslip()
     {
-        $deductions = Deduction::all();
-        $allowances = Allowance::all();
+        // $deductions = Deduction::all();
+        // $allowances = Allowance::all();
         $departments = Department::all();
-        return view('adminpages.createPayslip')->with(["departments" => $departments, 'deductions' => $deductions, 'allowances' => $allowances]);
+        return view('adminpages.createPayslip')->with(["departments" => $departments]);
     }
 
     public function fetchEmployee($id)
@@ -539,23 +554,41 @@ class AdminController extends Controller
         return json_encode($users);
     }
 
+    // public function fetchEmployeeFinance($id)
+    // {
+
+    //     if (request()->ajax()) {
+    //         if ($id) {
+    //             $deductions = Deduction::all();
+    //             $allowances = Allowance::all();
+    //             $data = User::with('account', 'allowances.users', 'deductions.users')
+    //                 ->select('id', 'employee_name', 'email', 'department_id', 'designation_id', 'phone_number')
+    //                 ->where('id', $id)
+    //                 ->get();
+    //             // DB::table('orders')->where('finalized', 1)->exists()
+    //             $total_deduction = DB::table('deduction_user')->where('user_id', $id)->sum('deduction_value');
+    //             $total_allowance = DB::table('allowance_user')->where('user_id', $id)->sum('allowance_value');
+    //         }
+    //         return json_encode(['result' => $data, 'total_deduction' => $total_deduction, 'total_allowance' => $total_allowance]);
+    //     }
+    // }
     public function fetchEmployeeFinance($id)
     {
-
         if (request()->ajax()) {
             if ($id) {
-                // $deductions = Deduction::all();
-                // $allowances = Allowance::all();
-                $data = User::with('account', 'allowances.users', 'deductions.users')
-                    ->select('id', 'employee_name', 'email', 'department_id', 'designation_id', 'phone_number')
+                $deductions = Deduction::all();
+                $allowances = Allowance::all();
+                $data = User::with('account','allowances.users', 'deductions.users')
+                    ->select('id', 'employee_name', 'email','department_id', 'designation_id', 'phone_number')
                     ->where('id', $id)
                     ->get();
-                // DB::table('orders')->where('finalized', 1)->exists()
-                $total_deduction = DB::table('deduction_user')->where('user_id', $id)->sum('deduction_value');
-                $total_allowance = DB::table('allowance_user')->where('user_id', $id)->sum('allowance_value');
+                    $total_deduction = DB::table('deduction_user')->where('user_id', $id)->sum('deduction_value');
+                    $total_allowance = DB::table('allowance_user')->where('user_id', $id)->sum('allowance_value');
             }
-            return json_encode(['result' => $data, 'total_deduction' => $total_deduction, 'total_allowance' => $total_allowance]);
+            // return json_encode(['result'=>$data]);
+            return json_encode(['result'=>$data,'deduct'=> $deductions, 'allowan'=> $allowances, 'total_deduction' => $total_deduction, 'total_allowance' => $total_allowance]);
         }
+
     }
 
     public function fetchDeductions()
@@ -588,7 +621,7 @@ class AdminController extends Controller
         // $user_payslip_month_year = Payslip::where('user_id', '=', $user_id)->exists();
         if (request()->ajax()) {
             if (Payslip::where('slip_number', '=', $request->input('slip_number'))->exists()) {
-                // return back()->with('error','Payslip has already been generated for this user');
+               
 
                 return response()->json(
                     [

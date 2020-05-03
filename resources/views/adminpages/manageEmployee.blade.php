@@ -55,9 +55,10 @@
               @endif
             </td>
             <td>
+              
               <a href="/employee/{{$user->id}}" class="btn btn-sm btn-info" role="button">View</a>
               <a href="/employee/{{$user->id}}/edit" class="btn btn-sm btn-primary" role="button">Edit</a>
-              <a href="#" class="btn btn-sm btn-danger" role="button">Delete</a>
+              <a href="/delete-employee/{{$user->id}}" class="btn btn-sm btn-danger" role="button">Delete</a>
             </td>
           </tr>
          
