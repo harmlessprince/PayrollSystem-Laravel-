@@ -10,6 +10,10 @@ use Yajra\DataTables\DataTables;
 
 class PayslipController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -101,7 +105,21 @@ class PayslipController extends Controller
      */
     public function show($id)
     {
-        return view('payslippages.show');
+
+        $payslip = Payslip::with([
+            'user' => function ($query) {
+               return $query->select('id', 'employee_name', 'department_id', 'designation_id', 'email', 'phone_number')
+                    ->with('account');
+            },
+            'user.department' => function ($query) {
+              return  $query->select('id', 'department_name');
+            },
+            'user.designation' => function ($query) {
+               return $query->select('id', 'designation_name');
+            }
+        ])->find($id);
+        return view('payslippages.show', ['payslip'=>$payslip]);
+
     }
 
     /**
@@ -112,7 +130,6 @@ class PayslipController extends Controller
      */
     public function edit($id)
     {
-        
     }
 
     /**
@@ -164,7 +181,7 @@ class PayslipController extends Controller
                     ->where('payslip_year', array($request->payslip_year))
                     ->where('payslip_month', array($request->payslip_month))
                     ->get();
-            }else {
+            } else {
                 return response()->json(
                     [
                         'success' => true,
@@ -173,17 +190,6 @@ class PayslipController extends Controller
                 );
             }
             return  DataTables::of($data)->make(true);
-       
         }
-
-
     }
-
-
-
-
-
-
-
-
 }
