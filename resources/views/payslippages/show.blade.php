@@ -36,7 +36,7 @@
             </div>
             <div class="col-md-4">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item" class="text-upperCase"><strong>Payslip No:</strong> {{$payslip->id}}{{$payslip->slip_number}} </li>
+                    <li class="list-group-item" ><strong>Payslip No:</strong><span class="text-uppercase"> {{$payslip->id}}{{$payslip->slip_number}} </span></li>
                     <li class="list-group-item"><strong>Payslip Status: </strong>
                         @if ($payslip->status = 0 )
                             Unpaid
