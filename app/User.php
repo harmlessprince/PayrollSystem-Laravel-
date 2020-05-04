@@ -69,4 +69,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Deduction::class)->withPivot('deduction_name','deduction_value')->withTimestamps();
     }
 
+    public function payslips()
+    {
+        return $this->hasMany('App\Payslip');
+    }
+
 }

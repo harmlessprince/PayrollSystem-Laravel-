@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'EmployeeController@index');
 Route::resource('employee', 'AdminController');
+
 // Auth::routes();
 Auth::routes(['register' => false]);
 Route::get('/admin', 'AdminController@index')->name('admin');
@@ -45,8 +46,8 @@ Route::post('/store/attendance','AdminController@storeAttendance');
 Route::get('/attendance/report','AdminController@attendanceReport');
 
 //Generating Employee Payslip
-Route::get('/create/payslip','AdminController@createPayslip');
-Route::post('/store/payslip','AdminController@storePayslip');
+// Route::get('/create/payslip','AdminController@createPayslip');
+// Route::post('/store/payslip','AdminController@storePayslip');
 Route::get('/fetch/users/{id}','AdminController@fetchEmployee');
 Route::get('/fetch/employee-fiance/{id}','AdminController@fetchEmployeeFinance');
 Route::get('/fetch/deductions','AdminController@fetchDeductions');
@@ -62,3 +63,11 @@ Route::get('allowances/get/{id}', 'AdminController@loadAllowances');
 Route::get('/payroll/configuration', 'AdminController@appConfiguration');
 
 Route::post('/store/allowance&deductions', 'AdminController@SaveAllowanceAndDeductions');
+
+
+
+//////////////////////////////////---Generate PaySlips-----///////////////////////////////
+Route::resource('payslips', 'PayslipController');
+Route::get('/load-payslips', 'PayslipController@load_payslips');
+//////////////////////////////////---Generate PaySlips-----///////////////////////////////
+

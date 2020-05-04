@@ -10,7 +10,6 @@ $(document).ready(() => {
         $("#years")
             .append(yearOptions)
             .val(now);
-        // $("#year").val(now);country
     };
 
     generateYears();
@@ -29,7 +28,7 @@ $(document).ready(() => {
         $("#months")
             .append(monthOptions)
             .val(currentMonth);
-        // $("#month").val(currentMonth);
+        $("#month").val(currentMonth);
     };
 
     generateMonths();
@@ -332,7 +331,7 @@ $(document).ready(() => {
         // $(".create-slip").parsley();
         slipID();
         $.ajax({
-            url: "/store/payslip",
+            url: "/payslips",
             method: "POST",
             data: $(this).serialize(),
             dataType: "json",
@@ -381,5 +380,64 @@ $(document).ready(() => {
     }
     $(".sumSalary").on("click", calculateNetSalary);
 
-    
+    // Hide Payslip List On Table Load
+    $(".payslip_list").css("display", "none");
+    $(".fetch_payslips").on("click", function(e) {
+        e.preventDefault();
+        var payslip_month = $("#months").val();
+        var payslip_year = $("#years").val();
+        table = $("#payslip_table").DataTable({
+            destroy: true,
+            processing: true,
+            serverside: true,
+            ajax: {
+                type: "get",
+                url: "/load-payslips",
+                data: {
+                    payslip_month: payslip_month,
+                    payslip_year: payslip_year
+                }
+            },
+            columns: [
+                { data: null },
+                { data: "user.employee_name" },
+                {
+                    data: null,
+                    render: function(data, type, row, meta) {
+                        return `Basic Salary => ${row.basic_salary} <br>  
+                    Total Allowance => ${row.total_allowance} <br> 
+                     Total Deduction => ${row.total_deduction} <br> <br> 
+                     Total Salary => ${row.total_salary}`;
+                    }
+                },
+                { data: "payslip_year" },
+                { data: "payslip_month" },
+                {
+                    data: "status",
+                    render: function(data, type, row, meta) {
+                        if (data == 0) {
+                            return `<button id="" class="btn btn-warning btn-sm" type="button" >unpaid</button>`;
+                        } else {
+                            return `<button id="" class="btn btn-success btn-sm" type="button" >unpaid</button>`;
+                        }
+                    }
+                },
+                {
+                    data: "id",
+                    render: function(data, type, row, meta) {
+                        return `<div class="form-group">
+                                <a href = "/payslips/${data}" id="" class="btn btn-success btn-sm text-white" type="button" >payslip</a>
+                                <a id="" class="btn btn-danger btn-sm text-white" type="button" >delete</a>
+                                                            </div>`;
+                    }
+                }
+            ],
+            fnRowCallback: function(nRow, aData, iDisplayIndex) {
+                $("td:nth-child(1)", nRow).html(iDisplayIndex + 1);
+                return nRow;
+            }
+        });
+
+        $(".payslip_list").css("display", "inline-block");
+    });
 });

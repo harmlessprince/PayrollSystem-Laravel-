@@ -100,8 +100,8 @@
     </a>
     <div id="payroll" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" href="/create/payslip">Create Payslip</a>
-        <a class="collapse-item" href="#">Payslip List</a>
+        <a class="collapse-item" href="/payslips/create">Create Payslip</a>
+        <a class="collapse-item" href="	/payslips">Payslip List</a>
       </div>
     </div>
   </li>

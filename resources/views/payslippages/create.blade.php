@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','Daily Attendance')
+@section('title','Create Payslip')
 @section("page-level-scripts-up")
 <!-- Custom styles for this page -->
 
@@ -118,7 +118,7 @@
 
 @section('main-content')
 <div class="row align-items-center">
-
+    @include('flash-message')
     {{-- {{ csrf_token() }} --}}
     <div class="card col-md-6 mx-auto">
         <div class="card-body">
@@ -156,7 +156,7 @@
 </div>
 
 <!-- Modal -->
-<form action="/store/payslip" class="create-slip" method="POST" data-parsley-validate="">
+<form action="payslips/store" class="create-slip" method="POST" data-parsley-validate="">
     @csrf
     <div class="modal fade  bd-example-modal-lg" id="exampleModalScrollable " tabindex="-1" role="dialog"
         aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">

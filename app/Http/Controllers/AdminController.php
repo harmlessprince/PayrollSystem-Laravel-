@@ -539,13 +539,7 @@ class AdminController extends Controller
     // Attendance Report Generation Methds Ends
 
     /**Generate Employee Payslip from here */
-    public function createPayslip()
-    {
-        // $deductions = Deduction::all();
-        // $allowances = Allowance::all();
-        $departments = Department::all();
-        return view('adminpages.createPayslip')->with(["departments" => $departments]);
-    }
+    
 
     public function fetchEmployee($id)
     {
@@ -598,65 +592,7 @@ class AdminController extends Controller
             return json_encode(['deduct' => $deductions]);
         }
     }
-    public function storePayslip(Request $request)
-    {
-        // dd($request->all());
-        $this->validate($request, [
-            'user_id' => 'required',
-            'basic_salary' => 'required|numeric',
-            'total_salary' => 'required|numeric',
-            'total_allowance' => 'required|numeric',
-            'total_deduction' => 'required|numeric',
-            'payslip_year' => 'required|integer',
-            'payslip_month' => 'required',
-            'slip_number' => 'required',
-            'status' => 'required',
-            'methodOfPayment' => 'required',
-        ]);
 
-        // $slip_number = $request->input('slip_number');
-        // $payslip_month = $request->payslip_month;
-        // $payslip_year = $request->payslip_year;
-        // dd($slip_id);
-        // $user_payslip_month_year = Payslip::where('user_id', '=', $user_id)->exists();
-        if (request()->ajax()) {
-            if (Payslip::where('slip_number', '=', $request->input('slip_number'))->exists()) {
-               
-
-                return response()->json(
-                    [
-                        'success' => true,
-                        'message' => 'Payslip has already been generated for this user'
-                    ]
-                );
-            } else {
-
-
-                $payslip = new Payslip();
-
-                $payslip->slip_number = $request->input('slip_number');
-                $payslip->basic_salary = $request->input('basic_salary');
-                $payslip->user_id = $request->input('user_id');
-                $payslip->total_salary = $request->input('total_salary');
-                $payslip->total_allowance = $request->input('total_allowance');
-                $payslip->total_deduction = $request->input('total_deduction');
-                $payslip->payslip_year = $request->input('payslip_year');
-                $payslip->payslip_month = $request->input('payslip_month');
-                $payslip->status = $request->input('status');
-                $payslip->methodOfPayment = $request->input('methodOfPayment');
-                $payslip->comment = $request->input('comment');
-
-                $payslip->save();
-
-                return response()->json(
-                    [
-                        'success' => true,
-                        'message' => 'Payslip  generated Successfully'
-                    ]
-                );
-            }
-        }
-    }
 
     public function fetchAllowances()
     {
