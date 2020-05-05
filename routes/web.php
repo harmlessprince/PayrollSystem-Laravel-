@@ -69,5 +69,7 @@ Route::post('/store/allowance&deductions', 'AdminController@SaveAllowanceAndDedu
 //////////////////////////////////---Generate PaySlips-----///////////////////////////////
 Route::resource('payslips', 'PayslipController');
 Route::get('/load-payslips', 'PayslipController@load_payslips');
+Route::get('/print/payslip/{id}', 'PayslipController@get_payslip_data');
+
 //////////////////////////////////---Generate PaySlips-----///////////////////////////////
 

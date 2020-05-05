@@ -1,5 +1,6 @@
 $(document).ready(() => {
     $("#generate_payslip").prop("disabled", true);
+
     let generateYears = () => {
         var now = new Date().getFullYear();
         yearOptions = "";
@@ -65,7 +66,9 @@ $(document).ready(() => {
                     },
                     complete: function() {
                         setTimeout(removeSpinner, 2000);
-                        $("#generate_payslip").prop("disabled", false);
+                        $('#users').on('change', function() {
+                            $("#generate_payslip").prop("disabled", false);
+                          });
                     }
                 });
             }
@@ -235,6 +238,7 @@ $(document).ready(() => {
             });
         } else {
             alert("You must choose an employee");
+            $('.create-slip').modal('hide');
         }
     }
 
@@ -441,3 +445,6 @@ $(document).ready(() => {
         $(".payslip_list").css("display", "inline-block");
     });
 });
+
+
+// $department->users_count

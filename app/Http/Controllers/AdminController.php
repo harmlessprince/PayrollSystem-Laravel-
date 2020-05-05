@@ -49,7 +49,13 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('dashboards.admin');
+
+        $userCount = User::count();
+        $departmentCount  = Department::count();
+        $payslipCount = Payslip::where('payslip_month', date('F'))
+            ->where('payslip_year', date('Y'))
+            ->count();
+        return view('dashboards.admin', compact('userCount', 'departmentCount', 'payslipCount'));
     }
 
     //This display's summary of employee data and gives access to edit, delete and view
@@ -65,11 +71,8 @@ class AdminController extends Controller
     public function create()
     {
         $departments = Department::all();
-        // $departments = Department::all();
-        // $deductions = Deduction::pluck('deduction_name', 'id');
         $deductions = Deduction::all();
         $allowances = Allowance::all();
-
 
         return view('adminpages.createEmployee')->with(['departments' => $departments, 'deductions' => $deductions,  'allowances' => $allowances]);
     }
@@ -238,7 +241,7 @@ class AdminController extends Controller
         // ,'allowances.users', 'deductions.users'
         // dd($user);
 
-        return view('adminpages.editEmployeeProfile')->with(['user' => $user, 'departments' => $departments, 'designations'=>$designations]);
+        return view('adminpages.editEmployeeProfile')->with(['user' => $user, 'departments' => $departments, 'designations' => $designations]);
     }
 
     public function update(Request $request, $id)
@@ -329,7 +332,7 @@ class AdminController extends Controller
 
             $user_deduction_data[$request->input('deduction_name')[$i]] = [
                 'deduction_value' => $request->input('deduction_value')[$i],
-                'deduction_name' => $request->input('deduction_name')[$i], 'deduction_id' => $deductionsIds[$i],'user_id' => $user->id
+                'deduction_name' => $request->input('deduction_name')[$i], 'deduction_id' => $deductionsIds[$i], 'user_id' => $user->id
             ];
         }
 
@@ -351,7 +354,7 @@ class AdminController extends Controller
 
             $sync_allowance_data[$request->input('allowance_name')[$i]] = [
                 'allowance_value' => $request->input('allowance_value')[$i],
-                'allowance_name' => $request->input('allowance_name')[$i], 'allowance_id' => $allowanceIds[$i],'user_id' => $user->id
+                'allowance_name' => $request->input('allowance_name')[$i], 'allowance_id' => $allowanceIds[$i], 'user_id' => $user->id
             ];
         }
 
@@ -373,17 +376,17 @@ class AdminController extends Controller
 
 
         return redirect('/manage-employee')->with('success', 'Employee Data Updated Sucessfully');
-
     }
 
-    public function destroyEmployee ($id){
+    public function destroyEmployee($id)
+    {
 
         DB::table('users')->where('id', $id)->delete();
         DB::table('accounts')->where('user_id', $id)->delete();
         DB::table('deduction_user')->where('user_id', $id)->delete();
         DB::table('allowance_user')->where('user_id', $id)->delete();
         DB::table('payslips')->where('user_id', $id)->delete();
-       
+
         // $user = User::find($id)->delete();
         // $user->accounts()->where('user_id','=',$id)->delete();
 
@@ -539,7 +542,7 @@ class AdminController extends Controller
     // Attendance Report Generation Methds Ends
 
     /**Generate Employee Payslip from here */
-    
+
 
     public function fetchEmployee($id)
     {
@@ -572,17 +575,16 @@ class AdminController extends Controller
             if ($id) {
                 $deductions = Deduction::all();
                 $allowances = Allowance::all();
-                $data = User::with('account','allowances.users', 'deductions.users')
-                    ->select('id', 'employee_name', 'email','department_id', 'designation_id', 'phone_number')
+                $data = User::with('account', 'allowances.users', 'deductions.users')
+                    ->select('id', 'employee_name', 'email', 'department_id', 'designation_id', 'phone_number')
                     ->where('id', $id)
                     ->get();
-                    $total_deduction = DB::table('deduction_user')->where('user_id', $id)->sum('deduction_value');
-                    $total_allowance = DB::table('allowance_user')->where('user_id', $id)->sum('allowance_value');
+                $total_deduction = DB::table('deduction_user')->where('user_id', $id)->sum('deduction_value');
+                $total_allowance = DB::table('allowance_user')->where('user_id', $id)->sum('allowance_value');
             }
             // return json_encode(['result'=>$data]);
-            return json_encode(['result'=>$data,'deduct'=> $deductions, 'allowan'=> $allowances, 'total_deduction' => $total_deduction, 'total_allowance' => $total_allowance]);
+            return json_encode(['result' => $data, 'deduct' => $deductions, 'allowan' => $allowances, 'total_deduction' => $total_deduction, 'total_allowance' => $total_allowance]);
         }
-
     }
 
     public function fetchDeductions()

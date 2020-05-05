@@ -90,7 +90,7 @@
 <!-- Page level plugins -->
 <script src="/vendor/payslip.js"></script>
 {{-- <script src="/vendor/parsley.js"></script> --}}
-<script src="http://parsleyjs.org/dist/parsley.js"></script>
+{{-- <script src="http://parsleyjs.org/dist/parsley.js"></script> --}}
 <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 <!-- Page level custom scripts -->

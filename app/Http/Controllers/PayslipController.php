@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Department;
 use App\Payslip;
 use App\User;
+use Barryvdh\DomPDF\Facade as PDF;
+// use PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Yajra\DataTables\DataTables;
 
 class PayslipController extends Controller
@@ -108,19 +111,45 @@ class PayslipController extends Controller
 
         $payslip = Payslip::with([
             'user' => function ($query) {
-               return $query->select('id', 'employee_name', 'department_id', 'designation_id', 'email', 'phone_number')
-                    ->with('account');
+                return $query->select('id', 'employee_name', 'department_id', 'designation_id', 'email', 'phone_number')
+                    ->with('account', 'allowances.users', 'deductions.users');
             },
             'user.department' => function ($query) {
-              return  $query->select('id', 'department_name');
+                return  $query->select('id', 'department_name');
             },
             'user.designation' => function ($query) {
-               return $query->select('id', 'designation_name');
-            }
-        ])->find($id);
-        return view('payslippages.show', ['payslip'=>$payslip]);
+                return $query->select('id', 'designation_name');
+            },
 
+        ])->find($id);
+        return view('payslippages.show', ['payslip' => $payslip]);
     }
+
+
+    public function get_payslip_data($id)
+    {
+
+        $payslip = Payslip::with([
+            'user' => function ($query) {
+                return $query->select('id', 'employee_name', 'department_id', 'designation_id', 'email', 'phone_number')
+                    ->with('account', 'allowances.users', 'deductions.users');
+            },
+            'user.department' => function ($query) {
+                return  $query->select('id', 'department_name');
+            },
+            'user.designation' => function ($query) {
+                return $query->select('id', 'designation_name');
+            },
+
+        ])->find($id);
+        // return $payslip;
+
+        return view('payslippages.pdfview', ['payslip'=>$payslip]);
+        // $pdf = PDF::loadView('payslippages.pdfview', ['payslip'=>$payslip]);
+        // return $pdf->download('invoice.pdf');
+        // return $pdf->stream();
+    }
+
 
     /**
      * Show the form for editing the specified resource.
