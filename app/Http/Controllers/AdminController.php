@@ -231,15 +231,9 @@ class AdminController extends Controller
     public function edit($id)
     {
         $departments = Department::all();
-        // $departments = Department::all();
         $designations = Designation::all();
-        // $deductions = Deduction::pluck('deduction_name', 'id');
-        // $deductions = Deduction::all();
-        // $allowances = Allowance::all();
 
         $user = User::with('account', 'department', 'designation', 'allowances.users', 'deductions.users')->find($id);
-        // ,'allowances.users', 'deductions.users'
-        // dd($user);
 
         return view('adminpages.editEmployeeProfile')->with(['user' => $user, 'departments' => $departments, 'designations' => $designations]);
     }

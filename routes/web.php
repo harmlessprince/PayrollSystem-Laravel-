@@ -15,7 +15,6 @@ use Illuminate\Foundation\Console\RouteCacheCommand;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'EmployeeController@index');
 Route::resource('employee', 'AdminController');
 
 // Auth::routes();
@@ -55,7 +54,8 @@ Route::get('/fetch/allowances','AdminController@fetchAllowances');
 
 
 
-Route::get('/employee', 'EmployeeController@index')->name('employee');
+
+
 // Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
 Route::get('allowances/get/{id}', 'AdminController@loadAllowances');
@@ -73,3 +73,12 @@ Route::get('/print/payslip/{id}', 'PayslipController@get_payslip_data');
 
 //////////////////////////////////---Generate PaySlips-----///////////////////////////////
 
+////////////////////////////////////---- Employee Routes-----/////////////////////
+Route::get('/', 'EmployeeController@index');
+Route::get('/employee', 'EmployeeController@index')->name('employee');
+Route::get('/view/payslips', 'EmployeeController@indexpayslip');
+Route::get('/load-payslips', 'EmployeeController@load_payslips');
+Route::get('/mypayslip/{id}', 'EmployeeController@show');
+Route::get('/print/payslip/{id}', 'EmployeeController@get_payslip_data');
+Route::get('/applyfor/leave', 'EmployeeController@applyforleave');
+Route::get('/all/leaves', 'EmployeeController@displayleaves');

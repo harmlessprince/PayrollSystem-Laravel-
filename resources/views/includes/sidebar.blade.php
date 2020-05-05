@@ -140,24 +140,24 @@
 
   <!-- Employee Link Menu Starts Here --->
   <!-- Nav Item - Attendance Collapse Menu -->
-  <li class="nav-item">
+  {{-- <li class="nav-item">
     <a class="nav-link" href="#" aria-expanded="true" aria-controls="collapseTwo">
       <i class="fas fa-fw fa-cog"></i>
       <span>Attendance</span>
     </a>
-  </li>
+  </li> --}}
 
   <!-- Nav Item - Leave Collapse Menu -->
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#leave" aria-expanded="true"
       aria-controls="collapseTwo">
-      <i class="fas fa-fw fa-cog"></i>
+      <i class="fas fa-fw fa-bed"></i>
       <span>Leave</span>
     </a>
     <div id="leave" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" href="#">Apply for Leave</a>
-        <a class="collapse-item" href="#">Manage Leave</a>
+        <a class="collapse-item" href="/applyfor/leave">Apply for Leave</a>
+        <a class="collapse-item" href="/all/leaves">Manage Leave</a>
       </div>
     </div>
   </li>
@@ -167,8 +167,8 @@
 
   <!-- Nav Item - Payslip Collapse Menu -->
   <li class="nav-item">
-    <a class="nav-link" href="#" aria-expanded="true" aria-controls="collapseTwo">
-      <i class="fas fa-fw fa-cog"></i>
+    <a class="nav-link" href="/view/payslips" aria-expanded="true" aria-controls="collapseTwo">
+      <i class="fas fa-fw fa-money-check-alt"></i>
       <span>Payslip</span>
     </a>
   </li>
@@ -177,7 +177,7 @@
   <li class="nav-item">
     <a class="nav-link" href="#" aria-expanded="true" aria-controls="collapseTwo">
       <i class="fas fa-fw fa-cog"></i>
-      <span>Holiday</span>
+      <span>Settings</span>
     </a>
   </li>
   @endif
