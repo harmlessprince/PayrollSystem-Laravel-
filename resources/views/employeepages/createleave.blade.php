@@ -14,7 +14,7 @@
 
 <div class="card   shadow mb-4">
     {{-- /store/leave --}}
-    <form action="/store/leave" method="POST" id="leave">
+    <form action="/send/leave-request/" method="POST" id="leave">
         @csrf
         <div class="card">
             <div class="mx-auto col-md-8">

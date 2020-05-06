@@ -20,6 +20,7 @@ Route::resource('employee', 'AdminController');
 // Auth::routes();
 Auth::routes(['register' => false]);
 Route::get('/admin', 'AdminController@index')->name('admin');
+Route::get('/admin/profile/{id}', 'AdminController@adminProfile');
 Route::get('/manage-employee', 'AdminController@manageEmployee');
 Route::get('/create-employee', 'AdminController@create');
 Route::get('/delete-employee/{id}', 'AdminController@destroyEmployee');
@@ -62,7 +63,25 @@ Route::get('allowances/get/{id}', 'AdminController@loadAllowances');
 
 Route::get('/payroll/configuration', 'AdminController@appConfiguration');
 
-Route::post('/store/allowance&deductions', 'AdminController@SaveAllowanceAndDeductions');
+//////////////////////-----------Leave routes-----------------//////////////
+Route::get('/create/leave', 'AdminController@createLeave');
+Route::post('/store/leave', 'AdminController@storeLeave');
+Route::get('/manage/leaves', 'AdminController@manageLeave');
+
+
+//////////////////////-----------Allowances routes-----------------//////////////
+Route::get('/create/allowance', 'AdminController@createAllowance');
+Route::post('/store/allowance', 'AdminController@storeAllowance');
+Route::get('/manage/allowances', 'AdminController@manageAllowance');
+
+
+//////////////////////-----------Deduction routes-----------------//////////////
+Route::get('/create/deduction', 'AdminController@createDeduction');
+Route::post('/store/deduction', 'AdminController@storeDeduction');
+Route::get('/manage/deductions', 'AdminController@manageDeduction');
+
+
+
 
 
 
@@ -78,11 +97,13 @@ Route::get('/print/payslip/{id}', 'PayslipController@get_payslip_data');
 
 ////////////////////////////////////---- Employee Routes-----/////////////////////
 Route::get('/', 'EmployeeController@index');
+Route::get('/profile/{id}', 'EmployeeController@show');
 Route::get('/employee', 'EmployeeController@index')->name('employee');
 Route::get('/view/payslips', 'EmployeeController@indexpayslip');
 Route::get('/load-payslips', 'EmployeeController@load_payslips');
-Route::get('/mypayslip/{id}', 'EmployeeController@show');
+// Route::get('/mypayslip/{id}', 'EmployeeController@show');
+Route::get('/mypayslip/{id}', 'EmployeeController@showslip');
 Route::get('/print/payslip/{id}', 'EmployeeController@get_payslip_data');
-Route::get('/create/leave', 'EmployeeController@createleave');
+Route::get('/apply/for/leave', 'EmployeeController@createleave');
 Route::get('/show/leaves/{id}', 'EmployeeController@showleave');
-Route::post('/store/leave/', 'EmployeeController@storeleave' );
+Route::post('/send/leave-request/', 'EmployeeController@storeleave' );

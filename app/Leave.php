@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Leave extends Model
 {
     //
-    protected $fillable = ['user_id','leave_type', 'from_date', 'to_date', 'description'];
+    protected $fillable = ['leave_type'];
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsToMany('App\User')->withPivot('leave_type', 'from_date', 'to_date', 'description','status');
     }
 }

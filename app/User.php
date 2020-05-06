@@ -76,7 +76,7 @@ class User extends Authenticatable
 
     public function leaves()
     {
-        return $this->hasMany('App\Leave');
+        return $this->belongsToMany('App\Leave')->withPivot('leave_type', 'from_date', 'to_date', 'description','status');
     }
 
 }

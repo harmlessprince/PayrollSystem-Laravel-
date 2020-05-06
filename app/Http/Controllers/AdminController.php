@@ -13,6 +13,7 @@ use App\DeductionUser;
 use App\Department;
 use App\Designation;
 use App\Fianancialdetail;
+use App\Leave;
 use App\Payslip;
 use App\User;
 use Facade\FlareClient\Http\Response;
@@ -219,7 +220,15 @@ class AdminController extends Controller
 
         return redirect('/admin')->with('success', 'Employee Data Created Sucessfully');
     }
+    
+    public function adminProfile($id)
+    {
+        $user = User::with('account')->find($id);
 
+        return view('adminpages.profile',  ['user' => $user]);
+    }
+
+    
 
     public function show($id)
     {
@@ -381,11 +390,6 @@ class AdminController extends Controller
         DB::table('allowance_user')->where('user_id', $id)->delete();
         DB::table('payslips')->where('user_id', $id)->delete();
 
-        // $user = User::find($id)->delete();
-        // $user->accounts()->where('user_id','=',$id)->delete();
-
-        // $user->deductions()->wherePivot('user_id','=',$id)->detach();
-        // $user->allowances()->wherePivot('user_id','=',$id)->detach();
 
     }
     // creating department And Designation
@@ -486,34 +490,6 @@ class AdminController extends Controller
     }
 
 
-    public function SaveAllowanceAndDeductions(Request $request)
-    {
-
-
-        $this->validate($request, [
-            'allowance_name.*' => 'required',
-            'deduction_name.*' => 'required'
-        ]);
-
-        $allowances = $request->allowance_name;
-
-        foreach ($allowances as $allowance_value) {
-            $allowances[] = Allowance::create([
-                'allowance_name' => $allowance_value
-            ]);
-        }
-
-        $deductions = $request->deduction_name;
-
-        foreach ($deductions as $deduction_value) {
-            $deductions[] = Deduction::create([
-                'deduction_name' => $deduction_value
-            ]);
-        }
-
-        return redirect('/admin')->with('success', 'Allowance(s) and Deduction(s) uploaded sucessfully');
-    }
-
     //Attendance Report Generation
 
     public function loadAllowances($id)
@@ -545,24 +521,7 @@ class AdminController extends Controller
         return json_encode($users);
     }
 
-    // public function fetchEmployeeFinance($id)
-    // {
-
-    //     if (request()->ajax()) {
-    //         if ($id) {
-    //             $deductions = Deduction::all();
-    //             $allowances = Allowance::all();
-    //             $data = User::with('account', 'allowances.users', 'deductions.users')
-    //                 ->select('id', 'employee_name', 'email', 'department_id', 'designation_id', 'phone_number')
-    //                 ->where('id', $id)
-    //                 ->get();
-    //             // DB::table('orders')->where('finalized', 1)->exists()
-    //             $total_deduction = DB::table('deduction_user')->where('user_id', $id)->sum('deduction_value');
-    //             $total_allowance = DB::table('allowance_user')->where('user_id', $id)->sum('allowance_value');
-    //         }
-    //         return json_encode(['result' => $data, 'total_deduction' => $total_deduction, 'total_allowance' => $total_allowance]);
-    //     }
-    // }
+   
     public function fetchEmployeeFinance($id)
     {
         if (request()->ajax()) {
@@ -596,6 +555,105 @@ class AdminController extends Controller
             $allowances = Allowance::all();
             return json_encode(['allowan' => $allowances]);
         }
+    }
+
+
+    /////////////////////-----Creating and Managing Leaves----------------///////////////
+    public function createLeave(){
+        return  view('adminpages.createleave');
+    }
+
+
+    public function storeLeave(Request $request){
+        
+
+        $this->validate($request, [
+            'leave_type.*' => 'required',
+        ]);
+
+        $leaves = $request->leave_type;
+
+        foreach ($leaves as $leave) {
+            $leaves[] = Leave::create([
+                'leave_type' => $leave,
+            ]);
+        }
+
+        return redirect('/create/leave')->with('success', 'Leave Created sucessfully');
+    }
+
+    public function manageLeave(){
+
+        $leaves = Leave::get();
+
+        return view("adminpages.manageLeaves", ['leaves' => $leaves]);
+    }
+
+
+
+    /////////////////////-----Creating and Managing Allowance----------------///////////////
+    public function createAllowance(){
+        return  view('adminpages.createallowance');
+    }
+
+
+    public function storeAllowance(Request $request){
+        
+
+        $this->validate($request, [
+            'allowance_name.*' => 'required',
+        ]);
+
+        $allowances = $request->allowance_name;
+
+        foreach ($allowances as $allowance) {
+            $allowances[] = Allowance::create([
+                'allowance_name' => $allowance,
+            ]);
+        }
+
+        return redirect('/create/allowance')->with('success', 'Allowance Created sucessfully');
+    }
+
+    public function manageAllowance(){
+
+        $allowances = Allowance::get();
+
+        return view("adminpages.manageAllowances", ['allowances' => $allowances]);
+    }
+
+
+
+
+     /////////////////////-----Creating and Managing Deductions----------------///////////////
+     public function createDeduction(){
+        return  view('adminpages.createDeduction');
+    }
+
+
+    public function storeDeduction(Request $request){
+        
+
+        $this->validate($request, [
+            'deduction_name.*' => 'required',
+        ]);
+
+        $deductions = $request->deduction_name;
+
+        foreach ($deductions as $deduction) {
+            $deductions[] = Deduction::create([
+                'deduction_name' => $deduction,
+            ]);
+        }
+
+        return redirect('/create/deduction')->with('success', 'Deduction Created sucessfully');
+    }
+
+    public function manageDeduction(){
+
+        $deductions = Deduction::get();
+
+        return view("adminpages.manageDeduction", ['deductions' => $deductions]);
     }
 
     //Compnay Settings Methods Starts Here

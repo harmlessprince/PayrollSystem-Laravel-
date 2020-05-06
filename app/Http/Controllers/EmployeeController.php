@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Leave;
 use App\Payslip;
+use App\User;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,8 +33,14 @@ class EmployeeController extends Controller
         return view('dashboards.employee');
     }
 
-
     public function show($id){
+
+        $user = User::with('account')->find($id);
+
+        return view('employeepages.profile',  ['user' => $user]);
+    }
+
+    public function showslip($id){
 
         $payslip = Payslip::with([
             'user' => function ($query) {
@@ -50,6 +57,8 @@ class EmployeeController extends Controller
         ])->find($id);
         return view('employeepages.show', ['payslip' => $payslip]);
     }
+
+
 
 
     public function indexpayslip(){

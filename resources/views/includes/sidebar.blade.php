@@ -38,7 +38,7 @@
     </a>
     <div id="employee" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" href="/create-employee">Add Employee</a>
+        <a class="collapse-item" href="/create-employee">Create Employee</a>
         <a class="collapse-item" href="/manage-employee">Manage Employee</a>
       </div>
     </div>
@@ -63,7 +63,7 @@
   {{-- <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#attendance" aria-expanded="true"
       aria-controls="collapseTwo">
-      <i class="fas fa-fw fa-address-book"></i>
+      <i class="fas fa-fw fa-Createress-book"></i>
       <span>Attendance</span>
     </a>
     <div id="attendance" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -84,13 +84,43 @@
     </a>
     <div id="leave" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" href="#">Add Leave</a>
-        <a class="collapse-item" href="#">Manage Leave</a>
+        <a class="collapse-item" href="/create/leave">Create Leave</a>
+        <a class="collapse-item" href="/manage/leaves">Manage Leave</a>
       </div>
     </div>
   </li>
 
 
+  <!-- Nav Item - Allowance Collapse Menu -->
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#allowance" aria-expanded="true"
+      aria-controls="collapseTwo">
+      <i class="fas fa-fw fa-address-book"></i>
+      <span>Allowance</span>
+    </a>
+    <div id="allowance" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" href="/create/allowance">Create Allowance</a>
+        <a class="collapse-item" href="/manage/allowances">Manage Allowance</a>
+      </div>
+    </div>
+  </li>
+
+
+  <!-- Nav Item - Deduction Collapse Menu -->
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#deduction" aria-expanded="true"
+      aria-controls="collapseTwo">
+      <i class="fas fa-fw fa-address-book"></i>
+      <span>Deduction</span>
+    </a>
+    <div id="deduction" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" href="/create/deduction">Create Deduction</a>
+        <a class="collapse-item" href="/manage/deductions">Manage Deduction</a>
+      </div>
+    </div>
+  </li>
   <!-- Nav Item - Payroll Collapse Menu -->
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#payroll" aria-expanded="true"
@@ -106,46 +136,26 @@
     </div>
   </li>
 
-  <!-- Nav Item - Holiday Collapse Menu -->
+
+
+
+  <!-- Nav Item - Configuration Collapse Menu -->
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#holiday" aria-expanded="true"
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#settings" aria-expanded="true"
       aria-controls="collapseTwo">
-      <i class="fas fa-fw fa-glass-cheers"></i>
-      <span>Holiday</span>
+      <i class="fas fa-fw fa-cog"></i>
+      <span>Settings </span>
     </a>
-    <div id="holiday" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+    <div id="settings" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" href="#">Add Holiday</a>
-        <a class="collapse-item" href="#">Manage Holiday</a>
+        <a class="collapse-item" href="/payroll/configuration">Configuration</a>
+        <a class="collapse-item" href="#">Change Password</a>
       </div>
     </div>
   </li>
-
-     <!-- Nav Item - Configuration Collapse Menu -->
-     <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#settings" aria-expanded="true"
-        aria-controls="collapseTwo">
-        <i class="fas fa-fw fa-cog"></i>
-        <span>Settings </span>
-      </a>
-      <div id="settings" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="/payroll/configuration">Configuration</a>
-          <a class="collapse-item" href="#">Change Password</a>
-        </div>
-      </div>
-    </li>
   <!-- Admin Link Menu Ends Here --->
   @else
 
-  <!-- Employee Link Menu Starts Here --->
-  <!-- Nav Item - Attendance Collapse Menu -->
-  {{-- <li class="nav-item">
-    <a class="nav-link" href="#" aria-expanded="true" aria-controls="collapseTwo">
-      <i class="fas fa-fw fa-cog"></i>
-      <span>Attendance</span>
-    </a>
-  </li> --}}
 
   <!-- Nav Item - Leave Collapse Menu -->
   <li class="nav-item">
@@ -156,7 +166,7 @@
     </a>
     <div id="leave" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" href="/create/leave">Apply for Leave</a>
+        <a class="collapse-item" href="/apply/for/leave">Apply for Leave</a>
         <a class="collapse-item" href="/show/leaves/{{Auth::id()}}">Manage Leave</a>
       </div>
     </div>
