@@ -17,10 +17,13 @@
 @include('flash-message')
 
 <!-- DataTales Example -->
+
+
 <div class="card shadow mb-4">
-    <div class="card-body payslip_list">
+    
+    <div class="card-body">
         <div class="table-responsive" id="">
-            <table class="hover table-bordered table" width="100%" cellspacing="0" id="payslip_table">
+            <table class="hover text-center table-bordered table" width="100%" cellspacing="0" id="leave_list">
                 <thead>
                     <tr>
                         <th> Serial</th>
@@ -33,6 +36,21 @@
                 </thead>
                 <tbody>
                     
+                    @foreach ($leaves as  $index =>  $leave)
+                    <tr>
+                    <td>{{$index+1}}</td>
+                      <td>{{$leave->user->employee_name}}</td>
+                      <td>{{$leave->leave_type}}</td>
+                      <td>{{$leave->from_date}} {{$leave->to_date}}</td>
+                      <td>@if($leave->status)
+                        <button href="#" class="btn btn-sm btn-success">Approved</button>
+                        @else
+                        <button href="#" class="btn btn-sm btn-warning">Pending</button>
+                        @endif
+                      </td>
+                      <td>{{$leave->description}}</td>
+                   
+                      @endforeach
                 </tbody>
             </table>
         </div>
@@ -42,10 +60,10 @@
 
 @section('page-level-scripts-down')
 <!-- Page level plugins -->
-<script src="http://parsleyjs.org/dist/parsley.js"></script>
 <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 <!-- Page level custom scripts -->
 <script src="/js/demo/datatables-demo.js"></script>
+<script src="/vendor/leave.js"></script>
 
 @endsection

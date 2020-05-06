@@ -68,6 +68,9 @@ Route::post('/store/allowance&deductions', 'AdminController@SaveAllowanceAndDedu
 
 //////////////////////////////////---Generate PaySlips-----///////////////////////////////
 Route::resource('payslips', 'PayslipController');
+// Route::resource('photos', 'PhotoController')->except([
+//     'create', 'store', 'update', 'destroy'
+// ]);
 Route::get('/load-payslips', 'PayslipController@load_payslips');
 Route::get('/print/payslip/{id}', 'PayslipController@get_payslip_data');
 
@@ -80,5 +83,6 @@ Route::get('/view/payslips', 'EmployeeController@indexpayslip');
 Route::get('/load-payslips', 'EmployeeController@load_payslips');
 Route::get('/mypayslip/{id}', 'EmployeeController@show');
 Route::get('/print/payslip/{id}', 'EmployeeController@get_payslip_data');
-Route::get('/applyfor/leave', 'EmployeeController@applyforleave');
-Route::get('/all/leaves', 'EmployeeController@displayleaves');
+Route::get('/create/leave', 'EmployeeController@createleave');
+Route::get('/show/leaves/{id}', 'EmployeeController@showleave');
+Route::post('/store/leave/', 'EmployeeController@storeleave' );

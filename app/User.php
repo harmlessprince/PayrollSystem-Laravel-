@@ -74,4 +74,9 @@ class User extends Authenticatable
         return $this->hasMany('App\Payslip');
     }
 
+    public function leaves()
+    {
+        return $this->hasMany('App\Leave');
+    }
+
 }

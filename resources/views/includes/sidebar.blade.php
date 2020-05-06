@@ -156,8 +156,8 @@
     </a>
     <div id="leave" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" href="/applyfor/leave">Apply for Leave</a>
-        <a class="collapse-item" href="/all/leaves">Manage Leave</a>
+        <a class="collapse-item" href="/create/leave">Apply for Leave</a>
+        <a class="collapse-item" href="/show/leaves/{{Auth::id()}}">Manage Leave</a>
       </div>
     </div>
   </li>

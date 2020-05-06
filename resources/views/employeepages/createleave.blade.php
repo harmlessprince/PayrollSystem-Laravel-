@@ -3,12 +3,7 @@
 @section("page-level-scripts-up")
 <!-- Custom styles for this page -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-<style>
-    table.dataTable tbody tr:hover {
-        background-color: #c5cae9 !important;
-    }
-</style>
+{{-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script> --}}
 @endsection
 
 @section('page-name', 'Apply for Leave')
@@ -18,49 +13,63 @@
 <!-- DataTales Example -->
 
 <div class="card   shadow mb-4">
-    <form action="" method="get">
+    {{-- /store/leave --}}
+    <form action="/store/leave" method="POST" id="leave">
         @csrf
         <div class="card">
             <div class="mx-auto col-md-8">
+                @include('flash-message')
                 <div class="card-body">
                     <div class="form-group row">
-                        <label for="leave_type" class="col col-form-label"><strong>Leave Type</strong></label>
                         <div class="col">
-                            <select class="form-control" name="year" id="">
+                            <label for="leave_type" class="col col-form-label"><strong>Leave Type</strong></label>
+                            <select class="form-control" name="leave_type" id="leave_type">
                                 <option disabled selected>------select-----</option>
                                 <option value="medical">Medical</option>
-                                <option value="casual">Casual</option>
-                                <option value="others">Others</option>
+                                <option value="annual">Annual</option>
+                                <option value="personal">Personal</option>
+                                <option value="career">Career</option>
+                                <option value="parental">Parental</option>
+                                <option value="compassionate">Compassionate</option>
                             </select>
+                        </div>
+                        <div class="col">
+                            <label for="from" class="col col-form-label"><strong> Leave Status </strong></label>
+                            <div>
+                                <input class="form-control" type="text" name="status" id="status" readonly placeholder="Pending">
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col">
-                            <label for="from"><strong> From </strong></label>
+                            <label for="from"><strong> From </strong>(Month-Day-Year)</label>
                             <div>
-                                <input class="form-control" type="date" name="from_date" id="from_date">
+                                <input class="form-control" type="date" name="from_date" id="from_date"
+                                    data-validation="required">
                             </div>
                         </div>
                         <div class="col">
-                            <label for="to"><strong> To</strong></label>
+                            <label for="to"><strong> To</strong> (Month-Day-Year) </label>
                             <div>
                                 <div>
-                                    <input class="form-control" type="date" name="to_date" id="to_date">
+                                    <input class="form-control" type="date" name="to_date" id="to_date"
+                                        data-validation="required">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1"><strong> Description </strong></label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" id="description" name="description" rows="3"
+                            data-validation="required"></textarea>
                     </div>
 
                     <div class="form-group row text-center">
                         <div class="col">
                             <a class="btn  btn-secondary" href="#">Cancle</a>
                             <a class="btn btn-warning" href="#">Reset</a>
-                            <a class="btn btn-success" href="#">Submit</a>
+                            <button class="btn btn-success" type="submit">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -73,10 +82,6 @@
 @section('page-level-scripts-down')
 <!-- Page level plugins -->
 <script src="/vendor/payslip.js"></script>
-{{-- <script src="/vendor/parsley.js"></script> --}}
-{{-- <script src="http://parsleyjs.org/dist/parsley.js"></script> --}}
-<script src="/vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 <!-- Page level custom scripts -->
 {{-- <script src="/js/demo/datatables-demo.js"></script> --}}
 
