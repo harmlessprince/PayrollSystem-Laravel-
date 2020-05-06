@@ -29,8 +29,8 @@
                         <th> Serial</th>
                         <th>Employee Name</th>
                         <th>Leave Type</th>
-                        <th>Duration</th>
-                        <th>Leave Status</th>
+                        <th>Duration (Year-Month-Day)</th>
+                        <th>Leave Status </th>
                         <th>Comment</th>
                     </tr>
                 </thead>
@@ -40,8 +40,8 @@
                     <tr>
                     <td>{{$index+1}}</td>
                       <td>{{$leave->user->employee_name}}</td>
-                      <td>{{$leave->leave_type}}</td>
-                      <td>{{$leave->from_date}} {{$leave->to_date}}</td>
+                      <td class="text-capitalize">{{$leave->leave_type}}</td>
+                      <td> {{$leave->from_date}} To {{$leave->to_date}}</td>
                       <td>@if($leave->status)
                         <button href="#" class="btn btn-sm btn-success">Approved</button>
                         @else
