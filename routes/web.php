@@ -107,3 +107,4 @@ Route::get('/print/payslip/{id}', 'EmployeeController@get_payslip_data');
 Route::get('/apply/for/leave', 'EmployeeController@createleave');
 Route::get('/show/leaves/{id}', 'EmployeeController@showleave');
 Route::post('/send/leave-request/', 'EmployeeController@storeleave' );
+Route::get('/fetch/leaves','EmployeeController@fetchLeaves');

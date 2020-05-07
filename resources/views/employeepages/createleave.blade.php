@@ -24,13 +24,14 @@
                         <div class="col">
                             <label for="leave_type" class="col col-form-label"><strong>Leave Type</strong></label>
                             <select class="form-control" name="leave_type" id="leave_type">
-                                <option disabled selected>------select-----</option>
+                                
+                                {{-- <option disabled selected>------select-----</option>
                                 <option value="medical">Medical</option>
                                 <option value="annual">Annual</option>
                                 <option value="personal">Personal</option>
                                 <option value="career">Career</option>
                                 <option value="parental">Parental</option>
-                                <option value="compassionate">Compassionate</option>
+                                <option value="compassionate">Compassionate</option> --}}
                             </select>
                         </div>
                         <div class="col">
@@ -81,7 +82,7 @@
 
 @section('page-level-scripts-down')
 <!-- Page level plugins -->
-<script src="/vendor/payslip.js"></script>
+<script src="/vendor/leave.js"></script>
 <!-- Page level custom scripts -->
 {{-- <script src="/js/demo/datatables-demo.js"></script> --}}
 

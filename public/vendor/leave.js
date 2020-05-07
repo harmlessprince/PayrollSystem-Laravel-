@@ -35,4 +35,28 @@ $(document).ready(function() {
     }
     $(".leave_container").on("click", ".remove", removeLeave);
     $("#addLeave").on("click", addLeave);
+
+
+
+    (function fetchLeaves() {
+        $.ajax({
+            url: "/fetch/leaves",
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                var leave_options = data.map(element => {
+                    return `<option value="${element.leave_type}">${element.leave_type}</option>`;
+                });
+              
+               console.log(leave_options);
+                if ( leave_options.length<=0 ) {
+                    $("#leave_type").append("<option selected disabled>-------Please Create Leaves----------</option>");
+                } else {
+                    $("#leave_type").append("<option selected disabled>---------------Select----------------</option>");
+                    $("#leave_type").append(leave_options);
+                }
+            }
+        });
+    })();
 });

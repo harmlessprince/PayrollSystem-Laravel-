@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password'
     ];
 
     /**
@@ -76,7 +76,7 @@ class User extends Authenticatable
 
     public function leaves()
     {
-        return $this->belongsToMany('App\Leave')->withPivot('leave_type', 'from_date', 'to_date', 'description','status');
+        return $this->belongsToMany(Leave::class)->withPivot('leave_type','from_date', 'to_date', 'description','status')->withTimestamps();
     }
 
 }

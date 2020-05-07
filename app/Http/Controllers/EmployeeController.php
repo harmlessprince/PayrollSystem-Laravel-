@@ -9,6 +9,7 @@ use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class EmployeeController extends Controller
@@ -33,14 +34,16 @@ class EmployeeController extends Controller
         return view('dashboards.employee');
     }
 
-    public function show($id){
+    public function show($id)
+    {
 
         $user = User::with('account')->find($id);
 
         return view('employeepages.profile',  ['user' => $user]);
     }
 
-    public function showslip($id){
+    public function showslip($id)
+    {
 
         $payslip = Payslip::with([
             'user' => function ($query) {
@@ -61,7 +64,8 @@ class EmployeeController extends Controller
 
 
 
-    public function indexpayslip(){
+    public function indexpayslip()
+    {
         return view('employeepages.indexpayslip');
     }
 
@@ -126,7 +130,7 @@ class EmployeeController extends Controller
 
 
 
-        return view('employeepages.pdfview', ['payslip'=>$payslip]);
+        return view('employeepages.pdfview', ['payslip' => $payslip]);
         // $pdf = PDF::loadView('payslippages.pdfview', ['payslip'=>$payslip]);
         // return $pdf->download('invoice.pdf');
         // return $pdf->stream();
@@ -135,20 +139,23 @@ class EmployeeController extends Controller
 
     public function createleave()
     {
-       return view ('employeepages.createleave');
+        return view('employeepages.createleave');
     }
 
 
     public function showleave($id)
     {
-        $leaves = Leave::with([
-            'user' => function ($query) {
-                return $query->select('id', 'employee_name');
-            }])->where('user_id', $id)->get();
-            
-        // return json_encode($leave);
-        // return view('employeepages.show', ['payslip' => $payslip]);
-       return view ('employeepages.displayleaves',  ['leaves' => $leaves]);
+
+        $id =  Auth::id();
+
+        $data = User::select('id', 'employee_name')
+            ->whereHas('leaves', function ($q) use ($id) {
+                $q->where('user_id', '=', $id);
+            })->get();
+        
+            return view('employeepages.displayleaves', compact('data'));
+
+        //  return json_decode($data);
     }
 
     public function storeleave(Request $request)
@@ -159,44 +166,58 @@ class EmployeeController extends Controller
             'from_date' => 'required',
             'to_date' => 'required',
             'description' => 'required',
-            
+
         ]);
-        
+
         $todaysDate = date('Y-m-d');
 
-       
+
 
         $from_date = $request->input('from_date');
-            
+
         $to_date = $request->input('to_date');
 
         // ("Todays date. $todaysDate);
 
 
-        if ($todaysDate < $from_date ) {
+        if ($todaysDate < $from_date) {
 
             if ($to_date <= $from_date) {
-                return redirect('/create/leave')->with('error', 'From Date: '.$from_date.' must be greater than To Date: '.$to_date.'. Please choose a date greater than From Date' );
-            }else {
-               
-                Leave::create([
+                return redirect('/apply/for/leave')->with('error', 'From Date: ' . $from_date . ' must be greater than To Date: ' . $to_date . '. Please choose a date greater than From Date');
+            } else {
+
+                // Get all the ids of sellected 
+                $leave_type = $request->input('leave_type');
+                
+                $leaveID = Leave::select('id')->where('leave_type', $leave_type)->first()->id;
+
+                $user = User::find(Auth::id());
+
+                $sync_leave_data =  [
                     'user_id' => Auth::id(),
+                    'leave_id' => $leaveID,
                     'leave_type' => $request->input('leave_type'),
                     'from_date' => $request->input('from_date'),
                     'to_date' => $request->input('to_date'),
                     'description' => $request->input('description'),
-        
-                ]);
-                return redirect('/create/leave')->with('success', 'Leave form has been submitted');
+
+                ];
+
+                // dd($sync_leave_data);
+                $user->leaves()->attach($user, $sync_leave_data);
+                return redirect('/apply/for/leave')->with('success', 'Leave form has been submitted');
             }
-            
-        }else {
-             return redirect('/create/leave')->with('error', 'From Date: '.$from_date.' Can not be less than or equal to Today\'s Date: '.$todaysDate.'. Please choose a date greater than today\'s date' );
+        } else {
+            return redirect('/apply/for/leave')->with('error', 'From Date: ' . $from_date . ' Can not be less than or equal to Today\'s Date: ' . $todaysDate . '. Please choose a date greater than today\'s date');
         }
+    }
 
-        
 
-        
-     //  dd($request->all());
+    public function fetchLeaves()
+    {
+        if (request()->ajax()) {
+            $leaves = Leave::all();
+            return json_encode($leaves);
+        }
     }
 }

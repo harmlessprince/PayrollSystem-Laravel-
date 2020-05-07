@@ -287,6 +287,7 @@ class AdminController extends Controller
         $user->designation_id = $request->input('designation_name');
         $user->resumption_date = $request->input('resumption_date');
         $user->employee_status = $request->input('employee_status');
+        $user->role = $request->input('role');
 
 
         //Checking if file upload is present 

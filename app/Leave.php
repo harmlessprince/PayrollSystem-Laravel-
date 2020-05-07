@@ -8,8 +8,8 @@ class Leave extends Model
 {
     //
     protected $fillable = ['leave_type'];
-    public function user()
+    public function users()
     {
-        return $this->belongsToMany('App\User')->withPivot('leave_type', 'from_date', 'to_date', 'description','status');
+        return $this->belongsToMany('App\User');
     }
 }
